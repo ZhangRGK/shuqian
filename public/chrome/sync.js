@@ -29,7 +29,7 @@ ddp.connect().done(function() {
 
           // Was it removed?
           if (message === "removed") {
-            console.log("This document doesn't exist in our collection anymore :(");
+            chrome.bookmarks.remove(changedDoc.id);
           }
 
         });
