@@ -18,20 +18,22 @@ ddp.connect().done(function() {
     //  console.log(error);
     //});
 
-    var bookMarks = ddp.subscribe('bookMarks');
+    var bookMarks = ddp.subscribe('bookmarks');
     bookMarks.fail(function(error) {
       console.log(error);
     });
 
     bookMarks.done(function(){
-        console.log('done');
-        ddp.watch('bookMarks', function(changedDoc, message) {
+        ddp.watch('bookmarks', function(changedDoc, message) {
           console.log("The bookMarks collection changed. Here's what changed: ", changedDoc, message);
-        
+
           // Was it removed?
           if (message === "removed") {
             console.log("This document doesn't exist in our collection anymore :(");
           }
+
         });
+
     });
 });
+

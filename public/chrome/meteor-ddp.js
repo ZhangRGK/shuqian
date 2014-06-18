@@ -41,7 +41,7 @@ MeteorDdp.prototype.connect = function() {
   self.sock.onmessage = function(msg) {
     var data = JSON.parse(msg.data);
 
-    //console.log(msg);
+    console.log(msg);
 
     switch (data.msg) {
       case 'connected':
@@ -153,6 +153,7 @@ MeteorDdp.prototype._removeDoc = function(msg) {
 MeteorDdp.prototype._notifyWatchers = function(collName, changedDoc, docId, message) {
   changedDoc = JSON.parse(JSON.stringify(changedDoc)); // make a copy
   changedDoc._id = docId; // id might be useful to watchers, attach it.
+
 
   if (!this.watchers[collName]) {
     this.watchers[collName] = [];
