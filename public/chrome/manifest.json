@@ -1,14 +1,14 @@
 {
     "name": "bigmarks",
-    "version": "1.0",
-    "manifest_version": 3,
+    "version": "1.1",
+    "manifest_version": 4,
     "description": "用来和书签同步收藏的书签",
     "browser_action": {
         "default_icon": "icon128.png",
         "default_popup": "popup.html"
     },
     "background": {
-        "scripts": ["bigmarks.js"]
+        "scripts": ["jquery-2.1.1.min.js", "meteor-ddp.js", "sync.js"]
     },
     "icons": { 
         "16": "icon16.png",
@@ -18,5 +18,6 @@
     "permissions": [
         "bookmarks",
         "http://0.0.0.0:3000/"
-        ]
+    ],
+    "homepage_url": "http://shuqian.bigzhu.org"
 }
