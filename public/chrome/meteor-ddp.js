@@ -154,6 +154,7 @@ MeteorDdp.prototype._notifyWatchers = function(collName, changedDoc, docId, mess
   changedDoc = JSON.parse(JSON.stringify(changedDoc)); // make a copy
   changedDoc._id = docId; // id might be useful to watchers, attach it.
 
+
   if (!this.watchers[collName]) {
     this.watchers[collName] = [];
   } else {
