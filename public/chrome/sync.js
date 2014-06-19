@@ -37,3 +37,8 @@ ddp.connect().done(function() {
     });
 });
 
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log('userId='+request.userId);
+    localStorage.setItem('userId', request.userId);
+  });

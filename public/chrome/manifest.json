@@ -19,5 +19,12 @@
         "bookmarks",
         "http://0.0.0.0:3000/"
     ],
+    "content_scripts": [
+      {
+        "matches": ["http://localhost:3000/*"],
+        "js": ["content.js"]
+      }
+    ],
     "homepage_url": "http://shuqian.bigzhu.org"
+
 }
