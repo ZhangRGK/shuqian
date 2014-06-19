@@ -22,7 +22,7 @@
     "content_scripts": [
       {
         "matches": ["http://localhost:3000/*"],
-        "js": ["content.js"]
+        "js": ["jquery-2.1.1.min.js","content.js"]
       }
     ],
     "homepage_url": "http://shuqian.bigzhu.org"
