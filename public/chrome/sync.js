@@ -1,13 +1,3 @@
-//var ddp = new MeteorDdp("ws://localhost:3000/websocket");
-//
-//ddp.connect().then(function () {
-//    console.log('connected');
-//    ddp.subscribe("bookMarks");
-//    ddp.watch("bookMarks", function (changedDoc, message) {
-//        console.log(changedDoc);
-//        console.log(message);
-//    });
-//});
 var userId = localStorage.getItem('userId');
 console.log(userId);
 
