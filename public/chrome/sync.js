@@ -8,7 +8,8 @@
 //        console.log(message);
 //    });
 //});
-
+var userId = localStorage.getItem('userId');
+console.log(userId);
 
 var ddp = new MeteorDdp("ws://localhost:3000/websocket");
 ddp.connect().done(function() {
@@ -18,7 +19,7 @@ ddp.connect().done(function() {
     //  console.log(error);
     //});
 
-    var bookMarks = ddp.subscribe('bookmarks');
+    var bookMarks = ddp.subscribe('bookmarks', [userId]);
     bookMarks.fail(function(error) {
       console.log(error);
     });
@@ -37,6 +38,7 @@ ddp.connect().done(function() {
     });
 });
 
+//取到userId,插入localStorage
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log('userId='+request.userId);
