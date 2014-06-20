@@ -1,3 +1,9 @@
+var userId = localStorage.getItem('userId');
+
+if(userId == "null") {
+    chrome.tabs.create({'url': 'http://localhost:3000'})
+}
+
 function getBookMarks(){
     chrome.bookmarks.getTree(
             function(bookmarkTreeNodes) {
@@ -58,6 +64,8 @@ function upload(){
 document.getElementById("upload").onclick = function() {
     chrome.bookmarks.getTree(
             function(bookmarkTreeNodes) {
+                var  userId = localStorage.getItem('userId');
+                bookmarkTreeNodes[0].userId=userId;
                 post("http://0.0.0.0:3000/upload", JSON.stringify(bookmarkTreeNodes));
             });
 };
