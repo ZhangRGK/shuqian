@@ -1,12 +1,14 @@
-Meteor.publish('bookmarks', (userId)->
-  user = Meteor.users.findOne({_id:userId})
-  if user==undefined
-    #return null
-    return BookMarks.find()
+Meteor.publish('bookmarks', ->
+  if this.userId
+    return BookMarks.find({userId:this.userId})
   else
-    return BookMarks.find()
+    return BookMarks.find({userId:''})
 )
+
 Meteor.publish('tags', ->
-  return Tags.find()
+  if this.userId
+    return Tags.find({userId:this.userId})
+  else
+    return Tags.find({userId:''})
 )
 

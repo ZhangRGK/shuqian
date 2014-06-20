@@ -44,9 +44,8 @@ function remove(id, bookmarks){
 }
 function update(id, bookmarks){
     console.log('update');
-    console.log(id);
-    console.log(bookmarks);
     bookmarks.id = id;
+    console.log(bookmarks);
     post("http://0.0.0.0:3000/update", JSON.stringify(bookmarks));
 }
 chrome.bookmarks.onRemoved.addListener(remove);
@@ -55,18 +54,13 @@ chrome.bookmarks.onCreated.addListener(add);
 //chrome.bookmarks.onChanged.addListener(update);
 chrome.bookmarks.onMoved.addListener(update);
 //上载全部标签
-function upload(){
-    chrome.bookmarks.getTree(
-            function(bookmarkTreeNodes) {
-            console.log(bookmarkTreeNodes);
-            });
-}
 document.getElementById("upload").onclick = function() {
     chrome.bookmarks.getTree(
             function(bookmarkTreeNodes) {
-                var  userId = localStorage.getItem('userId');
-                bookmarkTreeNodes[0].userId=userId;
-                post("http://0.0.0.0:3000/upload", JSON.stringify(bookmarkTreeNodes));
+            var  userId = localStorage.getItem('userId');
+            bookmarkTreeNodes[0].userId=userId;
+            console.log(bookmarkTreeNodes[0]);
+            post("http://0.0.0.0:3000/upload", JSON.stringify(bookmarkTreeNodes[0]));
             });
 };
 
