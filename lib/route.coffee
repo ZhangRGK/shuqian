@@ -153,6 +153,7 @@ Meteor.Router.add('/update', 'POST', ->
   bookmark = eval(this.request.body)
   log bookmark
   BookMarks.update({id: bookmark.id}, {$set: {index: bookmark.index, parentId: bookmark.parentId}})
+<<<<<<< HEAD
 )
 
 Meteor.Router.add('/signIn', 'POST', ->
@@ -165,3 +166,6 @@ Meteor.Router.add('/signIn', 'POST', ->
       return error
   )
 )
+=======
+)
+>>>>>>> 27fe358761388d8a44cdd830f42f0ee9c9b18919
