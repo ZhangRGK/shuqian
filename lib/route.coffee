@@ -25,10 +25,10 @@ getTags = ->
       continue
     #tag.count = BookMarks.find({parentId:bookMark.id}).count()
     tag.count = distinctBookmarks(BookMarks.find({parentId: bookMark.id}).fetch()).length
-    if tag.count == 0
-      willPop.push(tag)
-  tags = _.without.apply(this, willPop)
-  tags = _.sortBy(tags, (data)-> return data.count)
+    #if tag.count == 0
+      #willPop.push(tag)
+  #tags = _.without.apply(this, willPop)
+  #tags = _.sortBy(tags, (data)-> return data.count)
   tags
 
 getTagsById = (id)->
@@ -128,6 +128,7 @@ Meteor.Router.add('/remove', 'POST', ->
 )
 
 cook = (node)->
+  log node
   temp = new node.constructor()
   isTag = false
   for key of node
@@ -144,6 +145,7 @@ cook = (node)->
 Meteor.Router.add('/upload', 'POST', ->
   console.log('upload')
   bookmark = eval(this.request.body)
+  log bookmark
   cook(bookmark[0])
 )
 
