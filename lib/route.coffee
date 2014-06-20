@@ -11,7 +11,6 @@ distinctBookmarks = (bookMarks)->
 getBookMarksByTag = (tag)->
   tags = Tags.find({title:tag}).fetch()
   urls = _.pluck(tags, 'url')
-  log urls
   #log BookMarks.find({url: {$in: urls}}).fetch()
   BookMarks.find({url: {$in: urls}})
 
@@ -98,7 +97,8 @@ Router.map(->
     data: ->
       {
       bookMark: BookMarks.findOne({url: decodeURIComponent(@params._url)}),
-      thisTags: getTagsByURL(@params._url),
+      #thisTags: getTagsByURL(@params._url),
+      thisTags: Tags.find({url: decodeURIComponent(@params._url)}),
       tags: getTags()
       }
   })
