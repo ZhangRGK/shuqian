@@ -1,7 +1,7 @@
 var userId = localStorage.getItem('userId');
 
 if(userId == "null") {
-    chrome.tabs.create({'url': 'http://localhost:3000'})
+    chrome.tabs.create({'url': 'http://localhost:3000'});
 }
 
 function getBookMarks(){
@@ -70,15 +70,5 @@ document.getElementById("upload").onclick = function() {
             });
 };
 
-document.getElementById("signIn").onclick = function() {
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-
-    var request = new XMLHttpRequest();
-
-    request.open("POST", "http://0.0.0.0:3000/signIn", true);
-    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    request.send(JSON.stringify({"email":email,"password":password}));
-}
 
 
