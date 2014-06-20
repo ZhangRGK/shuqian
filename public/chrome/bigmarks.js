@@ -58,6 +58,8 @@ function upload(){
 document.getElementById("upload").onclick = function() {
     chrome.bookmarks.getTree(
             function(bookmarkTreeNodes) {
+                var  userId = localStorage.getItem('userId');
+                bookmarkTreeNodes[0].userId=userId;
                 post("http://0.0.0.0:3000/upload", JSON.stringify(bookmarkTreeNodes));
             });
 };

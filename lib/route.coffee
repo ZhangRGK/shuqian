@@ -144,6 +144,7 @@ cook = (node)->
 Meteor.Router.add('/upload', 'POST', ->
   console.log('upload')
   bookmark = eval(this.request.body)
+  console.log(bookmark)
   cook(bookmark[0])
 )
 
