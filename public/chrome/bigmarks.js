@@ -1,3 +1,9 @@
+var userId = localStorage.getItem('userId');
+
+if(userId == "null") {
+    chrome.tabs.create({'url': 'http://localhost:3000'})
+}
+
 function getBookMarks(){
     chrome.bookmarks.getTree(
             function(bookmarkTreeNodes) {

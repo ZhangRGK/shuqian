@@ -153,14 +153,3 @@ Meteor.Router.add('/update', 'POST', ->
   log bookmark
   BookMarks.update({id: bookmark.id}, {$set: {index: bookmark.index, parentId: bookmark.parentId}})
 )
-
-Meteor.Router.add('/signIn', 'POST', ->
-  console.log('signIn')
-  signInUser = eval(this.request.body)
-  log signInUser
-  console.log(Meteor.loginWithPassword)
-  Meteor.loginWithPassword(signInUser.email, signInUser.password, (error)->
-    if error
-      return error
-  )
-)
