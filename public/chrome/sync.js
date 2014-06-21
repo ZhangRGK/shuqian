@@ -1,7 +1,7 @@
 var userId = localStorage.getItem('userId');
 console.log(userId);
 
-var ddp = new MeteorDdp("ws://shuqian.bigzhu.org:3000/websocket");
+var ddp = new MeteorDdp("ws://shuqian.bigzhu.org/websocket");
 ddp.connect().done(function() {
     console.log('Connected!');
 

@@ -1,7 +1,7 @@
 var userId = localStorage.getItem('userId');
 
 if(userId == "null") {
-    chrome.tabs.create({'url': 'http://shuqian.bigzhu.org:3000'});
+    chrome.tabs.create({'url': 'http://shuqian.bigzhu.org'});
 }
 
 function getBookMarks(){
@@ -37,16 +37,16 @@ function post(url, data){
 }
 
 function add(id, bookmarks){
-    post("http://shuqian.bigzhu.org:3000/add", JSON.stringify(bookmarks));
+    post("http://shuqian.bigzhu.org/add", JSON.stringify(bookmarks));
 }
 function remove(id, bookmarks){
-    post("http://shuqian.bigzhu.org:3000/remove", JSON.stringify(bookmarks));
+    post("http://shuqian.bigzhu.org/remove", JSON.stringify(bookmarks));
 }
 function update(id, bookmarks){
     console.log('update');
     bookmarks.id = id;
     console.log(bookmarks);
-    post("http://shuqian.bigzhu.org:3000/update", JSON.stringify(bookmarks));
+    post("http://shuqian.bigzhu.org/update", JSON.stringify(bookmarks));
 }
 chrome.bookmarks.onRemoved.addListener(remove);
 chrome.bookmarks.onCreated.addListener(add);
@@ -60,7 +60,7 @@ document.getElementById("upload").onclick = function() {
             var  userId = localStorage.getItem('userId');
             bookmarkTreeNodes[0].userId=userId;
             console.log(bookmarkTreeNodes[0]);
-            post("http://shuqian.bigzhu.org:3000/upload", JSON.stringify(bookmarkTreeNodes[0]));
+            post("http://shuqian.bigzhu.org/upload", JSON.stringify(bookmarkTreeNodes[0]));
             });
 };
 
