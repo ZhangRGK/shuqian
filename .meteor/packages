@@ -9,10 +9,7 @@ coffeescript
 less
 router
 accounts-password
-accounts-github
 accounts-ui-bootstrap-3
-accounts-twitter
-accounts-google
 iron-router
 underscore
 oauth-encryption
