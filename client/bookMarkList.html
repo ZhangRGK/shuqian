@@ -1,20 +1,37 @@
 <template name='bookMarkList'>
-<button id='editor' type="button" class="btn btn-default ">
-    <span class="glyphicon glyphicon-star"></span>编辑
-</button>
+
 <table class="table">
     <thead>
         <tr>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th><input type="checkbox"/></th>
+            <th>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default">{{tag}}</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">{{tag}}</a></li>
+                        <li class="divider"></li>
+                        {{#each otherTags}}
+                        <li><a href="#">{{title}}</a></li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </th>
+            <th>
+                <button id='editor' type="button" class="btn btn-default ">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
+            </th>
         </tr>
     </thead>
     <tbody>
     {{#each bookMarks}}
     {{> bookMark}}
     {{/each}}
-
     </tbody>
 </table>
 </template>
+

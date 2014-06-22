@@ -85,7 +85,8 @@ Router.map(->
     data: ->
       {
       bookMarks: getBookMarksByTag(@params._tag),
-      tags: getTags()
+      tags: getTags(),
+      tag:@params._tag
       }
   })
 
