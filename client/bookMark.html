@@ -1,18 +1,17 @@
 <template name='bookMark'>
 <tr>
-    <td><input type="checkbox"/></td>
+    <td><input type="checkbox" value="{{_id}}"/></td>
     <td>
-        <a href="{{url}}" target="_bank">
-            <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
-        </a>
         <a href="/d/{{encodeURL}}">
-            {{title}}
+            <div>
+                <a href="{{url}}" target="_bank">
+                    <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
+                </a>
+                {{title}}
+            </div>
         </a>
     </td>
     <td>
-        <a class='pull-right on-show'>
-            <button type="button" class="btn btn-default btn-xs remove"><span data-id="{{_id}}" class="glyphicon glyphicon-remove"></span></button>
-        </a>
     </td>
 </tr>
 </template>

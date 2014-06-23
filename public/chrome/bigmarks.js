@@ -1,4 +1,6 @@
 var userId = localStorage.getItem('userId');
+var serviceUrl = 'http://shuqian.bigzhu.org';
+serviceUrl = 'http://0.0.0.0';
 
 if (userId == null || userId == "null") {
     $("#uploadToDefault").removeClass("hidden");
@@ -6,18 +8,18 @@ if (userId == null || userId == "null") {
 }
 
 $("#openApp").on("click", function () {
-    chrome.tabs.create({"url": "http://localhost:3000"});
+    chrome.tabs.create({"url": serviceUrl});
 });
 
 $("#uploadToDefault").on("click", function() {
     chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
-        post("http://localhost:3000",{"userId":null,"data":JSON.stringify(bookmarkTreeNodes)});
+        post(serviceUrl,{"userId":null,"data":JSON.stringify(bookmarkTreeNodes)});
     });
 });
 
 $("#uploadToUser").on("click", function() {
     chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
-        post("http://localhost:3000",{"userId":userId,"data":JSON.stringify(bookmarkTreeNodes)});
+        post(serviceUrl,{"userId":userId,"data":JSON.stringify(bookmarkTreeNodes)});
     });
 });
 
@@ -55,17 +57,16 @@ function post(url, data){
 }
 //
 function add(id, bookmarks){
-    post("http://0.0.0.0:3000/add", JSON.stringify(bookmarks));
+    post(currentUser+"/add", JSON.stringify(bookmarks));
 }
 function remove(id, bookmarks){
-    post("http://0.0.0.0:3000/remove", JSON.stringify(bookmarks));
+    post(serviceUrl+"/remove", JSON.stringify(bookmarks));
 }
 function update(id, bookmarks){
     console.log('update');
-    console.log(id);
-    console.log(bookmarks);
     bookmarks.id = id;
-    post("http://0.0.0.0:3000/update", JSON.stringify(bookmarks));
+    console.log(bookmarks);
+    post(serviceUrl+"/update", JSON.stringify(bookmarks));
 }
 chrome.bookmarks.onRemoved.addListener(remove);
 chrome.bookmarks.onCreated.addListener(add);
@@ -73,16 +74,12 @@ chrome.bookmarks.onCreated.addListener(add);
 //chrome.bookmarks.onChanged.addListener(update);
 chrome.bookmarks.onMoved.addListener(update);
 //上载全部标签
-function upload(){
-    chrome.bookmarks.getTree(
-            function(bookmarkTreeNodes) {
-            console.log(bookmarkTreeNodes);
-            });
-}
 document.getElementById("upload").onclick = function() {
     chrome.bookmarks.getTree(
             function(bookmarkTreeNodes) {
-                post("http://0.0.0.0:3000/upload", JSON.stringify(bookmarkTreeNodes));
+            var  userId = localStorage.getItem('userId');
+            bookmarkTreeNodes[0].userId=userId;
+            console.log(bookmarkTreeNodes[0]);
+            post(serviceUrl+"/upload", JSON.stringify(bookmarkTreeNodes[0]));
             });
 };
-

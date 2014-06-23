@@ -1,20 +1,50 @@
 <template name='bookMarkList'>
-<button id='editor' type="button" class="btn btn-default ">
-    <span class="glyphicon glyphicon-star"></span>编辑
-</button>
+{{#if currentUser}}
 <table class="table">
     <thead>
         <tr>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th><input type="checkbox"/></th>
+            <th>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default">
+                        {{#if tag}}
+                        {{tag}}
+                        {{else}}
+                        标签
+                        {{/if}}
+                    </button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {{#each uniqTag}}
+                        <li>
+                        <a href="#">
+                            {{#if selected}}
+                            <span class="glyphicon glyphicon-ok"></span>
+                            {{/if}}
+                            {{title}}</a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </th>
+            <th>
+                <button id='editor' type="button" class="btn btn-default ">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
+            </th>
         </tr>
     </thead>
     <tbody>
     {{#each bookMarks}}
     {{> bookMark}}
     {{/each}}
-
     </tbody>
 </table>
+{{else}}
+没有登录,放点什么?
+{{/if}}
 </template>
+

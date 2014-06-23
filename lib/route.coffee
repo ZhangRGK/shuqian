@@ -2,34 +2,27 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  layoutTemplate: 'main'
+  layoutTemplate: 'main',
+  loadingTemplate: 'loading',
+  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
+ 
 })
 
 distinctBookmarks = (bookMarks)->
   _.uniq(bookMarks, false, (d)-> return d.url)
 
 getBookMarksByTag = (tag)->
-  tagNode = BookMarks.findOne({title: tag})
-  #会调二次,要解决,很奇怪(route没有wait导致的)
-  #if !tagNode
-  #  return
-  id = tagNode.id
-  bookMarks = BookMarks.find({parentId: id}).fetch()
-  distinctBookmarks(bookMarks)
+  tags = Tags.find({title:tag}).fetch()
+  urls = _.pluck(tags, 'url')
+  BookMarks.find({url: {$in: urls}})
+
 getTags = ->
   tags = Tags.find().fetch()
-  willPop = [tags]
-  for tag in tags
-    bookMark = BookMarks.findOne({title: tag.title})
-    if !bookMark
-      continue
-    #tag.count = BookMarks.find({parentId:bookMark.id}).count()
-    tag.count = distinctBookmarks(BookMarks.find({parentId: bookMark.id}).fetch()).length
-    if tag.count == 0
-      willPop.push(tag)
-  tags = _.without.apply(this, willPop)
-  tags = _.sortBy(tags, (data)-> return data.count)
-  tags
+  uniqTag = _.uniq(tags, false, (d)-> return d.title)
+  for tag in uniqTag
+    tag.count = Tags.find({title:tag.title}).count()
+  Session.set('uniqTag', uniqTag)
+  return uniqTag
 
 getTagsById = (id)->
   #找到这个id的bookMark
@@ -65,22 +58,15 @@ getBookMarksBySearch = (value)->
 Router.map(->
   this.route('bookMarkList', {
     path: '/',
-    waitOn: ->
-      [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    ,
     data: ->
       {
       bookMarks: BookMarks.find(),
       tags: getTags()
-      #tags: Tags.find()
       }
   })
 
   this.route('bookMarkList', {
     path: '/search/:_value',
-    waitOn: ->
-      [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    ,
     data: ->
       {
       bookMarks: getBookMarksBySearch(@params._value),
@@ -90,25 +76,21 @@ Router.map(->
 
   this.route('bookMarkList', {
     path: '/tag/:_tag',
-    waitOn: ->
-      [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    ,
     data: ->
       {
       bookMarks: getBookMarksByTag(@params._tag),
-      tags: getTags()
+      tags: getTags(),
+      tag: @params._tag
       }
   })
 
   this.route('bookMarkDetail', {
     path: '/d/:_url',
-    waitOn: ->
-      [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    ,
     data: ->
       {
       bookMark: BookMarks.findOne({url: decodeURIComponent(@params._url)}),
-      thisTags: getTagsByURL(@params._url),
+      #thisTags: getTagsByURL(@params._url),
+      thisTags: Tags.find({url: decodeURIComponent(@params._url)}),
       tags: getTags()
       }
   })
@@ -126,25 +108,41 @@ Meteor.Router.add('/remove', 'POST', ->
   BookMarks.remove({index: bookmark.index})
   console.log(bookmark)
 )
-
-cook = (node)->
+spread = (node, nodes)->
   temp = new node.constructor()
-  isTag = false
   for key of node
     if key != 'children'
       temp[key] = node[key]
     else
-      if Tags.find({title: node.title}).count() == 0 and node.title != ''
-        Tags.insert({title: node.title})
       for i in node[key]
-        cook(i)
-  if BookMarks.find(temp).count() == 0
-    BookMarks.insert(temp)
+        spread(i, nodes)
+  nodes.push(temp)
 
 Meteor.Router.add('/upload', 'POST', ->
   console.log('upload')
-  bookmark = eval(this.request.body)
-  cook(bookmark[0])
+  topNode = eval(this.request.body)
+  userId = topNode.userId
+  log userId
+
+
+  nodes = []
+  spread(topNode, nodes)
+  for node in nodes
+    if node.url
+      bookMark = {userId:userId, url:node.url, title:node.title, dateAdded:node.dateAdded, stat:1}
+      #增加时间和状态不能纳入排重.会导致重复导入
+      findBookMark = {userId:userId, url:node.url, title:node.title}
+      if BookMarks.find(findBookMark).count() == 0
+        BookMarks.insert(bookMark)
+      if node.parentId
+        parentNodes = _.filter(nodes, (d)-> return  d.id==node.parentId )
+        for parentNode in parentNodes
+          #增加时间和状态不能纳入排重.会导致重复导入
+          tag = {userId:userId, url:node.url, title:parentNode.title, dateAdded:parentNode.dateAdded, stat:1}
+          findTag = {userId:userId, url:node.url, title:parentNode.title}
+          if Tags.find(findTag).count() == 0
+            Tags.insert(tag)
+  return
 )
 
 Meteor.Router.add('/update', 'POST', ->
