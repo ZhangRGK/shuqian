@@ -7,6 +7,10 @@ Template.bookMarkList.helpers({
   uniqTag:->
     Session.get('uniqTag')
 })
+
+test  = () ->
+  console.log(value)
+
 toggle = (evt, selected)->
   id = $(evt.target).val()
   bookMark = BookMarks.findOne({_id:id})
@@ -21,6 +25,7 @@ toggle = (evt, selected)->
         tag.selected = selected
   Session.set('uniqTag', uniqTag)
   console.log Session.get('uniqTag')
+
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->
     $('input[type="checkbox"]').toggle()
@@ -30,4 +35,6 @@ Template.bookMarkList.events = {
       toggle(evt, true)
     else
       toggle(evt, false)
+
+
 }
