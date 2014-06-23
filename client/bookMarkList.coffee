@@ -12,5 +12,4 @@ Template.bookMarkList.helpers({
       _.reject(@tags, (d)=> d.title == @tag)
     else
       return
-
 })
