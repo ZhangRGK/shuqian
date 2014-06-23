@@ -97,10 +97,11 @@ Router.map(->
 )
 
 Meteor.Router.add('/add', 'POST', ->
-  bookmark = eval(this.request.body)
-  if BookMarks.find({url: bookmark.url}).count() == 0
+  addData = eval(this.request.body)
+  userId = addData.userId;
+  if BookMarks.find({url: addData.url, userId:userId}).count() == 0
+    bookMark = {userId:userId, url:bookmark.url, title:bookmark.title, dateAdded:bookmark.dateAdded, stat:1}
     BookMarks.insert(bookmark)
-    console.log(bookmark)
 )
 Meteor.Router.add('/remove', 'POST', ->
   console.log('remove')
@@ -122,8 +123,6 @@ Meteor.Router.add('/upload', 'POST', ->
   console.log('upload')
   topNode = eval(this.request.body)
   userId = topNode.userId
-  log userId
-
 
   nodes = []
   spread(topNode, nodes)

@@ -39,7 +39,9 @@ function post(url, data){
 }
 
 function add(id, bookmarks){
-    post(currentUser+"/add", JSON.stringify(bookmarks));
+    console.log("add");
+    bookmarks.userId = userId;
+    post(serviceUrl+"/add", JSON.stringify(bookmarks));
 }
 function remove(id, bookmarks){
     post(serviceUrl+"/remove", JSON.stringify(bookmarks));
