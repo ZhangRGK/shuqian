@@ -1,6 +1,6 @@
 var userId = localStorage.getItem('userId');
 var serviceUrl = 'http://shuqian.bigzhu.org';
-serviceUrl = 'http://0.0.0.0';
+serviceUrl = 'http://localhost:3000';
 
 if(userId == "null") {
     chrome.tabs.create({'url': serviceUrl});
