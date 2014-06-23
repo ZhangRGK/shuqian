@@ -7,7 +7,7 @@
             <td><input type="checkbox"/></td>
             <td>
                 <!-- Build your select: -->
-                <select class="multiselect" multiple="multiple">
+                <select id="multi" class="multiselect" multiple="multiple">
                     {{#each uniqTag}}
                     <option value="{{title}}">{{title}}</option>
                     {{/each}}
@@ -28,7 +28,9 @@
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.multiselect').multiselect();
+            $('.multiselect').multiselect({
+                selectedClass:null
+            });
         });
     </script>
 </table>

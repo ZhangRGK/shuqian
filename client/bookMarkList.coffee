@@ -20,11 +20,17 @@ toggle = (evt, selected)->
   
   for selectTag in selectTags
     for tag in uniqTag
+      #$('#multi').multiselect('deselect', tag);
       if selectTag.title == tag.title
         console.log selectTag.title
         tag.selected = selected
+        if(tag.selected)
+          $('#multi').multiselect('select', selectTag.title);
+        else
+          $('#multi').multiselect('deselect', selectTag.title);
   Session.set('uniqTag', uniqTag)
   console.log Session.get('uniqTag')
+
 
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->
@@ -36,5 +42,7 @@ Template.bookMarkList.events = {
     else
       toggle(evt, false)
 
+  'onchange #multi':(evt,template) ->
+    console.log('xxx')
 
 }
