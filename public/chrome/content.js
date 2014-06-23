@@ -1,20 +1,24 @@
 
 var userId = '';
 $(function() {
-$(document).bind("click",function(){
-//$('body').click( function(){
-        var  theUserId = localStorage.getItem('Meteor.userId');
-        if (theUserId != userId){
-            console.log(theUserId);
-            console.log(userId);
-            chrome.runtime.sendMessage({userId: theUserId}, function(response) {
-                console.log(response.farewell);
-            });
-            userId = theUserId;
-        }
+    var theUserId = localStorage.getItem('Meteor.userId');
+    if (theUserId == "null") {
+
     }
-);
-});
+})
+//$(document).bind("click",function(){
+////$('body').click( function(){
+//        if (theUserId != userId){
+//            console.log(theUserId);
+//            console.log(userId);
+//            chrome.runtime.sendMessage({userId: theUserId}, function(response) {
+//                console.log(response.farewell);
+//            });
+//            userId = theUserId;
+//        }
+//    }
+//);
+//});
 
 /*以下无效
 $(function() {

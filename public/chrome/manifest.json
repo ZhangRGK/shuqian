@@ -17,6 +17,7 @@
     },
     "permissions": [
         "bookmarks",
+        "tabs",
         "http://0.0.0.0:3000/"
     ],
     "content_scripts": [

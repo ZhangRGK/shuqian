@@ -1,21 +1,39 @@
 var userId = localStorage.getItem('userId');
 
-if(userId == "null") {
-    chrome.tabs.create({'url': 'http://localhost:3000'})
+if (userId == null || userId == "null") {
+    $("#uploadToDefault").removeClass("hidden");
+    $("#uploadToUser").addClass("hidden");
 }
 
-function getBookMarks(){
-    chrome.bookmarks.getTree(
-            function(bookmarkTreeNodes) {
-            console.log(bookmarkTreeNodes);
-            });
-}
-function show(id, bookmarks){
-    console.log(id);
-    console.log(bookmarks);
-}
+$("#openApp").on("click", function () {
+    chrome.tabs.create({"url": "http://localhost:3000"});
+});
 
+$("#uploadToDefault").on("click", function() {
+    chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
+        post("http://localhost:3000",{"userId":null,"data":JSON.stringify(bookmarkTreeNodes)});
+    });
+});
 
+$("#uploadToUser").on("click", function() {
+    chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
+        post("http://localhost:3000",{"userId":userId,"data":JSON.stringify(bookmarkTreeNodes)});
+    });
+});
+
+//
+//function getBookMarks() {
+//    chrome.bookmarks.getTree(
+//        function (bookmarkTreeNodes) {
+//            console.log(bookmarkTreeNodes);
+//        });
+//}
+//function show(id, bookmarks){
+//    console.log(id);
+//    console.log(bookmarks);
+//}
+//
+//
 function post(url, data){
     var method = "POST";
     var postData = "Some data";
@@ -35,7 +53,7 @@ function post(url, data){
     // Actually sends the request to the server.
     request.send(data);
 }
-
+//
 function add(id, bookmarks){
     post("http://0.0.0.0:3000/add", JSON.stringify(bookmarks));
 }
@@ -67,16 +85,4 @@ document.getElementById("upload").onclick = function() {
                 post("http://0.0.0.0:3000/upload", JSON.stringify(bookmarkTreeNodes));
             });
 };
-
-document.getElementById("signIn").onclick = function() {
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-
-    var request = new XMLHttpRequest();
-
-    request.open("POST", "http://0.0.0.0:3000/signIn", true);
-    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    request.send(JSON.stringify({"email":email,"password":password}));
-}
-
 
