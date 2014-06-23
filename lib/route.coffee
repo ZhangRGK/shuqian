@@ -14,7 +14,6 @@ distinctBookmarks = (bookMarks)->
 getBookMarksByTag = (tag)->
   tags = Tags.find({title:tag}).fetch()
   urls = _.pluck(tags, 'url')
-  #log BookMarks.find({url: {$in: urls}}).fetch()
   BookMarks.find({url: {$in: urls}})
 
 getTags = ->
@@ -58,9 +57,6 @@ getBookMarksBySearch = (value)->
 Router.map(->
   this.route('bookMarkList', {
     path: '/',
-    #waitOn: ->
-    #  [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    #,
     data: ->
       {
       bookMarks: BookMarks.find(),
@@ -70,9 +66,6 @@ Router.map(->
 
   this.route('bookMarkList', {
     path: '/search/:_value',
-    #waitOn: ->
-    #  [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    #,
     data: ->
       {
       bookMarks: getBookMarksBySearch(@params._value),
@@ -82,22 +75,16 @@ Router.map(->
 
   this.route('bookMarkList', {
     path: '/tag/:_tag',
-    #waitOn: ->
-    #  [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    #,
     data: ->
       {
       bookMarks: getBookMarksByTag(@params._tag),
       tags: getTags(),
-      tag:@params._tag
+      tag: @params._tag
       }
   })
 
   this.route('bookMarkDetail', {
     path: '/d/:_url',
-    #waitOn: ->
-    #  [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    #,
     data: ->
       {
       bookMark: BookMarks.findOne({url: decodeURIComponent(@params._url)}),
