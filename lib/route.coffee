@@ -21,6 +21,7 @@ getTags = ->
   uniqTag = _.uniq(tags, false, (d)-> return d.title)
   for tag in uniqTag
     tag.count = Tags.find({title:tag.title}).count()
+  Session.set('uniqTag', uniqTag)
   return uniqTag
 
 getTagsById = (id)->

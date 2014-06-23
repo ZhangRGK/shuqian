@@ -18,10 +18,14 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">{{tag}}</a></li>
-                        <li class="divider"></li>
-                        {{#each otherTags}}
-                        <li><a href="#">{{title}}</a></li>
+                        {{#each uniqTag}}
+                        <li>
+                        <a href="#">
+                            {{#if selected}}
+                            <span class="glyphicon glyphicon-ok"></span>
+                            {{/if}}
+                            {{title}}</a>
+                        </li>
                         {{/each}}
                     </ul>
                 </div>
