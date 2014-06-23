@@ -17,14 +17,18 @@
                         <span class="caret"></span>
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu dropdown-menu-form" role="menu">
                         {{#each uniqTag}}
                         <li>
                         <a href="#">
-                            {{#if selected}}
-                            <span class="glyphicon glyphicon-ok"></span>
-                            {{/if}}
-                            {{title}}</a>
+                            {{title}}
+                            <span class="glyphicon 
+                                {{#if selected}}
+                                glyphicon-ok
+                                {{/if}}
+                                ">
+                            </span> 
+                        </a>
                         </li>
                         {{/each}}
                     </ul>
