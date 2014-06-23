@@ -1,7 +1,8 @@
 var userId = localStorage.getItem('userId');
+var serviceUrl = 'http://shuqian.bigzhu.org';
 
 if(userId == "null") {
-    chrome.tabs.create({'url': 'http://shuqian.bigzhu.org'});
+    chrome.tabs.create({'url': serviceUrl});
 }
 
 function getBookMarks(){
@@ -37,16 +38,16 @@ function post(url, data){
 }
 
 function add(id, bookmarks){
-    post("http://shuqian.bigzhu.org/add", JSON.stringify(bookmarks));
+    post(currentUser+"/add", JSON.stringify(bookmarks));
 }
 function remove(id, bookmarks){
-    post("http://shuqian.bigzhu.org/remove", JSON.stringify(bookmarks));
+    post(serviceUrl+"/remove", JSON.stringify(bookmarks));
 }
 function update(id, bookmarks){
     console.log('update');
     bookmarks.id = id;
     console.log(bookmarks);
-    post("http://shuqian.bigzhu.org/update", JSON.stringify(bookmarks));
+    post(serviceUrl+"/update", JSON.stringify(bookmarks));
 }
 chrome.bookmarks.onRemoved.addListener(remove);
 chrome.bookmarks.onCreated.addListener(add);
@@ -60,7 +61,7 @@ document.getElementById("upload").onclick = function() {
             var  userId = localStorage.getItem('userId');
             bookmarkTreeNodes[0].userId=userId;
             console.log(bookmarkTreeNodes[0]);
-            post("http://shuqian.bigzhu.org/upload", JSON.stringify(bookmarkTreeNodes[0]));
+            post(serviceUrl+"/upload", JSON.stringify(bookmarkTreeNodes[0]));
             });
 };
 
