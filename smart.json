@@ -4,6 +4,7 @@
     "iron-router": {},
     "accounts-ui-bootstrap-3": {},
     "collection-api": {},
-    "router": {}
+    "router": {},
+    "spin": {}
   }
 }

@@ -2,7 +2,10 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  layoutTemplate: 'main'
+  layoutTemplate: 'main',
+  loadingTemplate: 'loading',
+  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
+ 
 })
 
 distinctBookmarks = (bookMarks)->
@@ -55,9 +58,9 @@ getBookMarksBySearch = (value)->
 Router.map(->
   this.route('bookMarkList', {
     path: '/',
-    waitOn: ->
-      [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    ,
+    #waitOn: ->
+    #  [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
+    #,
     data: ->
       {
       bookMarks: BookMarks.find(),
@@ -67,9 +70,9 @@ Router.map(->
 
   this.route('bookMarkList', {
     path: '/search/:_value',
-    waitOn: ->
-      [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    ,
+    #waitOn: ->
+    #  [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
+    #,
     data: ->
       {
       bookMarks: getBookMarksBySearch(@params._value),
@@ -79,9 +82,9 @@ Router.map(->
 
   this.route('bookMarkList', {
     path: '/tag/:_tag',
-    waitOn: ->
-      [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    ,
+    #waitOn: ->
+    #  [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
+    #,
     data: ->
       {
       bookMarks: getBookMarksByTag(@params._tag),
@@ -92,9 +95,9 @@ Router.map(->
 
   this.route('bookMarkDetail', {
     path: '/d/:_url',
-    waitOn: ->
-      [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
-    ,
+    #waitOn: ->
+    #  [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
+    #,
     data: ->
       {
       bookMark: BookMarks.findOne({url: decodeURIComponent(@params._url)}),
