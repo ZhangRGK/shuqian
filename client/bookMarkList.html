@@ -1,38 +1,50 @@
+<!-- Include the plugin's CSS and JS: -->
+
 <template name='bookMarkList'>
 {{#if currentUser}}
 <table class="table">
     <thead>
         <tr>
-            <th><input type="checkbox"/></th>
+            <!--<th><input type="checkbox"/></th>-->
             <th>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default">
-                        {{#if tag}}
-                        {{tag}}
-                        {{else}}
-                        标签
-                        {{/if}}
-                    </button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-form" role="menu">
-                        {{#each uniqTag}}
-                        <li>
-                        <a href="#">
-                            {{title}}
-                            <span class="glyphicon 
-                                {{#if selected}}
-                                glyphicon-ok
-                                {{/if}}
-                                ">
-                            </span> 
-                        </a>
-                        </li>
-                        {{/each}}
-                    </ul>
-                </div>
+                <!-- Build your select: -->
+                <select id="test" multiple="multiple">
+                    <option value="cheese" selected>Cheese</option>
+                    <option value="tomatoes">Tomatoes</option>
+                    <option value="mozarella" selected>Mozzarella</option>
+                    <option value="mushrooms">Mushrooms</option>
+                    <option value="pepperoni">Pepperoni</option>
+                    <option value="onions">Onions</option>
+                </select>
+
+                <!--<div class="btn-group">-->
+                    <!--<button type="button" class="btn btn-default">-->
+                        <!--{{#if tag}}-->
+                        <!--{{tag}}-->
+                        <!--{{else}}-->
+                        <!--标签-->
+                        <!--{{/if}}-->
+                    <!--</button>-->
+                    <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
+                        <!--<span class="caret"></span>-->
+                        <!--<span class="sr-only">Toggle Dropdown</span>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu dropdown-menu-form" role="menu">-->
+                        <!--{{#each uniqTag}}-->
+                        <!--<li>-->
+                        <!--<a href="#">-->
+                            <!--{{title}}-->
+                            <!--<span class="glyphicon-->
+                                <!--{{#if selected}}-->
+                                <!--glyphicon-ok-->
+                                <!--{{/if}}-->
+                                <!--">-->
+                            <!--</span>-->
+                        <!--</a>-->
+                        <!--</li>-->
+                        <!--{{/each}}-->
+                    <!--</ul>-->
+                <!--</div>-->
             </th>
             <th>
                 <button id='editor' type="button" class="btn btn-default ">

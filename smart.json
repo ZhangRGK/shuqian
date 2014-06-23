@@ -5,6 +5,9 @@
     "accounts-ui-bootstrap-3": {},
     "collection-api": {},
     "router": {},
-    "spin": {}
+    "spin": {},
+    "bootstrap-multiselect":{
+        "git":"https://github.com/unboundmusic/bootstrap-multiselect-meteor"
+    }
   }
 }
