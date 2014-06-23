@@ -103,12 +103,14 @@ Meteor.Router.add('/add', 'POST', ->
     bookMark = {userId:userId, url:bookmark.url, title:bookmark.title, dateAdded:bookmark.dateAdded, stat:1}
     BookMarks.insert(bookmark)
 )
-Meteor.Router.add('/remove', 'POST', ->
-  console.log('remove')
-  bookmark = eval(this.request.body)
-  BookMarks.remove({index: bookmark.index})
-  console.log(bookmark)
-)
+#Meteor.Router.add('/remove', 'POST', ->
+#  console.log('remove')
+#  removeData = eval(this.request.body)
+#  console.log(removeData)
+#  userId = removeData.userId
+#  BookMarks.remove({index: bookmark.index})
+#  console.log(bookmark)
+#)
 spread = (node, nodes)->
   temp = new node.constructor()
   for key of node

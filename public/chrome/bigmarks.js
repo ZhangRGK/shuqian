@@ -43,16 +43,27 @@ function add(id, bookmarks){
     bookmarks.userId = userId;
     post(serviceUrl+"/add", JSON.stringify(bookmarks));
 }
-function remove(id, bookmarks){
-    post(serviceUrl+"/remove", JSON.stringify(bookmarks));
+
+/*
+function remove(id, bookmarks, test){
+    console.log("remove");
+    console.log(bookmarks);
+    console.log(test);
+    node2 = chrome.bookmarks.get(id, function(node){ 
+            console.log(node);
+            post(serviceUrl+"/remove", JSON.stringify(bookmarks));
+            });
+    console.log(node2);
 }
+*/
+
 function update(id, bookmarks){
     console.log('update');
     bookmarks.id = id;
     console.log(bookmarks);
     post(serviceUrl+"/update", JSON.stringify(bookmarks));
 }
-chrome.bookmarks.onRemoved.addListener(remove);
+//chrome.bookmarks.onRemoved.addListener(remove);
 chrome.bookmarks.onCreated.addListener(add);
 //只有title和url改变时会触发
 //chrome.bookmarks.onChanged.addListener(update);
