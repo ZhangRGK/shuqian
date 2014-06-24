@@ -8,7 +8,6 @@ Template.bookMark.helpers({
     encodeURIComponent(this.url)
   ,
   date:->
-    console.log @dateAdded
     d = new Date(@dateAdded)
     return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+(d.getDay()+1)+"日"
 })

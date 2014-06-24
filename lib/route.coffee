@@ -12,6 +12,7 @@ distinctBookmarks = (bookMarks)->
   _.uniq(bookMarks, false, (d)-> return d.url)
 
 getBookMarksByTag = (tag)->
+  Session.set('tag', tag)
   tags = Tags.find({title:tag}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}})
@@ -98,7 +99,7 @@ Router.map(->
 
 Meteor.Router.add('/add', 'POST', ->
   addData = eval(this.request.body)
-  userId = addData.userId;
+  userId = addData.userId
   if BookMarks.find({url: addData.url, userId:userId}).count() == 0
     bookMark = {userId:userId, url:bookmark.url, title:bookmark.title, dateAdded:bookmark.dateAdded, stat:1}
     BookMarks.insert(bookmark)
