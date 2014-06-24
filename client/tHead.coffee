@@ -1,5 +1,5 @@
 Template.tHead.rendered = ->
-  $('.multiselect').multiselect()
+  $('#multi').multiselect()
   Deps.autorun(->
     tags = Tags.find().fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
@@ -7,5 +7,5 @@ Template.tHead.rendered = ->
     for tag in uniqTag
       tag.count = Tags.find({title:tag.title}).count()
       data.push({label:tag.title, value:tag.title})
-    $(".multiselect").multiselect('dataprovider', data)
+    $('#multi').multiselect('dataprovider', data)
   )

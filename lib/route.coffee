@@ -85,6 +85,9 @@ Router.map(->
       tags: getTags(),
       tag: @params._tag
       }
+    onAfterAction: ->
+      for t in getTags()
+        $('#multi').multiselect('deselect', t.title)
   })
 
   this.route('bookMarkDetail', {
