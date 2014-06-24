@@ -2,34 +2,12 @@
 
 {{#if currentUser}}
 <table class="table">
-    <thead>
-        <tr>
-            <th><input type="checkbox"/></th>
-            <th>
-                <select id="multi" class="multiselect" multiple="multiple">
-                    {{#each uniqTag}}
-                    <option value="{{title}}">{{title}}</option>
-                    {{/each}}
-                </select>
-            </th>
-            <th>
-                <button id='editor' type="button" class="btn btn-default ">
-                    <span class="glyphicon glyphicon-cog"></span>
-                </button>
-            </th>
-        </tr>
-    </thead>
+    {{> tHead}}
     <tbody>
     {{#each bookMarks}}
-    {{> bookMark}}
+        {{> bookMark}}
     {{/each}}
     </tbody>
-    <!-- Initialize the plugin: -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.multiselect').multiselect();
-        });
-    </script>
 </table>
 {{else}}
 没有登录,放点什么?
