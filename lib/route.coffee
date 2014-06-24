@@ -22,7 +22,8 @@ getTags = ->
   uniqTag = _.uniq(tags, false, (d)-> return d.title)
   for tag in uniqTag
     tag.count = Tags.find({title:tag.title}).count()
-  Session.setDefault('uniqTag', uniqTag)
+  #Session.setDefault('uniqTag', uniqTag)
+  Session.set('uniqTag', uniqTag)
   #localStorage.setItem("tags", uniqTag)
   return uniqTag
 
