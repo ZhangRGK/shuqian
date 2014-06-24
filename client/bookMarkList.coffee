@@ -12,7 +12,11 @@ toggle = (evt, selected)->
   id = $(evt.target).val()
   bookMark = BookMarks.findOne({_id:id})
   selectTags = Tags.find({url:bookMark.url}).fetch()
-  uniqTag = Session.get('uniqTag')
+
+
+  tags = Tags.find().fetch()
+  uniqTag = _.uniq(tags, false, (d)-> return d.title)
+
 
   for selectTag in selectTags
     for tag in uniqTag

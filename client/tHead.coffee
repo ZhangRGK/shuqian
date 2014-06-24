@@ -8,4 +8,5 @@ Template.tHead.rendered = ->
       tag.count = Tags.find({title:tag.title}).count()
       data.push({label:tag.title, value:tag.title})
     $('#multi').multiselect('dataprovider', data)
+
   )
