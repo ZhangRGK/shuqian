@@ -15,7 +15,9 @@ toggle = (evt, selected)->
   selectTags = Tags.find({url:bookMark.url}).fetch()
   
   uniqTag = Session.get('uniqTag')
-  
+  console.log('1')
+  console.log($('#multi').val())
+  console.log('2')
   for selectTag in selectTags
     for tag in uniqTag
       if selectTag.title == tag.title
@@ -25,7 +27,14 @@ toggle = (evt, selected)->
         else
           $('.multiselect').multiselect('deselect', selectTag.title)
 
+<<<<<<< HEAD
+Meteor.startup(->
+  $('.multiselect').multiselect()
+  console.log('xx')
+)
+=======
   Session.set('uniqTag', uniqTag)
+>>>>>>> FETCH_HEAD
 
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->
