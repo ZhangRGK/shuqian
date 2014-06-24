@@ -11,6 +11,16 @@ removeTag = (bookMarkId, tag)->
   doTag = Tags.findOne(tag)
   Tags.update({_id:doTag._id}, {$set: {stat:0}})
 
+selectMulti = ->
+  $('input[name="bookmark"]:checked').map(->
+    bookMarkId = $(this).val()
+    bookMark = BookMarks.findOne({_id:bookMarkId})
+    selectTags = Tags.find({url:bookMark.url}).fetch()
+
+    for selectTag in selectTags
+      $('#multi').multiselect('select', selectTag.title)
+  )
+
 Template.tHead.rendered = ->
   $('#multi').multiselect({
     onChange: (element, checked)->
@@ -37,5 +47,5 @@ Template.tHead.rendered = ->
       tag.count = Tags.find({title:tag.title}).count()
       data.push({label:tag.title, value:tag.title})
     $('#multi').multiselect('dataprovider', data)
-
+    selectMulti()
   )
