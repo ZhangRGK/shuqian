@@ -3,6 +3,7 @@
     <meta meta charset="utf-8"/>
     <link rel="stylesheet" href="bootstrap.min.css"/>
     <link rel="stylesheet" href="popup.css"/>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 <div id="main">
@@ -11,25 +12,25 @@
     <hr />
     -->
     <div class="group">
-        <button id='openApp' type="button" class="form-control btn btn-sm btn-primary">
-            <i class="glyphicon glyphicon-home"></i>
-            打开书签应用
+        <button id='openApp' type="button" class="form-control btn btn-sm btn-success">
+            <i class="fa fa-bookmark"></i>
+            <span id="user">网站登录</span>
         </button>
     </div>
     <hr/>
     <div class="group">
         <button id='uploadToDefault' type="button" class="form-control btn btn-sm btn-default hidden">
-            <i class="glyphicon glyphicon-plus"></i>
+            <i class="fa fa-plus"></i>
             上传书签到空用户
         </button>
         <button id="uploadToUser" type="button" class="form-control btn btn-sm btn-default">
-            <i class="glyphicon glyphicon-plus"></i>
+            <i class="fa fa-plus"></i>
             上传所有书签
         </button>
     </div>
     <hr />
     <div class="group">
-        <i class="glyphicon glyphicon-trash pull-right" title="清除用户"></i>
+        <i id="signOut" class="fa fa-sign-out pull-right" title="安全退出"></i>
     </div>
 </div>
 <script src="jquery-2.1.1.min.js"></script>

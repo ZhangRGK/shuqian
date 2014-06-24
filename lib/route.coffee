@@ -119,14 +119,12 @@ spread = (node, nodes)->
   nodes.push(temp)
 
 Meteor.Router.add('/upload', 'POST', ->
-  console.log('upload')
-  topNode = eval(this.request.body)
-  userId = topNode.userId
-  log userId
-
+  body = eval(this.request.body)
+  userId = body.userId
 
   nodes = []
-  spread(topNode, nodes)
+  spread(body.data[0], nodes)
+
   for node in nodes
     if node.url
       bookMark = {userId:userId, url:node.url, title:node.title, dateAdded:node.dateAdded, stat:1}
