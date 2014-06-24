@@ -1,14 +1,20 @@
 var userId = localStorage.getItem('userId');
 var serviceUrl = 'http://shuqian.bigzhu.org';
+var userEmail = localStorage.getItem("userEmail");
 serviceUrl = 'http://localhost:3000';
 
+console.log(userEmail);
 var init = function() {
     if (userId == null || userId == "null") {
         $("#uploadToDefault").removeClass("hidden");
         $("#uploadToUser").addClass("hidden");
+        $("#userEmail").addClass("hidden");
+        $("html,body").css("height","170px");
     } else {
         $("#uploadToDefault").addClass("hidden");
         $("#uploadToUser").removeClass("hidden");
+        $("#userEmail").removeClass("hidden");
+        $("html,body").css("height","190px");
     }
 }();
 
