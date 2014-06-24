@@ -1,5 +1,10 @@
 Template.tHead.rendered = ->
-  $('#multi').multiselect()
+  $('#multi').multiselect(
+    onChange:(element, checked) ->
+      console.log(element.val())
+      console.log(checked)
+  )
+
   Deps.autorun(->
     tags = Tags.find().fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)

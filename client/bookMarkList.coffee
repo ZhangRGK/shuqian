@@ -30,7 +30,12 @@ toggle = (evt, selected)->
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->
     $('input[type="checkbox"]').toggle()
+    if($('#multi').prop('disabled'))
+      $('#multi').multiselect('enable')
+    else
+      $('#multi').multiselect('disable')
   ,
+
   'click input[type="checkbox"]':  (evt, template)->
     if $(evt.target).prop('checked')
       toggle(evt, true)
