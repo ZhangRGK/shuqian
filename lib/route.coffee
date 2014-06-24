@@ -22,7 +22,9 @@ getTags = ->
   uniqTag = _.uniq(tags, false, (d)-> return d.title)
   for tag in uniqTag
     tag.count = Tags.find({title:tag.title}).count()
+  #Session.setDefault('uniqTag', uniqTag)
   Session.set('uniqTag', uniqTag)
+  #localStorage.setItem("tags", uniqTag)
   return uniqTag
 
 getTagsById = (id)->
@@ -83,10 +85,13 @@ Router.map(->
       tags: getTags(),
       tag: @params._tag
       }
+<<<<<<< HEAD
     onAfterAction:->
       #if Meteor.isClient
         #if typeof $('#multi').val() != 'null'
           #$('#multi').multiselect('refresh')
+=======
+>>>>>>> FETCH_HEAD
   })
 
   this.route('bookMarkDetail', {

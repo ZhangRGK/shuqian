@@ -23,15 +23,18 @@ toggle = (evt, selected)->
       if selectTag.title == tag.title
         tag.selected = selected
         if(tag.selected)
-          $('#multi').multiselect('select', selectTag.title)
+          $('.multiselect').multiselect('select', selectTag.title)
         else
-          $('#multi').multiselect('deselect', selectTag.title)
-  Session.set('uniqTag', uniqTag)
+          $('.multiselect').multiselect('deselect', selectTag.title)
 
+<<<<<<< HEAD
 Meteor.startup(->
   $('.multiselect').multiselect()
   console.log('xx')
 )
+=======
+  Session.set('uniqTag', uniqTag)
+>>>>>>> FETCH_HEAD
 
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->

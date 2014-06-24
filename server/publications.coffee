@@ -7,8 +7,8 @@ Meteor.publish('bookmarks', ->
 
 Meteor.publish('tags', ->
   if this.userId
-    return Tags.find({userId:this.userId})
-  else
-    return Tags.find({userId:''})
+      return Tags.find({userId:this.userId})
+    else
+      return Tags.find({userId:''})
 )
 
