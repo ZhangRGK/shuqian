@@ -85,6 +85,13 @@ Router.map(->
       tags: getTags(),
       tag: @params._tag
       }
+<<<<<<< HEAD
+    onAfterAction:->
+      #if Meteor.isClient
+        #if typeof $('#multi').val() != 'null'
+          #$('#multi').multiselect('refresh')
+=======
+>>>>>>> FETCH_HEAD
   })
 
   this.route('bookMarkDetail', {
