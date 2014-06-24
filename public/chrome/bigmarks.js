@@ -1,6 +1,6 @@
 var userId = localStorage.getItem('userId');
-var serviceUrl = 'http://shuqian.bigzhu.org';
 var userEmail = localStorage.getItem("userEmail");
+var serviceUrl = 'http://shuqian.bigzhu.org';
 serviceUrl = 'http://localhost:3000';
 
 var init = function() {
@@ -12,7 +12,7 @@ var init = function() {
     } else {
         $("#uploadToDefault").addClass("hidden");
         $("#uploadToUser").removeClass("hidden");
-        $("#userEmail").removeClass("hidden");
+        $("#userEmail").html(userEmail).removeClass("hidden");
         $("html,body").css("height","170px");
     }
 }();
