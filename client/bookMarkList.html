@@ -4,20 +4,19 @@
 <table class="table">
     <thead>
         <tr>
-            <td><input type="checkbox"/></td>
-            <td>
-                <!-- Build your select: -->
+            <th><input type="checkbox"/></th>
+            <th>
                 <select id="multi" class="multiselect" multiple="multiple">
                     {{#each uniqTag}}
                     <option value="{{title}}">{{title}}</option>
                     {{/each}}
                 </select>
-            </td>
-            <td>
+            </th>
+            <th>
                 <button id='editor' type="button" class="btn btn-default ">
                     <span class="glyphicon glyphicon-cog"></span>
                 </button>
-            </td>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -28,9 +27,7 @@
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.multiselect').multiselect({
-                selectedClass:null
-            });
+            $('.multiselect').multiselect();
         });
     </script>
 </table>

@@ -83,6 +83,10 @@ Router.map(->
       tags: getTags(),
       tag: @params._tag
       }
+    onAfterAction:->
+      if Meteor.isClient
+        log 'xx'
+        #$('#multi').multiselect('refresh')
   })
 
   this.route('bookMarkDetail', {
