@@ -5,11 +5,9 @@ Template.bookMarkList.helpers({
   #  else
   #    return
   uniqTag:->
+    #$('.multiselect').multiselect('select', @tag)
     Session.get('uniqTag')
 })
-
-test  = () ->
-  console.log(value)
 
 toggle = (evt, selected)->
   id = $(evt.target).val()
@@ -20,17 +18,16 @@ toggle = (evt, selected)->
   
   for selectTag in selectTags
     for tag in uniqTag
-      #$('#multi').multiselect('deselect', tag);
       if selectTag.title == tag.title
-        console.log selectTag.title
         tag.selected = selected
         if(tag.selected)
-          $('#multi').multiselect('select', selectTag.title);
+          $('#multi').multiselect('select', selectTag.title)
         else
-          $('#multi').multiselect('deselect', selectTag.title);
+          $('#multi').multiselect('deselect', selectTag.title)
   Session.set('uniqTag', uniqTag)
-  console.log Session.get('uniqTag')
 
+Meteor.startup(->
+)
 
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->
@@ -41,8 +38,4 @@ Template.bookMarkList.events = {
       toggle(evt, true)
     else
       toggle(evt, false)
-
-  'onchange #multi':(evt,template) ->
-    console.log('xxx')
-
 }
