@@ -3,18 +3,17 @@ var serviceUrl = 'http://shuqian.bigzhu.org';
 var userEmail = localStorage.getItem("userEmail");
 serviceUrl = 'http://localhost:3000';
 
-console.log(userEmail);
 var init = function() {
     if (userId == null || userId == "null") {
         $("#uploadToDefault").removeClass("hidden");
         $("#uploadToUser").addClass("hidden");
         $("#userEmail").addClass("hidden");
-        $("html,body").css("height","170px");
+        $("html,body").css("height","150px");
     } else {
         $("#uploadToDefault").addClass("hidden");
         $("#uploadToUser").removeClass("hidden");
         $("#userEmail").removeClass("hidden");
-        $("html,body").css("height","190px");
+        $("html,body").css("height","170px");
     }
 }();
 
@@ -33,18 +32,6 @@ $("#uploadToUser").on("click", function() {
     chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
         post(serviceUrl+"/upload",JSON.stringify({"userId":userId,"data":bookmarkTreeNodes}));
     });
-});
-
-$("#signOut").on("click", function() {
-    localStorage.removeItem("userId");
-    userId = null;
-    if (userId == null || userId == "null") {
-        $("#uploadToDefault").removeClass("hidden");
-        $("#uploadToUser").addClass("hidden");
-    } else {
-        $("#uploadToDefault").addClass("hidden");
-        $("#uploadToUser").removeClass("hidden");
-    }
 });
 
 function post(url, data){
