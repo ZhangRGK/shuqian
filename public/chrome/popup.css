@@ -1,0 +1,11 @@
+#main {
+    padding:20px 8px 0px 8px;
+}
+
+hr {
+    margin: 8px 0px;
+}
+
+.hidden {
+    display:none;
+}

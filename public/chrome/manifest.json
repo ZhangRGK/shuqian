@@ -17,14 +17,13 @@
     },
     "permissions": [
         "bookmarks",
-        //"http://shuqian.bigzhu.org/"
+        "tabs",
         "http://localhost:3000/"
     ],
     "content_scripts": [
       {
-        //"matches": ["http://shuqian.bigzhu.org/*"],
-        "matches": ["http://localhost:3000/*"],
-        "js": ["jquery-2.1.1.min.js","content.js"]
+          "matches": ["http://localhost:3000/*"],
+          "js": ["jquery-2.1.1.min.js","content.js"]
       }
     ],
     "homepage_url": "http://shuqian.bigzhu.org"

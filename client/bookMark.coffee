@@ -8,8 +8,10 @@ Template.bookMark.helpers({
     encodeURIComponent(this.url)
   ,
   date:->
+<<<<<<< HEAD
     #console.log @dateAdded
+=======
+>>>>>>> FETCH_HEAD
     d = new Date(@dateAdded)
-    #return d.toDateString()
-    return d.getFullYear()+"年"+d.getMonth()+"月"+d.getDay()+"日"
+    return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+(d.getDay()+1)+"日"
 })

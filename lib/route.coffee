@@ -12,6 +12,7 @@ distinctBookmarks = (bookMarks)->
   _.uniq(bookMarks, false, (d)-> return d.url)
 
 getBookMarksByTag = (tag)->
+  Session.set('tag', tag)
   tags = Tags.find({title:tag}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}})
@@ -102,7 +103,7 @@ Router.map(->
 
 Meteor.Router.add('/add', 'POST', ->
   addData = eval(this.request.body)
-  userId = addData.userId;
+  userId = addData.userId
   if BookMarks.find({url: addData.url, userId:userId}).count() == 0
     bookMark = {userId:userId, url:bookmark.url, title:bookmark.title, dateAdded:bookmark.dateAdded, stat:1}
     BookMarks.insert(bookmark)
@@ -126,12 +127,12 @@ spread = (node, nodes)->
   nodes.push(temp)
 
 Meteor.Router.add('/upload', 'POST', ->
-  console.log('upload')
-  topNode = eval(this.request.body)
-  userId = topNode.userId
+  body = eval(this.request.body)
+  userId = body.userId
 
   nodes = []
-  spread(topNode, nodes)
+  spread(body.data[0], nodes)
+
   for node in nodes
     if node.url
       bookMark = {userId:userId, url:node.url, title:node.title, dateAdded:node.dateAdded, stat:1}
