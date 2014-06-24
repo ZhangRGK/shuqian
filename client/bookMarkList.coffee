@@ -27,15 +27,6 @@ toggle = (evt, selected)->
         else
           $('.multiselect').multiselect('deselect', selectTag.title)
 
-<<<<<<< HEAD
-Meteor.startup(->
-  $('.multiselect').multiselect()
-  console.log('xx')
-)
-=======
-  Session.set('uniqTag', uniqTag)
->>>>>>> FETCH_HEAD
-
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->
     $('input[type="checkbox"]').toggle()
