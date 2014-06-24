@@ -27,7 +27,6 @@ Template.tHead.rendered = ->
           bookMarkId = $(this).val()
           removeTag(bookMarkId, tag)
         )
-
   })
 
   Deps.autorun(->
