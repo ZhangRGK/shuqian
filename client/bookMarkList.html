@@ -1,40 +1,23 @@
 <template name='bookMarkList'>
+
 {{#if currentUser}}
 <table class="table">
     <thead>
         <tr>
-            <th><input type="checkbox"/></th>
-            <th>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default">
-                        {{#if tag}}
-                        {{tag}}
-                        {{else}}
-                        标签
-                        {{/if}}
-                    </button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        {{#each uniqTag}}
-                        <li>
-                        <a href="#">
-                            {{#if selected}}
-                            <span class="glyphicon glyphicon-ok"></span>
-                            {{/if}}
-                            {{title}}</a>
-                        </li>
-                        {{/each}}
-                    </ul>
-                </div>
-            </th>
-            <th>
+            <td><input type="checkbox"/></td>
+            <td>
+                <!-- Build your select: -->
+                <select id="multi" class="multiselect" multiple="multiple">
+                    {{#each uniqTag}}
+                    <option value="{{title}}">{{title}}</option>
+                    {{/each}}
+                </select>
+            </td>
+            <td>
                 <button id='editor' type="button" class="btn btn-default ">
                     <span class="glyphicon glyphicon-cog"></span>
                 </button>
-            </th>
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -42,6 +25,14 @@
     {{> bookMark}}
     {{/each}}
     </tbody>
+    <!-- Initialize the plugin: -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.multiselect').multiselect({
+                selectedClass:null
+            });
+        });
+    </script>
 </table>
 {{else}}
 没有登录,放点什么?
