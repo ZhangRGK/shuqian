@@ -15,7 +15,9 @@ toggle = (evt, selected)->
   selectTags = Tags.find({url:bookMark.url}).fetch()
   
   uniqTag = Session.get('uniqTag')
-  
+  console.log('1')
+  console.log($('#multi').val())
+  console.log('2')
   for selectTag in selectTags
     for tag in uniqTag
       if selectTag.title == tag.title
@@ -27,6 +29,8 @@ toggle = (evt, selected)->
   Session.set('uniqTag', uniqTag)
 
 Meteor.startup(->
+  $('.multiselect').multiselect()
+  console.log('xx')
 )
 
 Template.bookMarkList.events = {

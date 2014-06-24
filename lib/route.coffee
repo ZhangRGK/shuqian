@@ -84,9 +84,9 @@ Router.map(->
       tag: @params._tag
       }
     onAfterAction:->
-      if Meteor.isClient
-        log 'xx'
-        #$('#multi').multiselect('refresh')
+      #if Meteor.isClient
+        #if typeof $('#multi').val() != 'null'
+          #$('#multi').multiselect('refresh')
   })
 
   this.route('bookMarkDetail', {
