@@ -87,7 +87,8 @@ Router.map(->
       }
     onAfterAction: ->
       for t in getTags()
-        $('#multi').multiselect('deselect', t.title)
+        try $('#multi').multiselect('deselect', t.title)
+        catch e then null
   })
 
   this.route('bookMarkDetail', {
