@@ -23,7 +23,7 @@ getTags = ->
   for tag in uniqTag
     tag.count = Tags.find({title:tag.title}).count()
   #Session.setDefault('uniqTag', uniqTag)
-  Session.set('uniqTag', uniqTag)
+  #Session.set('uniqTag', uniqTag)
   #localStorage.setItem("tags", uniqTag)
   return uniqTag
 
@@ -86,11 +86,13 @@ Router.map(->
       tag: @params._tag
       }
     onAfterAction: ->
+      console.log 'onAfterAction'
       $('input[name="selectall"]').prop("checked", false)
       $('input[name="bookmark"]').prop("checked", false)
-      for t in getTags()
-        try $('#multi').multiselect('deselect', t.title)
-        catch e then null
+      $('option', $('#multi')).each((element)->
+        $(this).removeAttr('selected').prop('selected', false)
+			)
+      $('#multi').multiselect('refresh')
   })
 
   this.route('bookMarkDetail', {
