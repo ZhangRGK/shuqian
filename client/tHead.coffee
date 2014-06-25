@@ -35,6 +35,7 @@ Template.tHead.rendered = ->
       console.log(element)
       if(tag == 'addtagvalue')
         $(element).prop('selected':false)
+        $('#myModal').modal('show')
         return
 
       #增加
