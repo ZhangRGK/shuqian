@@ -108,9 +108,10 @@ Router.map(->
 Meteor.Router.add('/add', 'POST', ->
   addData = eval(this.request.body)
   userId = addData.userId
-  if BookMarks.find({url: addData.url, userId:userId}).count() == 0
-    bookMark = {userId:userId, url:bookmark.url, title:bookmark.title, dateAdded:bookmark.dateAdded, stat:1}
-    BookMarks.insert(bookmark)
+  bookmark = addData.data
+  if BookMarks.find({url: bookmark.url, userId:userId}).count() == 0
+    bm = {userId:userId, url:bookmark.url, title:bookmark.title, dateAdded:bookmark.dateAdded, stat:1}
+    BookMarks.insert(bm)
 )
 #Meteor.Router.add('/remove', 'POST', ->
 #  console.log('remove')
@@ -155,9 +156,16 @@ Meteor.Router.add('/upload', 'POST', ->
   return
 )
 
-Meteor.Router.add('/update', 'POST', ->
-  console.log('update')
-  bookmark = eval(this.request.body)
-  log bookmark
-  BookMarks.update({id: bookmark.id}, {$set: {index: bookmark.index, parentId: bookmark.parentId}})
+Meteor.Router.add('/update','POST',->
+  updateData = eval(this.request.body)
+  console.log(updateData)
+  bookmark = updateData.data;
+  BookMarks.update({id: bookmark.id},{$set: {index: bookmark.index, parentId: bookmark.pa}})
 )
+#
+#Meteor.Router.add('/update', 'POST', ->
+#  console.log('update')
+#  bookmark = eval(this.request.body)
+#  log bookmark
+#  BookMarks.update({id: bookmark.id}, {$set: {index: bookmark.index, parentId: bookmark.parentId}})
+#)

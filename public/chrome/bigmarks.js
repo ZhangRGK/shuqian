@@ -17,7 +17,6 @@ var init = function() {
     }
 }();
 
-
 $("#openApp").on("click", function () {
     chrome.tabs.create({"url": serviceUrl});
 });
@@ -45,13 +44,20 @@ function post(url, data){
 
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
+    request.onreadystatechange(function() {
+        if(http.readyState == 4 && http.status == 200) {
+            alert(http.responseText);
+        }
+    })
+
     request.send(data);
 }
 //
 function add(id, bookmarks){
-    console.log("add");
-    bookmarks.userId = userId;
-    post(serviceUrl+"/add", JSON.stringify(bookmarks));
+//    console.log("add");
+//    console.log(bookmarks);
+//    bookmarks.userId = userId;
+    post(serviceUrl+"/add", JSON.stringify({"userId":userId,"data":bookmarks}));
 }
 
 /*
@@ -59,7 +65,7 @@ function remove(id, bookmarks, test){
     console.log("remove");
     console.log(bookmarks);
     console.log(test);
-    node2 = chrome.bookmarks.get(id, function(node){ 
+    node2 = chrome.bookmarks.get(id, function(node){
             console.log(node);
             post(serviceUrl+"/remove", JSON.stringify(bookmarks));
             });
@@ -68,15 +74,20 @@ function remove(id, bookmarks, test){
 */
 
 function update(id, bookmarks){
-    console.log('update');
-    bookmarks.id = id;
+    console.log("update");
+    chrome.browserAction.setBadgeText({"text":"↑"});
     console.log(bookmarks);
-    post(serviceUrl+"/update", JSON.stringify(bookmarks));
+    bookmarks.id = id;
+    post(serviceUrl+"/update", JSON.stringify({"userId":userId,"data":bookmarks}));
 }
 //chrome.bookmarks.onRemoved.addListener(remove);
-chrome.bookmarks.onCreated.addListener(add);
+chrome.bookmarks.onCreated.addListener(function(id,bookmark) {
+    console.log(id,":",bookmark);
+});
 //只有title和url改变时会触发
 //chrome.bookmarks.onChanged.addListener(update);
+
+console.log(chrome.bookmarks.onMoved);
 chrome.bookmarks.onMoved.addListener(update);
 //上载全部标签
 //document.getElementById("upload").onclick = function() {
