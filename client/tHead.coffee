@@ -34,8 +34,7 @@ Template.tHead.rendered = ->
       tag = $(element).val()
       console.log(element)
       if(tag == 'addtagvalue')
-        $('#multi').multiselect(hide: ["slide", { direction: 'up' }, 100])
-        console.log($('input[value="addtagvalue"]'))
+        $(element).prop('selected':false)
         return
 
       #增加

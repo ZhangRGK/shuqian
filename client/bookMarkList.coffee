@@ -39,10 +39,10 @@ Template.bookMarkList.events = {
   'click input[type="checkbox"]':  (evt, template)->
     if $(evt.target).prop('name') == 'selectall'
      if $(evt.target).prop('checked')
-        $('input[name="bookmark"]').prop("checked", true)
+        $('input[name="bookmark"]').prop('checked', true)
         toggle($('input[name="bookmark"]'),true)
       else
-        $('input[name="bookmark"]').prop("checked", false)
+        $('input[name="bookmark"]').prop('checked', false)
         toggle($('input[name="bookmark"]'),false)
     else
       if $(evt.target).prop('checked')
