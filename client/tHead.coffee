@@ -24,6 +24,9 @@ selectMulti = ->
 Template.tHead.rendered = ->
   $('#multi').multiselect({
     #includeSelectAllOption: true,
+    templates: {
+      divider: '<div class="divider" data-role="divider"></div>'
+    },
     numberDisplayed: 8,
     onChange: (element, checked)->
       tag = $(element).val()

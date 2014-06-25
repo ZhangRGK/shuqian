@@ -8,8 +8,8 @@ Template.bookMarkList.helpers({
     Session.get('uniqTag')
 })
 
-toggle = (evt, selected)->
-  id = $(evt.target).val()
+toggle = (tar, selected)->
+  id = tar.val()
   bookMark = BookMarks.findOne({_id:id})
   selectTags = Tags.find({url:bookMark.url}).fetch()
 
@@ -40,11 +40,13 @@ Template.bookMarkList.events = {
     if $(evt.target).prop('name') == 'selectall'
      if $(evt.target).prop('checked')
         $('input[name="bookmark"]').prop("checked", true)
+        toggle($('input[name="bookmark"]'),true)
       else
         $('input[name="bookmark"]').prop("checked", false)
+        toggle($('input[name="bookmark"]'),false)
     else
       if $(evt.target).prop('checked')
-        toggle(evt, true)
+        toggle($(evt.target), true)
       else
-        toggle(evt, false)
+        toggle($(evt.target), false)
 }
