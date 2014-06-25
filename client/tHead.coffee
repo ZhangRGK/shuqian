@@ -23,17 +23,19 @@ selectMulti = ->
 
 Template.tHead.rendered = ->
   $('#multi').multiselect({
+    nonSelectedText: '选择标签',
     #includeSelectAllOption: true,
+    numberDisplayed: 8,
+    selectedClass: null,
     templates: {
       divider: '<div class="divider" data-role="divider"></div>'
     },
-    numberDisplayed: 8,
     onChange: (element, checked)->
       tag = $(element).val()
-
+      console.log(element)
       if(tag == 'addtagvalue')
-        $('input[value="addtagvalue"]').prop("selected", false)
-        console.log('xxx')
+        $('#multi').multiselect(hide: ["slide", { direction: 'up' }, 100])
+        console.log($('input[value="addtagvalue"]'))
         return
 
       #增加
@@ -57,12 +59,15 @@ Template.tHead.rendered = ->
     for tag in uniqTag
       tag.count = Tags.find({title:tag.title}).count()
       data.push({label:tag.title, value:tag.title})
+
     #新建标签option
     data.push({label:'新建标签', value:'addtagvalue'})
 
     $('#multi').multiselect('dataprovider', data)
     $('#multi').append($('<option></option>').attr('value', '123').text('123'))
-    $('input[value="addtagvalue"]').prop('disabled',true)
+
+    #$('input[value="addtagvalue"]').prop('disabled',true)
     $('input[value="addtagvalue"]').hide()
+
     selectMulti()
   )
