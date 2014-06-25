@@ -3,7 +3,6 @@ addTag = (bookMarkId, tag)->
 
   tag = {userId:Meteor.userId(), url:bookMark.url, title:tag}
   findTag = Tags.findOne(tag)
-  console.log findTag
   if findTag
     Tags.update({_id:findTag._id}, {$set: {stat:1}})
   else
@@ -15,14 +14,13 @@ removeTag = (bookMarkId, tag)->
   tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
   doTag = Tags.findOne(tag)
   Tags.update({_id:doTag._id}, {$set: {stat:0}})
-  #Tags.remove({_id:doTag._id})
 
 selectMulti = ->
   #根据选中checkbox,重新选中multiselect
   $('input[name="bookmark"]:checked').map(->
     bookMarkId = $(this).val()
     bookMark = BookMarks.findOne({_id:bookMarkId})
-    selectTags = Tags.find({url:bookMark.url}).fetch()
+    selectTags = Tags.find({url:bookMark.url, stat:1}).fetch()
     for selectTag in selectTags
       $('#multi').multiselect('select', selectTag.title)
   )
@@ -80,6 +78,5 @@ Template.tHead.rendered = ->
     #$('input[value="addtagvalue"]').prop('disabled',true)
     $('input[value="addtagvalue"]').hide()
 
-    console.log tags
     selectMulti()
   )

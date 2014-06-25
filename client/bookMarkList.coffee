@@ -11,10 +11,10 @@ Template.bookMarkList.helpers({
 toggle = (tar, selected)->
   id = tar.val()
   bookMark = BookMarks.findOne({_id:id})
-  selectTags = Tags.find({url:bookMark.url}).fetch()
+  selectTags = Tags.find({url:bookMark.url, stat:1}).fetch()
 
 
-  tags = Tags.find().fetch()
+  tags = Tags.find({stat:1}).fetch()
   uniqTag = _.uniq(tags, false, (d)-> return d.title)
 
 

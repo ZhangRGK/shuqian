@@ -17,10 +17,10 @@ getBookMarksByTag = (tag)->
   BookMarks.find({url: {$in: urls}})
 
 getTags = ->
-  tags = Tags.find().fetch()
+  tags = Tags.find({stat:1}).fetch()
   uniqTag = _.uniq(tags, false, (d)-> return d.title)
   for tag in uniqTag
-    tag.count = Tags.find({title:tag.title}).count()
+    tag.count = Tags.find({title:tag.title, stat:1}).count()
   return uniqTag
 
 getTagsById = (id)->
@@ -59,7 +59,7 @@ Router.map(->
     path: '/',
     data: ->
       {
-      bookMarks: BookMarks.find(),
+      bookMarks: BookMarks.find({stat:1}),
       tags: getTags()
       }
   })
