@@ -1,14 +1,14 @@
 Meteor.publish('bookmarks', ->
   if this.userId
-    return BookMarks.find({userId:this.userId, stat:1})
+    return BookMarks.find({userId:this.userId})
   else
-    return BookMarks.find({userId:'', stat:1})
+    return BookMarks.find({userId:''})
 )
 
 Meteor.publish('tags', ->
   if this.userId
-      return Tags.find({userId:this.userId, stat:1})
+      return Tags.find({userId:this.userId})
     else
-      return Tags.find({userId:'', stat:1})
+      return Tags.find({userId:''})
 )
 

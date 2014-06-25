@@ -1,16 +1,21 @@
 addTag = (bookMarkId, tag)->
   bookMark = BookMarks.findOne({_id:bookMarkId})
 
-  tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
-  if Tags.find(tag).count() == 0
+  tag = {userId:Meteor.userId(), url:bookMark.url, title:tag}
+  findTag = Tags.findOne(tag)
+  console.log findTag
+  if findTag
+    Tags.update({_id:findTag._id}, {$set: {stat:1}})
+  else
+    tag.stat=1
     Tags.insert(tag)
 
 removeTag = (bookMarkId, tag)->
   bookMark = BookMarks.findOne({_id:bookMarkId})
   tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
   doTag = Tags.findOne(tag)
-  #Tags.update({_id:doTag._id}, {$set: {stat:0}})
-  Tags.remove({_id:doTag._id})
+  Tags.update({_id:doTag._id}, {$set: {stat:0}})
+  #Tags.remove({_id:doTag._id})
 
 selectMulti = ->
   #根据选中checkbox,重新选中multiselect
@@ -55,7 +60,7 @@ Template.tHead.rendered = ->
 
   #preTagsList = []
   Deps.autorun(->
-    tags = Tags.find().fetch()
+    tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
     data = []
     for tag in uniqTag
@@ -75,7 +80,6 @@ Template.tHead.rendered = ->
     #$('input[value="addtagvalue"]').prop('disabled',true)
     $('input[value="addtagvalue"]').hide()
 
-    console.log '1'
     console.log tags
     selectMulti()
   )

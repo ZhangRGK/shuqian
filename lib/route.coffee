@@ -5,7 +5,6 @@ Router.configure({
   layoutTemplate: 'main',
   loadingTemplate: 'loading',
   waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
- 
 })
 
 distinctBookmarks = (bookMarks)->
@@ -13,7 +12,7 @@ distinctBookmarks = (bookMarks)->
 
 getBookMarksByTag = (tag)->
   Session.set('tag', tag)
-  tags = Tags.find({title:tag}).fetch()
+  tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}})
 
