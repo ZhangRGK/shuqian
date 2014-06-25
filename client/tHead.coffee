@@ -30,6 +30,12 @@ Template.tHead.rendered = ->
     numberDisplayed: 8,
     onChange: (element, checked)->
       tag = $(element).val()
+
+      if(tag == 'addtagvalue')
+        $('input[value="addtagvalue"]').prop("selected", false)
+        console.log('xxx')
+        return
+
       #增加
       if checked
         $('input[name="bookmark"]:checked').map(->
@@ -51,6 +57,12 @@ Template.tHead.rendered = ->
     for tag in uniqTag
       tag.count = Tags.find({title:tag.title}).count()
       data.push({label:tag.title, value:tag.title})
+    #新建标签option
+    data.push({label:'新建标签', value:'addtagvalue'})
+
     $('#multi').multiselect('dataprovider', data)
+    $('#multi').append($('<option></option>').attr('value', '123').text('123'))
+    $('input[value="addtagvalue"]').prop('disabled',true)
+    $('input[value="addtagvalue"]').hide()
     selectMulti()
   )
