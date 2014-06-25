@@ -7,25 +7,34 @@ chrome.browserAction.setBadgeBackgroundColor({"color":[255,0,0,255]});
 
 ddp.connect().done(function () {
     console.log("connect");
-    chrome.browserAction.setBadgeText({"text":"↓"});
 
-    var bookMarks = ddp.subscribe('bookmarks', [userId]);
-    bookMarks.fail(function (error) {
-        chrome.browserAction.setBadgeText({"text":"∞"});
-        console.log(error);
-    });
+    var bookmarks = ddp.subscribe('ddp_bookmarks',[userId])
+        .fail(function (error) {
+            chrome.browserAction.setBadgeText({"text":"∞"});
+            console.log(error);
+        });
+    var tags = ddp.subscribe('ddp_tags',[userId])
+        .fail(function (error) {
+            chrome.browserAction.setBadgeText({"text":"∞"});
+            console.log(error);
+        });
 
     //单个同步
-    bookMarks.done(function () {
-        ddp.watch('bookmarks', function (changedDoc, message) {
-            console.log(changedDoc)
-            console.log("The bookMarks collection changed. Here's what changed: ", changedDoc, message);
+    tags.done(function () {
+        bookmarks.done(function() {
+            console.log(ddp);
+            console.log(ddp.getCollection("tags"));
+            console.log(ddp.getCollection("ddp_tags"));
+            ddp.watch('Tags', function (changedDoc, message) {
+                chrome.browserAction.setBadgeText({"text":"↓"});
+                console.log("The bookMarks collection changed. Here's what changed: ", changedDoc, message);
 
-            // Was it removed?
-            if (message === "removed") {
-                chrome.bookmarks.remove(changedDoc.id);
-            }
-            chrome.browserAction.setBadgeText({"text":""});
+                // Was it removed?
+                if (message === "removed") {
+                    chrome.bookmarks.remove(changedDoc.id);
+                }
+                chrome.browserAction.setBadgeText({"text":""});
+            });
         });
     });
 });
