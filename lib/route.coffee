@@ -5,7 +5,6 @@ Router.configure({
   layoutTemplate: 'main',
   loadingTemplate: 'loading',
   waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
- 
 })
 
 distinctBookmarks = (bookMarks)->
@@ -13,18 +12,15 @@ distinctBookmarks = (bookMarks)->
 
 getBookMarksByTag = (tag)->
   Session.set('tag', tag)
-  tags = Tags.find({title:tag}).fetch()
+  tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}})
 
 getTags = ->
-  tags = Tags.find().fetch()
+  tags = Tags.find({stat:1}).fetch()
   uniqTag = _.uniq(tags, false, (d)-> return d.title)
   for tag in uniqTag
-    tag.count = Tags.find({title:tag.title}).count()
-  #Session.setDefault('uniqTag', uniqTag)
-  #Session.set('uniqTag', uniqTag)
-  #localStorage.setItem("tags", uniqTag)
+    tag.count = Tags.find({title:tag.title, stat:1}).count()
   return uniqTag
 
 getTagsById = (id)->
@@ -63,7 +59,7 @@ Router.map(->
     path: '/',
     data: ->
       {
-      bookMarks: BookMarks.find(),
+      bookMarks: BookMarks.find({stat:1}),
       tags: getTags()
       }
   })
