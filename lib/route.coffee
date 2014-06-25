@@ -86,6 +86,8 @@ Router.map(->
       tag: @params._tag
       }
     onAfterAction: ->
+      $('input[name="selectall"]').prop("checked", false)
+      $('input[name="bookmark"]').prop("checked", false)
       for t in getTags()
         try $('#multi').multiselect('deselect', t.title)
         catch e then null
