@@ -32,7 +32,6 @@ Template.tHead.rendered = ->
     },
     onChange: (element, checked)->
       tag = $(element).val()
-      console.log(element)
       if(tag == 'addtagvalue')
         $(element).prop('selected':false)
         $('#myModal').modal('show')
