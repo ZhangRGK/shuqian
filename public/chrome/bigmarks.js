@@ -44,11 +44,11 @@ function post(url, data){
 
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-    request.onreadystatechange(function() {
-        if(http.readyState == 4 && http.status == 200) {
-            alert(http.responseText);
-        }
-    })
+//    request.onreadystatechange(function() {
+//        if(http.readyState == 4 && http.status == 200) {
+//            alert(http.responseText);
+//        }
+//    })
 
     request.send(data);
 }
