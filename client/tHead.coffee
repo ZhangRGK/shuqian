@@ -24,6 +24,7 @@ selectMulti = ->
 Template.tHead.rendered = ->
   $('#multi').multiselect({
     #includeSelectAllOption: true,
+    numberDisplayed: 8,
     onChange: (element, checked)->
       tag = $(element).val()
       #增加
