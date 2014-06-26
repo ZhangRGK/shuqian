@@ -102,7 +102,7 @@ Template.tHead.rendered = ->
 		#)
 
     #$('input[value="addtagvalue"]').prop('disabled',true)
-    #$('input[value="addtagvalue"]').hide()
+    $('input[value="addtagvalue"]').hide()
 
     selectMulti()
   )
