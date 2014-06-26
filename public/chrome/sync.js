@@ -1,7 +1,7 @@
 var userId = localStorage.getItem('userId');
 
-//var ddp = new MeteorDdp("ws://shuqian.bigzhu.org/websocket");
-var ddp = new MeteorDdp("ws://localhost:3000/websocket");
+var ddp = new MeteorDdp("ws://shuqian.bigzhu.org/websocket");
+//var ddp = new MeteorDdp("ws://localhost:3000/websocket");
 
 chrome.browserAction.setBadgeBackgroundColor({"color": [255, 0, 0, 255]});
 
