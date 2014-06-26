@@ -22,10 +22,10 @@ updateState = ->
       $('#multi').multiselect('select', selectTag.title)
   )
 
-  if($('#multi').val() == null)
-    $('#multi').multiselect('disable')
-  else
-    $('#multi').multiselect('enable')
+#  if($('#multi').val() == null)
+#    $('#multi').multiselect('disable')
+#  else
+#    $('#multi').multiselect('enable')
 
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->
