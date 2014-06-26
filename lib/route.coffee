@@ -112,6 +112,7 @@ Router.map(->
 
   this.route('bookMarkDetail', {
     path: '/d/:_url',
+    waitOn: -> Meteor.subscribe('all_bookmarks'),
     data: ->
       {
       bookMark: BookMarks.findOne({url: decodeURIComponent(@params._url)}),
