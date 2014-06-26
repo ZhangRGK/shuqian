@@ -2,12 +2,12 @@ addTag = (bookMarkId, tag)->
   bookMark = BookMarks.findOne({_id:bookMarkId})
 
   #查找是否是在其他用户的bookmark上加tag,如果是,copy到自已的上面来.
-  findBookMark = {userId:Meteor.userId(), url:bookMark.url, title:node.title}
-
+  findBookMark = {userId:Meteor.userId(), url:bookMark.url, title:bookMark.title}
+  console.log findBookMark
+  console.log BookMarks.find(findBookMark).count()
   if BookMarks.find(findBookMark).count() == 0
-    bookMark.userId = Meteor.userId()
-    bookMark.dateAdded = Date.parse(new Date())
-    BookMarks.insert(bookMark)
+    insertBookMark = {userId:Meteor.userId(), url:bookMark.url, title:bookMark.title, dateAdded:Date.parse(new Date())}
+    BookMarks.insert(insertBookMark)
 
   tag = {userId:Meteor.userId(), url:bookMark.url, title:tag}
   findTag = Tags.findOne(tag)
