@@ -1,11 +1,12 @@
-#main {
-    padding:20px 8px 0px 8px;
-}
-
+//#main {
+//    padding:8px;
+//}
+//
 hr {
     margin: 8px 0px;
 }
-
-.hidden {
-    display:none;
+.main {
+    min-width:245px;
+    margin:8px;
+    margin-bottom:8px;
 }
