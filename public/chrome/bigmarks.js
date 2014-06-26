@@ -28,18 +28,6 @@ $("#openApp").on("click", function () {
     chrome.tabs.create({"url": serviceUrl});
 });
 
-$("#uploadToDefault").on("click", function() {
-    chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
-        post(serviceUrl+"/upload",JSON.stringify({"userId":null,"data":bookmarkTreeNodes}));
-    });
-});
-
-$("#uploadToUser").on("click", function() {
-    chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
-        post(serviceUrl+"/upload",JSON.stringify({"userId":userId,"data":bookmarkTreeNodes}));
-    });
-});
-
 function post(url, data){
     var method = "POST";
 
@@ -51,14 +39,27 @@ function post(url, data){
 
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-//    request.onreadystatechange(function() {
-//        if(http.readyState == 4 && http.status == 200) {
-//            alert(http.responseText);
-//        }
-//    })
+    //request.onreadystatechange(function(http) {
+    //    if(http.readyState == 4 && http.status == 200) {
+    //        chrome.browserAction.setBadgeText({"text": ""});
+    //    }
+    //});
 
     request.send(data);
 }
+$("#uploadToDefault").on("click", function() {
+    chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
+        chrome.browserAction.setBadgeText({"text": "↑↑"});
+        post(serviceUrl+"/upload",JSON.stringify({"userId":null,"data":bookmarkTreeNodes}));
+    });
+});
+
+$("#uploadToUser").on("click", function() {
+    chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
+        chrome.browserAction.setBadgeText({"text": "↑↑"});
+        post(serviceUrl+"/upload",JSON.stringify({"userId":userId,"data":bookmarkTreeNodes}));
+    });
+});
 //
 function add(id, bookmarks){
 //    console.log("add");

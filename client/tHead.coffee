@@ -36,7 +36,7 @@ Template.tHead.rendered = ->
     nonSelectedText: '选择标签',
     #includeSelectAllOption: true,
     numberDisplayed: 8,
-    selectedClass: null,
+    #selectedClass: null,
     templates: {
       divider: '<div class="divider" data-role="divider"></div>'
     },
@@ -68,17 +68,26 @@ Template.tHead.rendered = ->
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
     data = []
+
+    currentTag = Session.get('tag')
+
     for tag in uniqTag
-      tag.count = Tags.find({title:tag.title}).count()
-      data.push({label:tag.title, value:tag.title})
-      #tagList.push(tag.title)
+      if tag.title != currentTag
+        data.push({label:tag.title, value:tag.title})
 
     #新建标签option
+    data.push({label:currentTag, value:currentTag})
     data.push({label:'新建标签', value:'addtagvalue'})
 
 
     #if _.difference(tagList, preTagsList).length != 0
     $('#multi').multiselect('dataprovider', data)
+    $('option', $('#multi')).each((element)->
+      if $(this).val() == currentTag
+        $(this).addClass('active')
+        console.log currentTag
+        console.log this
+		)
 
     #$('input[value="addtagvalue"]').prop('disabled',true)
     $('input[value="addtagvalue"]').hide()
