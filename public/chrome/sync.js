@@ -9,9 +9,6 @@ ddp.connect().done(function () {
     console.log("connect");
 
     var bookmarksTree = null;
-    chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
-        bookmarksTree = bookmarkTreeNodes;
-    });
 
     var bookmarks = ddp.subscribe('ddp_bookmarks', [userId])
         .fail(function (error) {
@@ -39,11 +36,11 @@ ddp.connect().done(function () {
     var checkCounter = function () {
         console.log(counter);
         if (counter > 0) {
-            chrome.browserAction.setBadgeText({"text": "+"+counter});
+            chrome.browserAction.setBadgeText({"text": "+" + counter});
         } else if (counter == 0) {
             chrome.browserAction.setBadgeText({"text": ""});
         } else {
-            chrome.browserAction.setBadgeText({"text": ""+counter});
+            chrome.browserAction.setBadgeText({"text": "" + counter});
         }
     };
 
@@ -68,44 +65,64 @@ ddp.connect().done(function () {
     };
 
     var findTagByTitle = function (title, tree, callback) {
-        for (var i in tree) {
-            var node = tree[i];
-            if (node.title == title && (node.url == null || node.url == "")) {
-                callback(node);
-            } else if (node.children) {
-                findTagByTitle(title, node.children, callback);
+        var tags = [];
+        var searchTags = function (title, tree) {
+            for (var i in tree) {
+                var node = tree[i];
+                if (node.title == title && (node.url == null || node.url == "")) {
+                    tags.push(node);
+                } else if (node.children) {
+                    searchTags(title, node.children);
+                } else {
+                    tags.push("null");
+                }
+            }
+        };
+
+        searchTags(title, tree);
+        for (var i in tags) {
+            if (tags[i] != "null") {
+                callback(tags[i]);
+                return;
             }
         }
+        callback("null");
     };
+
 
     //单个同步
     tags.done(function () {
         bookmarks.done(function () {
             ddp.watch('tags', function (changedDoc, message) {
-
                 console.log(changedDoc, message);
                 if (message === "removed") {
-                    chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
-                        bookmarksTree = bookmarkTreeNodes;
-                        console.log("getTree", bookmarkTreeNodes);
-
+                    chrome.bookmarks.getTree(function (BookmarkTreeNode) {
+//                        console.log("getTree", bookmarkTreeNodes);
                         counterMinus();
-                        findRemoveBookMark(changedDoc, null, bookmarksTree, function (changedBookmark) {
-                            console.log(changedDoc, changedBookmark);
+                        findRemoveBookMark(changedDoc, null, BookmarkTreeNode, function (changedBookmark) {
+//                            console.log(changedDoc, changedBookmark);
                             chrome.bookmarks.remove(changedBookmark.id);
-                            setTimeout(counterPlus,1000);
+                            setTimeout(counterPlus, 1000);
                         });
                     });
                 } else if (message === "added") {
                     counterPlus();
-                    console.log(ddp.getCollection("bookmarks"));
+//                    console.log(ddp.getCollection("bookmarks"));
                     findAddBookMark(changedDoc, ddp.getCollection("bookmarks"), function (addedBookmark) {
-                        console.log(addedBookmark);
-                        findTagByTitle(changedDoc.title, bookmarksTree, function (tag) {
-                            console.log(tag);
-                            chrome.bookmarks.create({"parentId": tag.id, "title": addedBookmark.title, "url": addedBookmark.url}, function (bookmark) {
-                                console.log(bookmark);
-                                setTimeout(counterMinus,1000);
+//                        console.log(addedBookmark);
+                        chrome.bookmarks.getTree(function (BookmarkTreeNode) {
+                            findTagByTitle(changedDoc.title, BookmarkTreeNode, function (tag) {
+                                if (tag == "null") {
+                                    chrome.bookmarks.create({"parentId": "1", "title": changedDoc.title, "url": null}, function (newTag) {
+                                        chrome.bookmarks.create({"parentId": newTag.id, "title": addedBookmark.title, "url": addedBookmark.url}, function (bookmark) {
+                                            setTimeout(counterMinus, 1000);
+                                        });
+                                    });
+                                } else {
+                                    chrome.bookmarks.create({"parentId": tag.id, "title": addedBookmark.title, "url": addedBookmark.url}, function (bookmark) {
+                                        setTimeout(counterMinus, 1000);
+                                    });
+                                }
                             });
                         });
                     });

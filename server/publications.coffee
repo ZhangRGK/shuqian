@@ -2,7 +2,7 @@ Meteor.publish('bookmarks', ->
   if this.userId
     return BookMarks.find({userId:this.userId})
   else
-    return BookMarks.find({userId:''})
+    return BookMarks.find({userId:null})
 )
 
 Meteor.publish('ddp_bookmarks', (userId)->
