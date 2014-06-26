@@ -8,7 +8,16 @@
 <div id='app' class="container-fluid">
     <div class="page-header">
         <h2><a href='/'>书签</a><small>让你的chrome书签活起来</small></h2>
-        {{>loginButtons}}
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/garbage">回收站</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {{> loginButtons }} <!-- here -->
+                </ul>
+            </div>
+        </div>
     </div>
     {{#if currentUser}}
     <div class="form-group">

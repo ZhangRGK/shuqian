@@ -53,10 +53,16 @@ getBookMarksBySearch = (value)->
   }).fetch()
   return distinctBookmarks(bookMarks)
 
+getGarbageBookMarks=->
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url')
+  BookMarks.find({url: {$nin: urls}})
+
 
 Router.map(->
   this.route('bookMarkList', {
     path: '/',
+    waitOn: -> Meteor.subscribe('all_bookmarks')
     data: ->
       {
       bookMarks: BookMarks.find({stat:1}),
@@ -64,6 +70,14 @@ Router.map(->
       }
   })
 
+  this.route('bookMarkList', {
+    path: '/garbage',
+    data: ->
+      {
+      bookMarks: getGarbageBookMarks(),
+      tags: getTags()
+      }
+  })
   this.route('bookMarkList', {
     path: '/search/:_value',
     data: ->
@@ -87,7 +101,7 @@ Router.map(->
       $('option', $('#multi')).each((element)->
         $(this).removeAttr('selected').prop('selected', false)
 			)
-      $('#multi').multiselect('disable')
+      #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
   })
 
