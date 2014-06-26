@@ -16,7 +16,6 @@ toggle = (tar, selected)->
   tags = Tags.find({stat:1}).fetch()
   uniqTag = _.uniq(tags, false, (d)-> return d.title)
 
-
   for selectTag in selectTags
     for tag in uniqTag
       if selectTag.title == tag.title
@@ -25,6 +24,25 @@ toggle = (tar, selected)->
           $('#multi').multiselect('select', selectTag.title)
         else
           $('#multi').multiselect('deselect', selectTag.title)
+
+  if($('#multi').val() == null)
+    $('#multi').multiselect('disable')
+  else
+    $('#multi').multiselect('enable')
+
+updateState = ->
+  $('option', $('#multi')).each((element)->
+    $(this).removeAttr('selected').prop('selected', false)
+  )
+  $('#multi').multiselect('refresh')
+
+  $('input[name="bookmark"]:checked').map(->
+    bookMarkId = $(this).val()
+    bookMark = BookMarks.findOne({_id:bookMarkId})
+    selectTags = Tags.find({url:bookMark.url, stat:1}).fetch()
+    for selectTag in selectTags
+      $('#multi').multiselect('select', selectTag.title)
+  )
 
   if($('#multi').val() == null)
     $('#multi').multiselect('disable')
@@ -44,13 +62,10 @@ Template.bookMarkList.events = {
     if $(evt.target).prop('name') == 'selectall'
      if $(evt.target).prop('checked')
         $('input[name="bookmark"]').prop('checked', true)
-        toggle($('input[name="bookmark"]'),true)
+        updateState()
       else
         $('input[name="bookmark"]').prop('checked', false)
-        toggle($('input[name="bookmark"]'),false)
+        updateState()
     else
-      if $(evt.target).prop('checked')
-        toggle($(evt.target), true)
-      else
-        toggle($(evt.target), false)
+      updateState()
 }
