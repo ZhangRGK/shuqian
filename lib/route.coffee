@@ -58,6 +58,11 @@ getGarbageBookMarks=->
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls}})
 
+getNotMyBookMarks=->
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url')
+  BookMarks.find({url: {$nin: urls}, stat:1})
+
 
 Router.map(->
   this.route('bookMarkList', {
@@ -65,7 +70,7 @@ Router.map(->
     waitOn: -> Meteor.subscribe('all_bookmarks')
     data: ->
       {
-      bookMarks: BookMarks.find({stat:1}),
+      bookMarks: getNotMyBookMarks(),
       tags: getTags()
       }
   })
