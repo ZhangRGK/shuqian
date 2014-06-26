@@ -58,7 +58,6 @@ Template.tHead.rendered = ->
 
   #preTagsList = []
   Deps.autorun(->
-    console.log('qqq')
 
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)

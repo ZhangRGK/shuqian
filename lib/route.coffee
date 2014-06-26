@@ -82,6 +82,7 @@ Router.map(->
       tag: @params._tag
       }
     onAfterAction: ->
+      console.log('xxx')
       $('input[name="selectall"]').prop("checked", false)
       $('input[name="bookmark"]').prop("checked", false)
       $('option', $('#multi')).each((element)->
