@@ -1,10 +1,8 @@
-addTag = (bookMarkId, tag)->
+@addTag = (bookMarkId, tag)->
   bookMark = BookMarks.findOne({_id:bookMarkId})
 
   #查找是否是在其他用户的bookmark上加tag,如果是,copy到自已的上面来.
   findBookMark = {userId:Meteor.userId(), url:bookMark.url, title:bookMark.title}
-  console.log findBookMark
-  console.log BookMarks.find(findBookMark).count()
   if BookMarks.find(findBookMark).count() == 0
     insertBookMark = {userId:Meteor.userId(), url:bookMark.url, title:bookMark.title, dateAdded:Date.parse(new Date())}
     BookMarks.insert(insertBookMark)
