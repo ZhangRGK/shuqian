@@ -36,7 +36,7 @@ Template.tHead.rendered = ->
     nonSelectedText: '选择标签',
     #includeSelectAllOption: true,
     numberDisplayed: 8,
-    #selectedClass: null,
+    selectedClass: null,
     templates: {
       divider: '<div class="divider" data-role="divider"></div>'
     },
@@ -67,30 +67,42 @@ Template.tHead.rendered = ->
 
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
-    data = []
+    #data = []
 
     currentTag = Session.get('tag')
 
+    #for tag in uniqTag
+    #  if tag.title != currentTag
+    #    data.push({label:tag.title, value:tag.title})
+
+    ##新建标签option
+    #data.push({optgroup:[{label:currentTag, value:currentTag}]})
+    #data.push({label:'新建标签', value:'addtagvalue'})
+
+
+
+
+    optionDOM = ""
     for tag in uniqTag
       if tag.title != currentTag
-        data.push({label:tag.title, value:tag.title})
+        #data.push({label:tag.title, value:tag.title})
+        optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
+    optionDOM += '<optgroup label="当前标签!">' + '<option value="' + currentTag + '">' + currentTag + '</option>' + '<option value="addtagvalue">新建标签</option>' + '</optgroup>'
 
-    #新建标签option
-    data.push({label:currentTag, value:currentTag})
-    data.push({label:'新建标签', value:'addtagvalue'})
+    $('#multi').html(optionDOM)
+    $('#multi').multiselect('rebuild')
 
+    #$('#multi').multiselect('dataprovider', data)
 
-    #if _.difference(tagList, preTagsList).length != 0
-    $('#multi').multiselect('dataprovider', data)
-    $('option', $('#multi')).each((element)->
-      if $(this).val() == currentTag
-        $(this).addClass('active')
-        console.log currentTag
-        console.log this
-		)
+    #$('option', $('#multi')).each((element)->
+    #  if $(this).val() == currentTag
+    #    $(this).addClass('active')
+    #    console.log currentTag
+    #    console.log this
+		#)
 
     #$('input[value="addtagvalue"]').prop('disabled',true)
-    $('input[value="addtagvalue"]').hide()
+    #$('input[value="addtagvalue"]').hide()
 
     selectMulti()
   )
