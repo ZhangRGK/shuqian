@@ -87,6 +87,7 @@ Router.map(->
       $('option', $('#multi')).each((element)->
         $(this).removeAttr('selected').prop('selected', false)
 			)
+      $('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
   })
 

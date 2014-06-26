@@ -58,6 +58,8 @@ Template.tHead.rendered = ->
 
   #preTagsList = []
   Deps.autorun(->
+    console.log('qqq')
+
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
     data = []
@@ -72,8 +74,6 @@ Template.tHead.rendered = ->
 
     #if _.difference(tagList, preTagsList).length != 0
     $('#multi').multiselect('dataprovider', data)
-    #  preTagsList = tagList
-    $('#multi').append($('<option></option>').attr('value', '123').text('123'))
 
     #$('input[value="addtagvalue"]').prop('disabled',true)
     $('input[value="addtagvalue"]').hide()
