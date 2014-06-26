@@ -37,11 +37,13 @@ ddp.connect().done(function () {
     };
 
     var checkCounter = function () {
-        console.log("counter", counter);
-        if (counter == 0) {
+        console.log(counter);
+        if (counter > 0) {
+            chrome.browserAction.setBadgeText({"text": "+"+counter});
+        } else if (counter == 0) {
             chrome.browserAction.setBadgeText({"text": ""});
         } else {
-            chrome.browserAction.setBadgeText({"text": counter + ""});
+            chrome.browserAction.setBadgeText({"text": ""+counter});
         }
     };
 
@@ -91,7 +93,7 @@ ddp.connect().done(function () {
                         findRemoveBookMark(changedDoc, null, bookmarksTree, function (changedBookmark) {
                             console.log(changedDoc, changedBookmark);
                             chrome.bookmarks.remove(changedBookmark.id);
-                            setTimeout(counterPlus,2000);
+                            setTimeout(counterPlus,1000);
                         });
                     });
                 } else if (message === "added") {
@@ -103,7 +105,7 @@ ddp.connect().done(function () {
                             console.log(tag);
                             chrome.bookmarks.create({"parentId": tag.id, "title": addedBookmark.title, "url": addedBookmark.url}, function (bookmark) {
                                 console.log(bookmark);
-                                setTimeout(counterMinus,2000);
+                                setTimeout(counterMinus,1000);
                             });
                         });
                     });
