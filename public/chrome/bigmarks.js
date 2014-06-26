@@ -4,16 +4,23 @@ var serviceUrl = 'http://shuqian.bigzhu.org';
 serviceUrl = 'http://localhost:3000';
 
 var init = function() {
-    if (userId == null || userId == "null") {
-        $("#uploadToDefault").removeClass("hidden");
-        $("#uploadToUser").addClass("hidden");
-        $("#userEmail").addClass("hidden");
-        $("html,body").css("height","150px");
+    if (userId === null || userId === "null") {
+        $("#gravatar_button").hide();
+        $("#uploadToDefault").show();
+        $("#uploadToUser").hide();
+        $("html,body").css("height","40px");
     } else {
-        $("#uploadToDefault").addClass("hidden");
-        $("#uploadToUser").removeClass("hidden");
-        $("#userEmail").html(userEmail).removeClass("hidden");
-        $("html,body").css("height","170px");
+        $("#uploadToDefault").hide();
+        $("#uploadToUser").show();
+
+        url = "http://www.gravatar.com/avatar/"+MD5(userEmail);
+        img = '<img src="'+url+'" class="img-thumbnail" width="48"/>';
+
+        $("#gravatar").attr("src", url);
+        $("#gravatar_button").show();
+        $("#user").text(userEmail);
+
+        $("html,body").css("height","50px");
     }
 }();
 

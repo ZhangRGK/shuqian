@@ -1,33 +1,32 @@
 <html>
 <head>
-    <meta meta charset="utf-8"/>
-    <link rel="stylesheet" href="bootstrap.min.css"/>
-    <link rel="stylesheet" href="popup.css"/>
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<meta meta charset="utf-8"/>
+<link rel="stylesheet" href="bootstrap.min.css"/>
+<link rel="stylesheet" href="popup.css"/>
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="main">
-    <label id="userEmail"></label>
-    <hr />
-    <div class="group">
-        <button id='openApp' type="button" class="form-control btn btn-sm btn-success">
+<div class="main">
+    <div class="btn-group">
+        <button id="gravatar_button" class="btn btn-sm btn-default">
+            <img id="gravatar"  width="48"/>
+        </button>
+        <button id='openApp' class="btn btn-sm btn-success">
             <i class="fa fa-bookmark"></i>
             <span id="user">网站登录</span>
         </button>
-    </div>
-    <hr/>
-    <div class="group">
-        <button id='uploadToDefault' type="button" class="form-control btn btn-sm btn-default hidden">
+        <button id='uploadToDefault' class="btn btn-sm btn-default">
             <i class="fa fa-plus"></i>
             上传书签到空用户
         </button>
-        <button id="uploadToUser" type="button" class="form-control btn btn-sm btn-default">
+        <button id="uploadToUser" class=" btn btn-sm btn-default">
             <i class="fa fa-plus"></i>
             上传所有书签
         </button>
     </div>
 </div>
 <script src="jquery-2.1.1.min.js"></script>
+<script src="md5.js"></script>
 <script src="bootstrap.min.js"></script>
 <script src="bigmarks.js"></script>
 </body>
