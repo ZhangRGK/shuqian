@@ -34,7 +34,6 @@ Template.main.events = {
 }
 
 Meteor.startup(->
-  Meteor.absoluteUrl.defaultOptions.rootUrl = "http://shuqian.bigzhu.org"
   Deps.autorun(->
     if Meteor.user()
       localStorage.setItem("userEmail", Meteor.user().emails[0].address)
