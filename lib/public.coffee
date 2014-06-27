@@ -28,3 +28,14 @@
     console.log BookMarks.update({_id:bookMark._id}, {$set: {count:count}})
     console.log BookMarks.findOne({url:url, userId:userId})
   return
+
+#铺平
+@spread = (node, nodes)->
+  temp = {}
+  for key of node
+    if key != 'children'
+      temp[key] = node[key]
+    else
+      for i in node[key]
+        spread(i, nodes)
+  nodes.push(temp)

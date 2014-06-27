@@ -144,15 +144,6 @@ Meteor.Router.add('/add', 'POST', ->
 #  BookMarks.remove({index: bookmark.index})
 #  console.log(bookmark)
 #)
-spread = (node, nodes)->
-  temp = new node.constructor()
-  for key of node
-    if key != 'children'
-      temp[key] = node[key]
-    else
-      for i in node[key]
-        spread(i, nodes)
-  nodes.push(temp)
 
 Meteor.Router.add('/upload', 'POST', ->
   body = eval(this.request.body)
@@ -160,7 +151,6 @@ Meteor.Router.add('/upload', 'POST', ->
 
   nodes = []
   spread(body.data[0], nodes)
-
   for node in nodes
     if node.url
       bookMark = {userId:userId, url:node.url, title:node.title, dateAdded:node.dateAdded, stat:1}
@@ -176,7 +166,7 @@ Meteor.Router.add('/upload', 'POST', ->
           findTag = {userId:userId, url:node.url, title:parentNode.title}
           if Tags.find(findTag).count() == 0
             Tags.insert(tag)
-  return
+  return '0'
 )
 
 Meteor.Router.add('/update','POST',->
