@@ -10,10 +10,6 @@ chrome.browserAction.setBadgeBackgroundColor({"color": [255, 0, 0, 255]});
 ddp.connect().done(function () {
     console.log("connect");
 
-//    chrome.bookmarks.getTree(function(bmTree) {
-//        console.log(bmTree);
-//    });
-
     var search = function(queryObj,callback) {
         chrome.bookmarks.getTree(function(bmTree) {
             var array = [];
@@ -84,7 +80,7 @@ ddp.connect().done(function () {
             return;
         } else if (taskQueue.queue.length === 0) {
             chrome.browserAction.setBadgeText({"text": ""});
-            setTimeout(taskQueue.start, 5000);
+            setTimeout(taskQueue.start, 1000);                  //空闲时间
         } else {
             taskQueue.runTask();
         }
@@ -215,6 +211,10 @@ ddp.connect().done(function () {
             });
         });
     });
+})
+.fail(function() {
+    //TODO 处理DDP连接失败
+    console.log("connect error");
 });
 
 //取到userId,插入localStorage
