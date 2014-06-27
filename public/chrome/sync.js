@@ -1,12 +1,12 @@
 var userId = localStorage.getItem('userId');
 
-var ddp = new MeteorDdp("ws://shuqian.bigzhu.org/websocket");
+//var ddp = new MeteorDdp("ws://shuqian.bigzhu.org/websocket");
 //var ddp = new MeteorDdp("ws://localhost:3000/websocket");
 
 // 设定徽章背景色
 chrome.browserAction.setBadgeBackgroundColor({"color": [255, 0, 0, 255]});
 
-
+/*
 ddp.connect().done(function () {
     console.log("connect");
 
@@ -216,6 +216,8 @@ ddp.connect().done(function () {
     //TODO 处理DDP连接失败
     console.log("connect error");
 });
+
+*/
 
 //取到userId,插入localStorage
 chrome.runtime.onMessage.addListener(
