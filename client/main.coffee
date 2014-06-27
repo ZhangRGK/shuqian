@@ -36,6 +36,10 @@ Template.main.events = {
 Meteor.startup(->
   Deps.autorun(->
     if Meteor.user()
-      localStorage.setItem("userEmail", Meteor.user().emails[0].address)
+      if Meteor.user().emails[0]
+        name = Meteor.user().emails[0].address
+      else
+        name = Meteor.user().profile.name
+      localStorage.setItem("userEmail", name)
   )
 )
