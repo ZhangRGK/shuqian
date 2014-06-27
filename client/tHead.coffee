@@ -64,14 +64,15 @@ Template.tHead.rendered = ->
     #data.push({label:'新建标签', value:'addtagvalue'})
 
 
-
-
     optionDOM = ""
     for tag in uniqTag
       if tag.title != currentTag
         #data.push({label:tag.title, value:tag.title})
         optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
-    optionDOM +=  '<option data-role="divider"></option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' + '<option value="addtagvalue">新建标签</option>'
+    if(currentTag == 'garbage')
+      optionDOM +=  '<option data-role="divider"></option>' + '<option value="addtagvalue">新建标签</option>'
+    else
+      optionDOM +=  '<option data-role="divider"></option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' + '<option value="addtagvalue">新建标签</option>'
 
     $('#multi').html(optionDOM)
     $('#multi').multiselect('rebuild')
