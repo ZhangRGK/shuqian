@@ -1,20 +1,3 @@
-addTag = (bookMarkId, tag)->
-  bookMark = BookMarks.findOne({_id:bookMarkId})
-
-  #查找是否是在其他用户的bookmark上加tag,如果是,copy到自已的上面来.
-  findBookMark = {userId:Meteor.userId(), url:bookMark.url, title:bookMark.title}
-  if BookMarks.find(findBookMark).count() == 0
-    insertBookMark = {userId:Meteor.userId(), url:bookMark.url, title:bookMark.title, dateAdded:Date.parse(new Date())}
-    BookMarks.insert(insertBookMark)
-
-  tag = {userId:Meteor.userId(), url:bookMark.url, title:tag}
-  findTag = Tags.findOne(tag)
-  if findTag
-    Tags.update({_id:findTag._id}, {$set: {stat:1}})
-  else
-    tag.stat=1
-    Tags.insert(tag)
-
 removeTag = (bookMarkId, tag)->
   bookMark = BookMarks.findOne({_id:bookMarkId})
   tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
@@ -51,7 +34,8 @@ Template.tHead.rendered = ->
       if checked
         $('input[name="bookmark"]:checked').map(->
           bookMarkId = $(this).val()
-          addTag(bookMarkId, tag)
+          bookMark = BookMarks.findOne({_id:bookMarkId})
+          addTag(bookMark, tag)
         )
       #删除
       else
