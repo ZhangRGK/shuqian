@@ -54,6 +54,7 @@ getBookMarksBySearch = (value)->
   return distinctBookmarks(bookMarks)
 
 getGarbageBookMarks=->
+  Session.set('tag', 'garbage')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls}})
