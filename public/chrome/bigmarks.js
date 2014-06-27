@@ -57,7 +57,10 @@ $("#uploadToDefault").on("click", function() {
 $("#uploadToUser").on("click", function() {
     chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
         chrome.browserAction.setBadgeText({"text": "↑↑"});
-        post(serviceUrl+"/upload",JSON.stringify({"userId":userId,"data":bookmarkTreeNodes}));
+        $.post(serviceUrl+"/upload",{"userId":userId,"data":bookmarkTreeNodes}, function(data,status){
+            console.log("data:"+data+" status:"+status);
+            chrome.browserAction.setBadgeText({"text": ""});
+        });
     });
 });
 
@@ -90,13 +93,3 @@ chrome.bookmarks.onCreated.addListener(function(id,bookmark) {
 
 console.log(chrome.bookmarks.onMoved);
 chrome.bookmarks.onMoved.addListener(update);
-//上载全部标签
-//document.getElementById("upload").onclick = function() {
-//    chrome.bookmarks.getTree(
-//            function(bookmarkTreeNodes) {
-//            var  userId = localStorage.getItem('userId');
-//            bookmarkTreeNodes[0].userId=userId;
-//            console.log(bookmarkTreeNodes[0]);
-//            post(serviceUrl+"/upload", JSON.stringify(bookmarkTreeNodes[0]));
-//            });
-//};
