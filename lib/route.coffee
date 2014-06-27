@@ -68,6 +68,9 @@ getMyBookMarks=->
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}, stat:1}, limit : 10)
 
+getDetailBookMark=(url)->
+  #increaseBookMarkCount(url)
+  BookMarks.findOne({url: url})
 
 Router.map(->
   this.route('bookMarkList', {
@@ -119,8 +122,7 @@ Router.map(->
     waitOn: -> Meteor.subscribe('all_bookmarks'),
     data: ->
       {
-      bookMark: BookMarks.findOne({url: decodeURIComponent(@params._url)}),
-      #thisTags: getTagsByURL(@params._url),
+      bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
       thisTags: Tags.find({url: decodeURIComponent(@params._url)}),
       tags: getTags()
       }

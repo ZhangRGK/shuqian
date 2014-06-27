@@ -4,4 +4,6 @@ BookMarks.allow({
     return !! userId
   insert: (userId, id)->
     return !! userId
+  update: (userId, id)->
+    return !! userId
 })

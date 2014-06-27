@@ -34,8 +34,6 @@ Template.bookMarkList.events = {
       $('#multi').multiselect('enable')
     else
       $('#multi').multiselect('disable')
-  ,
-
   'click input[type="checkbox"]':  (evt, template)->
     if $(evt.target).prop('name') == 'selectall'
      if $(evt.target).prop('checked')
@@ -46,4 +44,6 @@ Template.bookMarkList.events = {
         updateState()
     else
       updateState()
+  'click .detail':  (evt, template)->
+    increaseBookMarkCount(this.url)
 }
