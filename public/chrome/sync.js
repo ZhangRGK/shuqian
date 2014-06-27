@@ -3,55 +3,114 @@ var userId = localStorage.getItem('userId');
 var ddp = new MeteorDdp("ws://shuqian.bigzhu.org/websocket");
 //var ddp = new MeteorDdp("ws://localhost:3000/websocket");
 
+// 设定徽章背景色
 chrome.browserAction.setBadgeBackgroundColor({"color": [255, 0, 0, 255]});
+
 
 ddp.connect().done(function () {
     console.log("connect");
 
-    var bookmarksTree = null;
-
     var bookmarks = ddp.subscribe('ddp_bookmarks', [userId])
         .fail(function (error) {
-            chrome.browserAction.setBadgeText({"text": "!"});
+            chrome.browserAction.setBadgeText({"text": "☠"});
             console.log(error);
         });
 
     var tags = ddp.subscribe('ddp_tags', [userId])
         .fail(function (error) {
-            chrome.browserAction.setBadgeText({"text": "!"});
+            chrome.browserAction.setBadgeText({"text": "☠"});
             console.log(error);
         });
 
-    var counter = 0;
-    var counterPlus = function () {
-        counter += 1;
-        checkCounter();
+    var taskQueue = {
+        "running": false,
+        "queue": []
     };
 
-    var counterMinus = function () {
-        counter -= 1;
-        checkCounter();
+    taskQueue.setRunning = function (running) {
+        this.running = running;
     };
 
-    var checkCounter = function () {
-        console.log(counter);
-        if (counter > 0) {
-            chrome.browserAction.setBadgeText({"text": "+" + counter});
-        } else if (counter == 0) {
+    taskQueue.push = function (task) {
+        this.queue.push(task);
+    };
+
+    taskQueue.start = function () {
+        if (taskQueue.running) {
+            return;
+        } else if (taskQueue.queue.length === 0) {
             chrome.browserAction.setBadgeText({"text": ""});
+            setTimeout(taskQueue.start, 5000);
         } else {
-            chrome.browserAction.setBadgeText({"text": "" + counter});
+            taskQueue.runTask();
         }
     };
 
-    var findRemoveBookMark = function (tag, parent, tree, callback) {
-        for (var i in tree) {
-            var node = tree[i];
-            if (node.url == tag.url && parent == tag.title) {
-                callback(node);
-            } else if (node.children) {
-                findRemoveBookMark(tag, node.title, node.children, callback);
-            }
+    taskQueue.start();
+
+    taskQueue.runTask = function () {
+        chrome.browserAction.setBadgeText({"text": "↑↓"});
+        taskQueue.setRunning(true);
+        var task = this.queue.shift();
+
+        if (task.type == "add") {
+            //TODO 判断是否存在 tag
+            //TODO 判断该tag下是否存在书签
+            //TODO 新增书签
+            chrome.bookmarks.search({"title": task.changedDoc.title}, function (tags) {
+                findAddBookMark(task.changedDoc, ddp.getCollection("bookmarks"), function (addedBookMark) {
+                    if (tags != null && tags.length > 0) {
+                        for (var j in tags) {
+                            var tag = tags[j];
+                            chrome.bookmarks.search({"title": addedBookMark.title, "url": addedBookMark.url}, function (bookmarks) {
+                                if (bookmarks != null && bookmarks.length > 0) {
+                                    for (var i in bookmarks) {
+                                        var bm = bookmarks[i];
+                                        if (bm.parentId != tag.id) {
+                                            chrome.bookmarks.create({"parentId": tag.id, "title": addedBookMark.title, "url": addedBookMark.url}, function () {
+                                                taskQueue.setRunning(false);
+                                                taskQueue.start();
+                                            });
+                                            break;
+                                        } else {
+                                            continue;
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        chrome.bookmarks.create({"parentId": "1", "title": task.changedDoc.title, "url": null}, function (newTag) {
+                            chrome.bookmarks.create({"parentId": newTag.id, "title": addedBookMark.title, "url": addedBookMark.url}, function () {
+                                taskQueue.setRunning(false);
+                                taskQueue.start();
+                            });
+                        });
+                    }
+                });
+            });
+        }
+        else if (task.type == "remove") {
+            //TODO 先找到目录，然后找到书签，最后一起删除掉
+            chrome.bookmarks.search({"title": task.changedDoc.title}, function (tags) {
+                if (tags != null && tags.length > 0) {
+                    tags.forEach(function (tag) {
+                        chrome.bookmarks.search({"url": task.changedDoc.url}, function (bookmarks) {
+                            if (bookmarks != null && bookmarks.length > 0) {
+                                bookmarks.forEach(function (bm) {
+                                    if (bm.parentId == tag.id) {
+                                        chrome.bookmarks.remove(bm.id, function () {
+                                            taskQueue.setRunning(false);
+                                            taskQueue.start();
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    });
+                }
+            });
         }
     };
 
@@ -64,74 +123,20 @@ ddp.connect().done(function () {
         }
     };
 
-    var findTagByTitle = function (title, tree, callback) {
-        var tags = [];
-        var searchTags = function (title, tree) {
-            for (var i in tree) {
-                var node = tree[i];
-                if (node.title == title && (node.url == null || node.url == "")) {
-                    tags.push(node);
-                } else if (node.children) {
-                    searchTags(title, node.children);
-                } else {
-                    tags.push("null");
-                }
-            }
-        };
-
-        searchTags(title, tree);
-        for (var i in tags) {
-            if (tags[i] != "null") {
-                callback(tags[i]);
-                return;
-            }
-        }
-        callback("null");
-    };
-
-
-    //单个同步
+//单个同步
     tags.done(function () {
         bookmarks.done(function () {
             ddp.watch('tags', function (changedDoc, message) {
-                console.log(changedDoc, message);
-                if (message === "removed") {
-                    chrome.bookmarks.getTree(function (BookmarkTreeNode) {
-//                        console.log("getTree", bookmarkTreeNodes);
-                        counterMinus();
-                        findRemoveBookMark(changedDoc, null, BookmarkTreeNode, function (changedBookmark) {
-//                            console.log(changedDoc, changedBookmark);
-                            chrome.bookmarks.remove(changedBookmark.id);
-                            setTimeout(counterPlus, 1000);
-                        });
-                    });
-                } else if (message === "added") {
-                    counterPlus();
-//                    console.log(ddp.getCollection("bookmarks"));
-                    findAddBookMark(changedDoc, ddp.getCollection("bookmarks"), function (addedBookmark) {
-//                        console.log(addedBookmark);
-                        chrome.bookmarks.getTree(function (BookmarkTreeNode) {
-                            findTagByTitle(changedDoc.title, BookmarkTreeNode, function (tag) {
-                                if (tag == "null") {
-                                    chrome.bookmarks.create({"parentId": "1", "title": changedDoc.title, "url": null}, function (newTag) {
-                                        chrome.bookmarks.create({"parentId": newTag.id, "title": addedBookmark.title, "url": addedBookmark.url}, function (bookmark) {
-                                            setTimeout(counterMinus, 1000);
-                                        });
-                                    });
-                                } else {
-                                    chrome.bookmarks.create({"parentId": tag.id, "title": addedBookmark.title, "url": addedBookmark.url}, function (bookmark) {
-                                        setTimeout(counterMinus, 1000);
-                                    });
-                                }
-                            });
-                        });
-                    });
+                if (message === "added") {
+                    taskQueue.push({"type": "add", "changedDoc": changedDoc});
+                } else if (message === "removed") {
+                    taskQueue.push({"type": "remove", "changedDoc": changedDoc});
                 }
             });
         });
     });
-
-});
+})
+;
 
 //取到userId,插入localStorage
 chrome.runtime.onMessage.addListener(
