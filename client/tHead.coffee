@@ -72,7 +72,7 @@ Template.tHead.rendered = ->
         #data.push({label:tag.title, value:tag.title})
         optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
     optionDOM +=  '<option data-role="divider"></option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' + '<option value="addtagvalue">新建标签</option>'
-    console.log(optionDOM)
+
     $('#multi').html(optionDOM)
     $('#multi').multiselect('rebuild')
 
