@@ -19,7 +19,6 @@ chrome.bookmarks.onCreated.addListener(function(id,bookmark) {
     bookmark.userId = userId;
     chrome.bookmarks.get(parentId, function(parenBookmarks){
         tag = parenBookmarks[0].title;
-        console.log(parenBookmarks);
         bookmark.tag = tag;
         chrome.browserAction.setBadgeText({"text": "↑↑"});
         $.post(serviceUrl+"/add",bookmark, function(data,status){

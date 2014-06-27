@@ -154,7 +154,7 @@ Meteor.Router.add('/upload', 'POST', ->
   spread(body.data[0], nodes)
   for node in nodes
     if node.url
-      bookMark = {userId:userId, url:node.url, title:node.title, dateAdded:node.dateAdded, stat:1}
+      bookMark = {userId:userId, url:node.url, title:node.title, dateAdded:parseInt(node.dateAdded), stat:1}
       #增加时间和状态不能纳入排重.会导致重复导入
       findBookMark = {userId:userId, url:node.url, title:node.title}
       if BookMarks.find(findBookMark).count() == 0
@@ -163,7 +163,7 @@ Meteor.Router.add('/upload', 'POST', ->
         parentNodes = _.filter(nodes, (d)-> return  d.id==node.parentId )
         for parentNode in parentNodes
           #增加时间和状态不能纳入排重.会导致重复导入
-          tag = {userId:userId, url:node.url, title:parentNode.title, dateAdded:parentNode.dateAdded, stat:1}
+          tag = {userId:userId, url:node.url, title:parentNode.title, dateAdded:parseInt(parentNode.dateAdded), stat:1}
           findTag = {userId:userId, url:node.url, title:parentNode.title}
           if Tags.find(findTag).count() == 0
             Tags.insert(tag)
