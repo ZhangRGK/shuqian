@@ -11,3 +11,7 @@ Template.bookMark.helpers({
     d = new Date(@dateAdded)
     return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+(d.getDay()+1)+"日"
 })
+Template.bookMark.events = {
+  'click a':  (evt, template)->
+    increaseBookMarkCount(this.url)
+}

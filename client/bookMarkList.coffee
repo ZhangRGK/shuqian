@@ -44,6 +44,4 @@ Template.bookMarkList.events = {
         updateState()
     else
       updateState()
-  'click .detail':  (evt, template)->
-    increaseBookMarkCount(this.url)
 }

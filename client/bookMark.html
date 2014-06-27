@@ -2,13 +2,15 @@
 <tr>
     <td><input type="checkbox" name="bookmark" value="{{_id}}"/></td>
     <td>
-        <a class='detail' href="/d/{{encodeURL}}">
-            <a href="{{url}}" target="_bank">
-                <div>
-                    <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
-                    {{title}}
-                </div>
-            </a>
+        <a href="{{url}}" target="_bank">
+            <div>
+                <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
+                {{title}}
+            </div>
+        </a>
+    </td>
+    <td>
+        <a href="/d/{{encodeURL}}" class="glyphicon glyphicon-th-list on-show size">
         </a>
     </td>
     <td>

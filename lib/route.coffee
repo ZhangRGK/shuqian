@@ -137,14 +137,6 @@ Meteor.Router.add('/add', 'POST', ->
   addTag(bookmark, tag, userId)
   return '0'
 )
-#Meteor.Router.add('/remove', 'POST', ->
-#  console.log('remove')
-#  removeData = eval(this.request.body)
-#  console.log(removeData)
-#  userId = removeData.userId
-#  BookMarks.remove({index: bookmark.index})
-#  console.log(bookmark)
-#)
 
 Meteor.Router.add('/upload', 'POST', ->
   body = eval(this.request.body)
