@@ -36,7 +36,7 @@ Template.main.events = {
 Meteor.startup(->
   Deps.autorun(->
     if Meteor.user()
-      if Meteor.user().emails.lenght == 1
+      if Meteor.user().emails.length == 1
         name = Meteor.user().emails[0].address
       else
         name = Meteor.user().profile.name
