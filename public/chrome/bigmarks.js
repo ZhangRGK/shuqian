@@ -1,7 +1,7 @@
 var userId = localStorage.getItem('userId');
 var userEmail = localStorage.getItem("userEmail");
 var serviceUrl = 'http://shuqian.bigzhu.org';
-var serviceUrl = 'http://localhost:3000';
+//var serviceUrl = 'http://localhost:3000';
 
 var init = function() {
     if (userId === null || userId === "null") {
@@ -58,6 +58,7 @@ $("#uploadToUser").on("click", function() {
     chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
         chrome.browserAction.setBadgeText({"text": "↑↑"});
         $.post(serviceUrl+"/upload",{"userId":userId,"data":bookmarkTreeNodes}, function(data,status){
+            console.log("data:"+data+" status:"+status);
             chrome.browserAction.setBadgeText({"text": ""});
         });
     });
