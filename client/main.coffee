@@ -39,7 +39,8 @@ Meteor.startup(->
       if Meteor.user().emails
         name = Meteor.user().emails[0].address
       else
-        name = Meteor.user().profile.name
+        name = Meteor.user().name
+      console.log name
       localStorage.setItem("userEmail", name)
   )
 )
