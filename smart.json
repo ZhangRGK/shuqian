@@ -1,13 +1,12 @@
 {
-    "packages": {
-        "bootstrap-3": {},
-            "iron-router": {},
-            "accounts-ui-bootstrap-3": {},
-            "collection-api": {},
-            "router": {},
-            "spin": {},
-            "bootstrap-multiselect":{
-                "git":"https://github.com/unboundmusic/bootstrap-multiselect-meteor.git"
-            }
+  "packages": {
+    "bootstrap-3": {},
+    "iron-router": {},
+    "collection-api": {},
+    "router": {},
+    "spin": {},
+    "bootstrap-multiselect": {
+      "git": "https://github.com/unboundmusic/bootstrap-multiselect-meteor.git"
     }
+  }
 }

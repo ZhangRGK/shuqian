@@ -9,7 +9,6 @@ coffeescript
 less
 router
 accounts-password
-accounts-ui-bootstrap-3
 iron-router
 underscore
 oauth-encryption
@@ -17,3 +16,4 @@ spin
 bootstrap-multiselect
 accounts-google
 service-configuration
+accounts-ui
