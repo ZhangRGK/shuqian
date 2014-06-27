@@ -14,7 +14,7 @@ getBookMarksByTag = (tag)->
   Session.set('tag', tag)
   tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
-  BookMarks.find({url: {$in: urls}})
+  BookMarks.find({url: {$in: urls}}, {sort:{dateAdded:-1}})
 
 getTags = ->
   tags = Tags.find({stat:1}).fetch()
@@ -165,7 +165,7 @@ Meteor.Router.add('/upload', 'POST', ->
 Meteor.Router.add('/update','POST',->
   updateData = eval(this.request.body)
   console.log(updateData)
-  bookmark = updateData.data;
+  bookmark = updateData.data
   BookMarks.update({id: bookmark.id},{$set: {index: bookmark.index, parentId: bookmark.pa}})
 )
 #
