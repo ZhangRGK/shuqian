@@ -10,10 +10,10 @@ Template.main.events = {
   'click #savetagbtn':(evt, template)->
 
     $('#myModal').modal('hide')
+    tag = $('#tagname').val()
     $('input[name="bookmark"]:checked').map(->
       bookMarkId = $(this).val()
       bookMark = BookMarks.findOne({_id:bookMarkId})
-      tag = $('#tagname').val()
       addTag(bookMark, tag)
       $('#tagname').val('')
     )
@@ -24,10 +24,10 @@ Template.main.events = {
       $('#myModal').modal('hide')
       #禁止界面刷新
       evt.preventDefault()
+      tag = $('#tagname').val()
       $('input[name="bookmark"]:checked').map(->
         bookMarkId = $(this).val()
         bookMark = BookMarks.findOne({_id:bookMarkId})
-        tag = $('#tagname').val()
         addTag(bookMark, tag)
         $('#tagname').val('')
       )
