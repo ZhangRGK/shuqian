@@ -32,7 +32,9 @@ ddp.connect().done(function () {
     };
 
     taskQueue.push = function (task) {
+        console.log("push task:", task);
         this.queue.push(task);
+        console.log("queue now:", task);
     };
 
     taskQueue.start = function () {
@@ -52,22 +54,32 @@ ddp.connect().done(function () {
         chrome.browserAction.setBadgeText({"text": "↑↓"});
         taskQueue.setRunning(true);
         var task = this.queue.shift();
+        console.log("run task:" + task);
 
         if (task.type == "add") {
+            console.log("add:", task.changedDoc);
             //TODO 判断是否存在 tag
             //TODO 判断该tag下是否存在书签
             //TODO 新增书签
             chrome.bookmarks.search({"title": task.changedDoc.title}, function (tags) {
+                console.log("search tags:", tags);
                 findAddBookMark(task.changedDoc, ddp.getCollection("bookmarks"), function (addedBookMark) {
+                    console.log("find bookmark:", addedBookMark);
+                    console.log("tags != null && tags.length > 0", tags != null && tags.length > 0);
                     if (tags != null && tags.length > 0) {
                         for (var j in tags) {
                             var tag = tags[j];
+                            console.log(tag);
+                            console.log(addedBookMark.title, tag, addedBookMark.url);
                             chrome.bookmarks.search({"title": addedBookMark.title, "url": addedBookMark.url}, function (bookmarks) {
+                                console.log("search bookmark:", bookmarks);
                                 if (bookmarks != null && bookmarks.length > 0) {
                                     for (var i in bookmarks) {
                                         var bm = bookmarks[i];
+                                        console.log("bm:", bm, bm.parentId != tag.id);
                                         if (bm.parentId != tag.id) {
                                             chrome.bookmarks.create({"parentId": tag.id, "title": addedBookMark.title, "url": addedBookMark.url}, function () {
+                                                console.log("create success");
                                                 taskQueue.setRunning(false);
                                                 taskQueue.start();
                                             });
@@ -76,13 +88,18 @@ ddp.connect().done(function () {
                                             continue;
                                         }
                                     }
+                                } else {
+                                    taskQueue.setRunning(false);
+                                    taskQueue.start();
                                 }
                             });
                         }
-                    }
-                    else {
-                        chrome.bookmarks.create({"parentId": "1", "title": task.changedDoc.title, "url": null}, function (newTag) {
-                            chrome.bookmarks.create({"parentId": newTag.id, "title": addedBookMark.title, "url": addedBookMark.url}, function () {
+                    } else {
+                        console.log("title:",task.changedDoc.title);
+                        chrome.bookmarks.create({"parentId": "1", "title": task.changedDoc.title}, function (newTag) {
+                            console.log("newTag",newTag,addedBookMark);
+                            chrome.bookmarks.create({"parentId": newTag.id, "title": addedBookMark.title, "url": addedBookMark.url}, function (newbm) {
+                                console.log(newbm);
                                 taskQueue.setRunning(false);
                                 taskQueue.start();
                             });
@@ -90,27 +107,42 @@ ddp.connect().done(function () {
                     }
                 });
             });
-        }
-        else if (task.type == "remove") {
+        } else if (task.type == "remove") {
+            console.log("remove");
             //TODO 先找到目录，然后找到书签，最后一起删除掉
             chrome.bookmarks.search({"title": task.changedDoc.title}, function (tags) {
                 if (tags != null && tags.length > 0) {
                     tags.forEach(function (tag) {
                         chrome.bookmarks.search({"url": task.changedDoc.url}, function (bookmarks) {
+                            console.log("search bookmark:", bookmarks);
                             if (bookmarks != null && bookmarks.length > 0) {
                                 bookmarks.forEach(function (bm) {
+                                    console.log("bm:", bm, bm.parentId != tag.id);
                                     if (bm.parentId == tag.id) {
                                         chrome.bookmarks.remove(bm.id, function () {
+                                            console.log("remove success");
                                             taskQueue.setRunning(false);
                                             taskQueue.start();
                                         });
+                                    } else {
+                                        taskQueue.setRunning(false);
+                                        taskQueue.start();
                                     }
                                 });
+                            } else {
+                                taskQueue.setRunning(false);
+                                taskQueue.start();
                             }
                         });
                     });
+                } else {
+                    taskQueue.setRunning(false);
+                    taskQueue.start();
                 }
             });
+        } else {
+            taskQueue.setRunning(false);
+            taskQueue.start();
         }
     };
 
@@ -145,21 +177,3 @@ chrome.runtime.onMessage.addListener(
         localStorage.setItem("userEmail", request.email);
     }
 );
-
-var serviceUrl = 'http://shuqian.bigzhu.org';
-//serviceUrl = 'http://localhost:3000';
-//浏览器新增bookmarks
-chrome.bookmarks.onCreated.addListener(function(id,bookmark) {
-    parentId = bookmark.parentId;
-    bookmark.userId = userId;
-    chrome.bookmarks.get(parentId, function(parenBookmarks){
-        tag = parenBookmarks[0].title;
-        bookmark.tag = tag;
-    });
-
-    chrome.browserAction.setBadgeText({"text": "↑↑"});
-    $.post(serviceUrl+"/add",bookmark, function(data,status){
-    console.log("Data: " + data + "\nStatus: " + status);
-    chrome.browserAction.setBadgeText({"text": ""});
-  });
-});
