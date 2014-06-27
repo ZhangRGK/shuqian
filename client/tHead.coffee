@@ -46,29 +46,20 @@ Template.tHead.rendered = ->
 
   })
 
-  #preTagsList = []
   Deps.autorun(->
 
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
-    #data = []
 
     currentTag = Session.get('tag')
-
-    #for tag in uniqTag
-    #  if tag.title != currentTag
-    #    data.push({label:tag.title, value:tag.title})
-
-    ##新建标签option
-    #data.push({optgroup:[{label:currentTag, value:currentTag}]})
-    #data.push({label:'新建标签', value:'addtagvalue'})
-
 
     optionDOM = ""
     for tag in uniqTag
       if tag.title != currentTag
         #data.push({label:tag.title, value:tag.title})
         optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
+
+    #回收站就没有当前标签
     if(currentTag == 'garbage')
       optionDOM +=  '<option data-role="divider"></option>' + '<option value="addtagvalue">新建标签</option>'
     else
@@ -76,15 +67,6 @@ Template.tHead.rendered = ->
 
     $('#multi').html(optionDOM)
     $('#multi').multiselect('rebuild')
-
-    #$('#multi').multiselect('dataprovider', data)
-
-    #$('option', $('#multi')).each((element)->
-    #  if $(this).val() == currentTag
-    #    $(this).addClass('active')
-    #    console.log currentTag
-    #    console.log this
-		#)
 
     #$('input[value="addtagvalue"]').prop('disabled',true)
     $('input[value="addtagvalue"]').hide()

@@ -17,16 +17,17 @@ Template.main.events = {
     )
   ,
   'keypress #tagname':(evt, template)->
-    evt.stopPropagation()
+    #evt.stopPropagation()
     if evt.keyCode==13
       $('#myModal').modal('hide')
+      #禁止界面刷新
+      evt.preventDefault()
       $('input[name="bookmark"]:checked').map(->
         bookMarkId = $(this).val()
         bookMark = BookMarks.findOne({_id:bookMarkId})
         tag = $('#tagname').val()
         addTag(bookMark, tag)
       )
-
 }
 
 Meteor.startup(->
