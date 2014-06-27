@@ -18,7 +18,8 @@
     "permissions": [
         "bookmarks",
         "tabs",
-        "http://shuqian.bigzhu.org/"
+        "http://shuqian.bigzhu.org/",
+        "http://localhost:3000/"
     ],
     "content_scripts": [
       {

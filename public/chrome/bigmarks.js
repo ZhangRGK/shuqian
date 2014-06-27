@@ -60,13 +60,6 @@ $("#uploadToUser").on("click", function() {
         post(serviceUrl+"/upload",JSON.stringify({"userId":userId,"data":bookmarkTreeNodes}));
     });
 });
-//
-function add(id, bookmarks){
-//    console.log("add");
-//    console.log(bookmarks);
-//    bookmarks.userId = userId;
-    post(serviceUrl+"/add", JSON.stringify({"userId":userId,"data":bookmarks}));
-}
 
 /*
 function remove(id, bookmarks, test){

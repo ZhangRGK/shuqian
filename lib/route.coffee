@@ -124,12 +124,12 @@ Router.map(->
 )
 
 Meteor.Router.add('/add', 'POST', ->
-  addData = eval(this.request.body)
-  userId = addData.userId
-  bookmark = addData.data
-  if BookMarks.find({url: bookmark.url, userId:userId}).count() == 0
-    bm = {userId:userId, url:bookmark.url, title:bookmark.title, dateAdded:bookmark.dateAdded, stat:1}
-    BookMarks.insert(bm)
+  bookmark = eval(this.request.body)
+  tag = bookmark.tag
+  userId = bookmark.userId
+  console.log bookmark
+  addTag(bookmark, tag, userId)
+  return '0'
 )
 #Meteor.Router.add('/remove', 'POST', ->
 #  console.log('remove')
