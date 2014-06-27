@@ -63,6 +63,11 @@ getNotMyBookMarks=->
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls}, stat:1})
 
+getMyBookMarks=->
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url')
+  BookMarks.find({url: {$in: urls}, stat:1}, limit : 10)
+
 
 Router.map(->
   this.route('bookMarkList', {
@@ -70,7 +75,7 @@ Router.map(->
     waitOn: -> Meteor.subscribe('all_bookmarks')
     data: ->
       {
-      bookMarks: getNotMyBookMarks(),
+      bookMarks: getMyBookMarks(),
       tags: getTags()
       }
   })
@@ -127,7 +132,6 @@ Meteor.Router.add('/add', 'POST', ->
   bookmark = eval(this.request.body)
   tag = bookmark.tag
   userId = bookmark.userId
-  console.log bookmark
   addTag(bookmark, tag, userId)
   return '0'
 )
