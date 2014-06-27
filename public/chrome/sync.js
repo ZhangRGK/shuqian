@@ -10,6 +10,48 @@ chrome.browserAction.setBadgeBackgroundColor({"color": [255, 0, 0, 255]});
 ddp.connect().done(function () {
     console.log("connect");
 
+//    chrome.bookmarks.getTree(function(bmTree) {
+//        console.log(bmTree);
+//    });
+
+    var search = function(queryObj,callback) {
+        chrome.bookmarks.getTree(function(bmTree) {
+            var array = [];
+            var find = function(queryObj,tree) {
+                for(var i in tree) {
+                    var node = tree[i];
+                    if(!!queryObj.title && !!queryObj.url) {
+                        if(queryObj.title == node.title && queryObj.url == node.url) {
+                            console.log("push both:",node);
+                            array.push({"id":node.id,"url":node.url,"title":node.title,"parentId":node.parentId});
+                        }
+                    } else if (!!queryObj.title) {
+                        if(queryObj.title == node.title) {
+                            console.log("push title:",node);
+                            array.push({"id":node.id,"url":node.url,"title":node.title,"parentId":node.parentId});
+                        }
+                    } else if (!!queryObj.url) {
+                        if(queryObj.url == node.url) {
+                            console.log("push url:",node);
+                            array.push({"id":node.id,"url":node.url,"title":node.title,"parentId":node.parentId});
+                        }
+                    }
+                    if(node.children) {
+                        find(queryObj,node.children);
+                    }
+                }
+            };
+            find(queryObj,bmTree);
+            callback(array);
+        });
+    };
+
+
+//
+//    search({"title":"书签栏"},function(array) {
+//        console.log(array);
+//    });
+
     var bookmarks = ddp.subscribe('ddp_bookmarks', [userId])
         .fail(function (error) {
             chrome.browserAction.setBadgeText({"text": "☠"});
@@ -61,7 +103,7 @@ ddp.connect().done(function () {
             //TODO 判断是否存在 tag
             //TODO 判断该tag下是否存在书签
             //TODO 新增书签
-            chrome.bookmarks.search({"title": task.changedDoc.title}, function (tags) {
+            search({"title": task.changedDoc.title}, function (tags) {
                 console.log("search tags:", tags);
                 findAddBookMark(task.changedDoc, ddp.getCollection("bookmarks"), function (addedBookMark) {
                     console.log("find bookmark:", addedBookMark);
@@ -71,7 +113,7 @@ ddp.connect().done(function () {
                             var tag = tags[j];
                             console.log(tag);
                             console.log(addedBookMark.title, tag, addedBookMark.url);
-                            chrome.bookmarks.search({"title": addedBookMark.title, "url": addedBookMark.url}, function (bookmarks) {
+                            search({"title": addedBookMark.title, "url": addedBookMark.url}, function (bookmarks) {
                                 console.log("search bookmark:", bookmarks);
                                 if (bookmarks != null && bookmarks.length > 0) {
                                     for (var i in bookmarks) {
@@ -89,8 +131,11 @@ ddp.connect().done(function () {
                                         }
                                     }
                                 } else {
-                                    taskQueue.setRunning(false);
-                                    taskQueue.start();
+                                    chrome.bookmarks.create({"parentId": tag.id, "title": addedBookMark.title, "url": addedBookMark.url}, function () {
+                                        console.log("create success");
+                                        taskQueue.setRunning(false);
+                                        taskQueue.start();
+                                    });
                                 }
                             });
                         }
@@ -110,10 +155,12 @@ ddp.connect().done(function () {
         } else if (task.type == "remove") {
             console.log("remove");
             //TODO 先找到目录，然后找到书签，最后一起删除掉
-            chrome.bookmarks.search({"title": task.changedDoc.title}, function (tags) {
+            console.log(task.changedDoc.title);
+            search({"title": task.changedDoc.title}, function (tags) {
+                console.log("search:",tags);
                 if (tags != null && tags.length > 0) {
                     tags.forEach(function (tag) {
-                        chrome.bookmarks.search({"url": task.changedDoc.url}, function (bookmarks) {
+                        search({"url": task.changedDoc.url}, function (bookmarks) {
                             console.log("search bookmark:", bookmarks);
                             if (bookmarks != null && bookmarks.length > 0) {
                                 bookmarks.forEach(function (bm) {
@@ -159,6 +206,7 @@ ddp.connect().done(function () {
     tags.done(function () {
         bookmarks.done(function () {
             ddp.watch('tags', function (changedDoc, message) {
+                console.log("watch tags:",changedDoc,message);
                 if (message === "added") {
                     taskQueue.push({"type": "add", "changedDoc": changedDoc});
                 } else if (message === "removed") {
@@ -167,8 +215,7 @@ ddp.connect().done(function () {
             });
         });
     });
-})
-;
+});
 
 //取到userId,插入localStorage
 chrome.runtime.onMessage.addListener(
