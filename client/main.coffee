@@ -11,8 +11,9 @@ Template.main.events = {
     $('#myModal').modal('hide')
     $('input[name="bookmark"]:checked').map(->
       bookMarkId = $(this).val()
+      bookMark = BookMarks.findOne({_id:bookMarkId})
       tag = $('#tagname').val()
-      addTag(bookMarkId, tag)
+      addTag(bookMark, tag)
     )
   ,
   'keypress #tagname':(evt, template)->
@@ -21,8 +22,9 @@ Template.main.events = {
       $('#myModal').modal('hide')
       $('input[name="bookmark"]:checked').map(->
         bookMarkId = $(this).val()
+        bookMark = BookMarks.findOne({_id:bookMarkId})
         tag = $('#tagname').val()
-        addTag(bookMarkId, tag)
+        addTag(bookMark, tag)
       )
 
 }

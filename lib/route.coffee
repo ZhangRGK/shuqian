@@ -63,14 +63,21 @@ getNotMyBookMarks=->
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls}, stat:1})
 
+getMyBookMarks=->
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url')
+  BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 10})
+
+getDetailBookMark=(url)->
+  #increaseBookMarkCount(url)
+  BookMarks.findOne({url: url})
 
 Router.map(->
   this.route('bookMarkList', {
     path: '/',
-    waitOn: -> Meteor.subscribe('all_bookmarks')
     data: ->
       {
-      bookMarks: getNotMyBookMarks(),
+      bookMarks: getMyBookMarks(),
       tags: getTags()
       }
   })
@@ -112,10 +119,10 @@ Router.map(->
 
   this.route('bookMarkDetail', {
     path: '/d/:_url',
+    waitOn: -> Meteor.subscribe('all_bookmarks'),
     data: ->
       {
-      bookMark: BookMarks.findOne({url: decodeURIComponent(@params._url)}),
-      #thisTags: getTagsByURL(@params._url),
+      bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
       thisTags: Tags.find({url: decodeURIComponent(@params._url)}),
       tags: getTags()
       }
@@ -123,12 +130,11 @@ Router.map(->
 )
 
 Meteor.Router.add('/add', 'POST', ->
-  addData = eval(this.request.body)
-  userId = addData.userId
-  bookmark = addData.data
-  if BookMarks.find({url: bookmark.url, userId:userId}).count() == 0
-    bm = {userId:userId, url:bookmark.url, title:bookmark.title, dateAdded:bookmark.dateAdded, stat:1}
-    BookMarks.insert(bm)
+  bookmark = eval(this.request.body)
+  tag = bookmark.tag
+  userId = bookmark.userId
+  addTag(bookmark, tag, userId)
+  return '0'
 )
 #Meteor.Router.add('/remove', 'POST', ->
 #  console.log('remove')
@@ -186,3 +192,5 @@ Meteor.Router.add('/update','POST',->
 #  log bookmark
 #  BookMarks.update({id: bookmark.id}, {$set: {index: bookmark.index, parentId: bookmark.parentId}})
 #)
+
+Router.onBeforeAction('loading');

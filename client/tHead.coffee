@@ -1,20 +1,3 @@
-@addTag = (bookMarkId, tag)->
-  bookMark = BookMarks.findOne({_id:bookMarkId})
-
-  #查找是否是在其他用户的bookmark上加tag,如果是,copy到自已的上面来.
-  findBookMark = {userId:Meteor.userId(), url:bookMark.url, title:bookMark.title}
-  if BookMarks.find(findBookMark).count() == 0
-    insertBookMark = {userId:Meteor.userId(), url:bookMark.url, title:bookMark.title, dateAdded:Date.parse(new Date())}
-    BookMarks.insert(insertBookMark)
-
-  tag = {userId:Meteor.userId(), url:bookMark.url, title:tag}
-  findTag = Tags.findOne(tag)
-  if findTag
-    Tags.update({_id:findTag._id}, {$set: {stat:1}})
-  else
-    tag.stat=1
-    Tags.insert(tag)
-
 removeTag = (bookMarkId, tag)->
   bookMark = BookMarks.findOne({_id:bookMarkId})
   tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
@@ -51,7 +34,8 @@ Template.tHead.rendered = ->
       if checked
         $('input[name="bookmark"]:checked').map(->
           bookMarkId = $(this).val()
-          addTag(bookMarkId, tag)
+          bookMark = BookMarks.findOne({_id:bookMarkId})
+          addTag(bookMark, tag)
         )
       #删除
       else
@@ -67,18 +51,39 @@ Template.tHead.rendered = ->
 
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
-    data = []
+    #data = []
+
+    currentTag = Session.get('tag')
+
+    #for tag in uniqTag
+    #  if tag.title != currentTag
+    #    data.push({label:tag.title, value:tag.title})
+
+    ##新建标签option
+    #data.push({optgroup:[{label:currentTag, value:currentTag}]})
+    #data.push({label:'新建标签', value:'addtagvalue'})
+
+
+
+
+    optionDOM = ""
     for tag in uniqTag
-      tag.count = Tags.find({title:tag.title}).count()
-      data.push({label:tag.title, value:tag.title})
-      #tagList.push(tag.title)
+      if tag.title != currentTag
+        #data.push({label:tag.title, value:tag.title})
+        optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
+    optionDOM +=  '<option data-role="divider"></option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' + '<option value="addtagvalue">新建标签</option>'
 
-    #新建标签option
-    data.push({label:'新建标签', value:'addtagvalue'})
+    $('#multi').html(optionDOM)
+    $('#multi').multiselect('rebuild')
 
+    #$('#multi').multiselect('dataprovider', data)
 
-    #if _.difference(tagList, preTagsList).length != 0
-    $('#multi').multiselect('dataprovider', data)
+    #$('option', $('#multi')).each((element)->
+    #  if $(this).val() == currentTag
+    #    $(this).addClass('active')
+    #    console.log currentTag
+    #    console.log this
+		#)
 
     #$('input[value="addtagvalue"]').prop('disabled',true)
     $('input[value="addtagvalue"]').hide()

@@ -145,3 +145,21 @@ chrome.runtime.onMessage.addListener(
         localStorage.setItem("userEmail", request.email);
     }
 );
+
+var serviceUrl = 'http://shuqian.bigzhu.org';
+//serviceUrl = 'http://localhost:3000';
+//浏览器新增bookmarks
+chrome.bookmarks.onCreated.addListener(function(id,bookmark) {
+    parentId = bookmark.parentId;
+    bookmark.userId = userId;
+    chrome.bookmarks.get(parentId, function(parenBookmarks){
+        tag = parenBookmarks[0].title;
+        bookmark.tag = tag;
+    });
+
+    chrome.browserAction.setBadgeText({"text": "↑↑"});
+    $.post(serviceUrl+"/add",bookmark, function(data,status){
+    console.log("Data: " + data + "\nStatus: " + status);
+    chrome.browserAction.setBadgeText({"text": ""});
+  });
+});
