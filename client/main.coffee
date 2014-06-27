@@ -8,11 +8,13 @@ Template.main.events = {
       Router.go('/search/' + value)
   ,
   'click #savetagbtn':(evt, template)->
+
     $('#myModal').modal('hide')
     $('input[name="bookmark"]:checked').map(->
       bookMarkId = $(this).val()
       bookMark = BookMarks.findOne({_id:bookMarkId})
       tag = $('#tagname').val()
+      $('#tagname').val('')
       addTag(bookMark, tag)
     )
   ,
@@ -26,6 +28,7 @@ Template.main.events = {
         bookMarkId = $(this).val()
         bookMark = BookMarks.findOne({_id:bookMarkId})
         tag = $('#tagname').val()
+        $('#tagname').val('')
         addTag(bookMark, tag)
       )
 }
