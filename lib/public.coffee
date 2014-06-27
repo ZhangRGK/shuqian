@@ -5,7 +5,7 @@
   #查找是否是在其他用户的bookmark上加tag,如果是,copy到自已的上面来.
   findBookMark = {userId:userId, url:bookMark.url, title:bookMark.title}
   if BookMarks.find(findBookMark).count() == 0
-    insertBookMark = {userId:userId, url:bookMark.url, title:bookMark.title, dateAdded:Date.parse(new Date())}
+    insertBookMark = {userId:userId, url:bookMark.url, title:bookMark.title, dateAdded:Date.parse(new Date()), stat:1}
     BookMarks.insert(insertBookMark)
 
   tag = {userId:userId, url:bookMark.url, title:tag}
