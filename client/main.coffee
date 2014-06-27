@@ -14,8 +14,8 @@ Template.main.events = {
       bookMarkId = $(this).val()
       bookMark = BookMarks.findOne({_id:bookMarkId})
       tag = $('#tagname').val()
-      $('#tagname').val('')
       addTag(bookMark, tag)
+      $('#tagname').val('')
     )
   ,
   'keypress #tagname':(evt, template)->
@@ -28,8 +28,8 @@ Template.main.events = {
         bookMarkId = $(this).val()
         bookMark = BookMarks.findOne({_id:bookMarkId})
         tag = $('#tagname').val()
-        $('#tagname').val('')
         addTag(bookMark, tag)
+        $('#tagname').val('')
       )
 }
 
@@ -40,7 +40,6 @@ Meteor.startup(->
         name = Meteor.user().emails[0].address
       else
         name = Meteor.user().profile.name
-      console.log name
       localStorage.setItem("userEmail", name)
   )
 )
