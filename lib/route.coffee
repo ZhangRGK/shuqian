@@ -72,7 +72,6 @@ getMyBookMarks=->
 Router.map(->
   this.route('bookMarkList', {
     path: '/',
-    waitOn: -> Meteor.subscribe('all_bookmarks')
     data: ->
       {
       bookMarks: getMyBookMarks(),
