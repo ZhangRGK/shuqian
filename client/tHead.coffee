@@ -48,7 +48,7 @@ Template.tHead.rendered = ->
 
   Deps.autorun(->
 
-    $('#multi').hide()
+    #$('#multi').hide()
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
 
@@ -69,7 +69,7 @@ Template.tHead.rendered = ->
     $('#multi').html(optionDOM)
     $('#multi').multiselect('rebuild')
 
-    $('#multith').hide()
+    #$('#multith').hide()
 
     #$('input[value="addtagvalue"]').prop('disabled',true)
     $('input[value="addtagvalue"]').hide()
