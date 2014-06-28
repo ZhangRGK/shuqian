@@ -23,9 +23,9 @@ updateState = ->
   )
 
   if $('input[name="bookmark"]:checked').val()
-    $('#multith').show()
+    $('#multith').css({visibility:"visible"})
   else
-    $('#multith').hide()
+    $('#multith').css({visibility:"hidden"})
 
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->
