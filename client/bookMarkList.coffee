@@ -22,12 +22,11 @@ updateState = ->
       $('#multi').multiselect('select', selectTag.title)
   )
 
+  console.log $('input[name="bookmark"]:checked')
   if($('#multi').val() == null)
-    #$('#multi').multiselect('disable')
     $('#multith').hide()
   else
     $('#multith').show()
-#$('#multi').multiselect('enable')
 
 Template.bookMarkList.events = {
   'click #editor':  (evt, template)->
@@ -40,10 +39,7 @@ Template.bookMarkList.events = {
     if $(evt.target).prop('name') == 'selectall'
      if $(evt.target).prop('checked')
         $('input[name="bookmark"]').prop('checked', true)
-        updateState()
       else
         $('input[name="bookmark"]').prop('checked', false)
-        updateState()
-    else
-      updateState()
+    updateState()
 }
