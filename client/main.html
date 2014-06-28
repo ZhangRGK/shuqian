@@ -4,24 +4,29 @@
 <title>书签</title>
 </head>
 <body>
-
-<div id='app' class="container-fluid">
-    <div class="page-header">
-        <h2><a href='/'>书签</a><small>让你的chrome书签活起来</small></h2>
-        <div class="navbar navbar-default" role="navigation">
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/">常用</a></li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li><a href="/garbage">回收站</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {{> loginButtons }} <!-- here -->
-                </ul>
-            </div>
+<div class="page-header">
+    <h2><a href="/">BigMarks</a><small>让你的chrome书签活起来</small></h2>
+</div>
+<div class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href='/'>常用</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-inverse-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">探索</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="/garbage">回收站</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {{> loginButtons }} <!-- here -->
+            </ul>
         </div>
     </div>
+</div>
+
+<div id='app' class="container-fluid">
     {{#if currentUser}}
     <div class="form-group">
         <input id='search' type="text" class="form-control" placeholder="Search">
