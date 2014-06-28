@@ -11,25 +11,24 @@ Template.main.events = {
 
     $('#myModal').modal('hide')
     tag = $('#tagname').val()
+    $('#tagname').val('')
     $('input[name="bookmark"]:checked').map(->
       bookMarkId = $(this).val()
       bookMark = BookMarks.findOne({_id:bookMarkId})
       addTag(bookMark, tag)
-      $('#tagname').val('')
     )
   ,
   'keypress #tagname':(evt, template)->
-    #evt.stopPropagation()
     if evt.keyCode==13
       $('#myModal').modal('hide')
       #禁止界面刷新
       evt.preventDefault()
       tag = $('#tagname').val()
+      $('#tagname').val('')
       $('input[name="bookmark"]:checked').map(->
         bookMarkId = $(this).val()
         bookMark = BookMarks.findOne({_id:bookMarkId})
         addTag(bookMark, tag)
-        $('#tagname').val('')
       )
 }
 
