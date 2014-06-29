@@ -67,7 +67,7 @@ getNotMyBookMarks=->
 getMyBookMarks=->
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
-  BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 10})
+  BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 
 getDetailBookMark=(url)->
   #increaseBookMarkCount(url)
