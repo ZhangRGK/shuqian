@@ -26,8 +26,6 @@ Meteor.publish('all_bookmarks', ->
 )
 
 Meteor.publish('not_mine_bookmarks', ->
-  tags = Tags.find({userId:this.userId}).fetch()
-  urls = _.pluck(tags, 'url')
-  return BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 14})
+  return BookMarks.find({userId: {$ne: this.userId}, stat:1}, {sort:{count:-1}, limit : 14})
 )
 
