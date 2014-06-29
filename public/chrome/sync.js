@@ -14,13 +14,15 @@ var serviceUrl = 'http://shuqian.bigzhu.org';
 //浏览器新增bookmarks
 chrome.bookmarks.onCreated.addListener(function(id,bookmark) {
     parentId = bookmark.parentId;
+    if (bookmark.url === undefined){
+        return;
+    }
 
     bookmark.userId = localStorage.getItem('userId');
     chrome.bookmarks.get(parentId, function(parenBookmarks){
         tag = parenBookmarks[0].title;
         bookmark.tag = tag;
         chrome.browserAction.setBadgeText({"text": "↑↑"});
-        console.log(bookmark);
         $.post(serviceUrl+"/add",bookmark, function(data,status){
             chrome.browserAction.setBadgeText({"text": ""});
         });
