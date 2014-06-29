@@ -21,7 +21,7 @@ getTags = ->
   uniqTag = _.uniq(tags, false, (d)-> return d.title)
   for tag in uniqTag
     tag.count = Tags.find({title:tag.title, stat:1}).count()
-  return uniqTag
+  return _.sortBy(uniqTag, (d)->  return d.title )
 
 getTagsById = (id)->
   #找到这个id的bookMark
