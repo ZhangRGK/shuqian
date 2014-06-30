@@ -47,7 +47,6 @@ Template.tHead.rendered = ->
   })
 
   Deps.autorun(->
-
     #$('#multi').hide()
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
@@ -61,10 +60,13 @@ Template.tHead.rendered = ->
         optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
 
     #回收站就没有当前标签
-    if(currentTag == 'garbage')
+    if(currentTag == 'garbage' || currentTag == 'blacklist')
       optionDOM +=  '<option data-role="divider"></option>' + '<option value="addtagvalue">新建标签</option>'
+      #显示bookMark.html中的删除按钮
+
     else
       optionDOM +=  '<option data-role="divider"></option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' + '<option value="addtagvalue">新建标签</option>'
+      #隐藏bookMark.html中的删除按钮
 
     $('#multi').html(optionDOM)
     $('#multi').multiselect('rebuild')

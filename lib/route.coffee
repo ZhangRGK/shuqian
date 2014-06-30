@@ -53,11 +53,19 @@ getBookMarksBySearch = (value)->
   }).fetch()
   return distinctBookmarks(bookMarks)
 
+#回收站
 getGarbageBookMarks=->
   Session.set('tag', 'garbage')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
-  BookMarks.find({url: {$nin: urls}})
+  BookMarks.find({url: {$nin: urls},stat:1})
+
+#黑名单
+getBlacklistBookMarks=->
+  Session.set('tag', 'blacklist')
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url')
+  BookMarks.find({url: {$nin: urls},stat:2})
 
 getNotMyBookMarks=->
   tags = Tags.find({stat:1}).fetch()
@@ -100,6 +108,14 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
+    path: '/blacklist',
+    data: ->
+      {
+      bookMarks: getBlacklistBookMarks(),
+      tags: getTags()
+      }
+  })
+  this.route('bookMarkList', {
     path: '/search/:_value',
     data: ->
       {
@@ -107,7 +123,6 @@ Router.map(->
       tags: getTags()
       }
   })
-
   this.route('bookMarkList', {
     path: '/tag/:_tag',
     data: ->
@@ -124,6 +139,7 @@ Router.map(->
 			)
       #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
+
   })
 
   this.route('bookMarkDetail', {
