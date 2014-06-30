@@ -20,7 +20,7 @@ Template.bookMark.helpers({
 Template.bookMark.events = {
   'click #tagUrl':  (evt, template)->
     increaseBookMarkCount(this.url)
-  'click #tagDel': (evt, template)->
+  'click td a': (evt, template)->
     currentType = Session.get('shuqianType')
     if currentType == "garbage"
       BookMarks.update({_id:this._id}, {$set: {stat:2}})
@@ -30,7 +30,6 @@ Template.bookMark.events = {
       bm.url = this.url
       bm.title = this.title
       bm.stat = 2
-      console.log(Template.bookMarkList.bookMarks(),this)
-#      Template.bookMarkList.helpers.bookMarks.remove
       BookMarks.insert(bm)
+    return
 }

@@ -1,16 +1,10 @@
 Template.bookMarkList.helpers({
-#otherTags: ->
-#  if @tags
-#    _.reject(@tags, (d)=> d.title == @tag)
-#  else
-#    return
   uniqTag: ->
     Session.get('uniqTag')
   bookMarks: ->
     if Session.get("shuqianType")=="explore"
-      array = _.uniq(this.bookMarks, false, (d)->
-        return d.url
-      )
+      bookMarks = this.bookMarks.fetch()
+      array = _.uniq(bookMarks, false, (d)-> return d.url)
       records = []
       i = 0
       while i < 14
@@ -18,12 +12,7 @@ Template.bookMarkList.helpers({
         i++
       return records
     else if Session.get("shuqianType")=="blacklist"
-      records = _.uniq(this.bookMarks, false, (d)->
-        return d.url
-      )
-      console.log(this.bookMarks.title)
-      console.log(records.title)
-      return records
+        return _.uniq(this.bookMarks, false, (d)-> return d.url)
     else
       return this.bookMarks
 })

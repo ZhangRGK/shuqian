@@ -75,10 +75,10 @@ getNotMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'explore')
   tags = Tags.find().fetch()
-  bms = _.pluck(BookMarks.find({"userId":Meteor.userId,"stat":2}).fetch(),"url")
+  bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
+
   urls = _.pluck(tags, 'url').concat(bms)
-  console.log urls
-  BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 100}).fetch()
+  BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 100})
 
 getMyBookMarks=->
   Session.set('shuqianTag', null)
@@ -106,8 +106,7 @@ Router.map(->
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
-      tags: getTags(),
-      showDel:true
+      tags: getTags()
       }
   })
   this.route('bookMarkList', {
