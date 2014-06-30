@@ -70,10 +70,14 @@ getBlacklistBookMarks=->
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls},stat:2})
 
+#探索
 getNotMyBookMarks=->
+  Session.set('shuqianTag', null)
+  Session.set('shuqianType', 'explore')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 14})
+
 
 getMyBookMarks=->
   tags = Tags.find({stat:1}).fetch()
