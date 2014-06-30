@@ -28,6 +28,9 @@ Template.tHead.rendered = ->
       if(tag == 'addtagvalue')
         $(element).prop('selected':false)
         $('#myModal').modal('show')
+        setTimeout(->
+          $('#tagname')[0].focus()
+        ,200)
         return
 
       #增加
