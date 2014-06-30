@@ -1,7 +1,6 @@
 var userId = localStorage.getItem('userId');
 var userEmail = localStorage.getItem("userEmail");
-var serviceUrl = 'http://localhost:3000';
-//var serviceUrl = 'http://shuqian.bigzhu.org';
+var serviceUrl = 'http://shuqian.bigzhu.org';
 
 var init = function() {
     if (userId === null || userId === "null") {
