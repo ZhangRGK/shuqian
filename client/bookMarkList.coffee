@@ -7,7 +7,9 @@ Template.bookMarkList.helpers({
   uniqTag: ->
     Session.get('uniqTag')
   bookMarks: ->
-    array = _.uniq(this.bookMarks, false)
+    array = _.uniq(this.bookMarks, false, (d)->
+      return d.url
+    )
     records = []
     i = 0
     while i < 14
