@@ -77,6 +77,7 @@ getNotMyBookMarks=->
   tags = Tags.find().fetch()
   bms = _.pluck(BookMarks.find({"userId":Meteor.userId,"stat":2}).fetch(),"url")
   urls = _.pluck(tags, 'url').concat(bms)
+  console.log urls
   BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 100}).fetch()
 
 getMyBookMarks=->
