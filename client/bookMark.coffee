@@ -10,7 +10,7 @@ Template.bookMark.helpers({
   flag:->
     currentType = Session.get('shuqianType')
     f = false
-    if(currentType == 'garbage')
+    if(currentType == 'garbage' || currentType == 'explore')
       f = true
     return f
   date:->
