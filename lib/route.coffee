@@ -92,7 +92,7 @@ Router.map(->
   })
   this.route('bookMarkList', {
     path: '/explore',
-    waitOn: -> [Meteor.subscribe('not_mine_bookmarks'), Meteor.subscribe('tags')]
+    waitOn: -> [Meteor.subscribe('all_bookmarks'), Meteor.subscribe('tags')]
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
@@ -200,4 +200,4 @@ Meteor.Router.add('/update','POST',->
 #  BookMarks.update({id: bookmark.id}, {$set: {index: bookmark.index, parentId: bookmark.parentId}})
 #)
 
-Router.onBeforeAction('loading');
+Router.onBeforeAction('loading')
