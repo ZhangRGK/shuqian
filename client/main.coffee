@@ -36,12 +36,12 @@ Meteor.startup(->
   Deps.autorun(->
     user = Meteor.user()
     if user
-      console.log user
       if user.emails
         email = user.emails[0].address
       else
         Meteor.subscribe("user")
         user = Meteor.users.findOne()
+        console.log user
         email = user.email
       localStorage.setItem("userEmail", email)
   )
