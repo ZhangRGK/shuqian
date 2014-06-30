@@ -84,7 +84,7 @@ Router.map(->
   })
   this.route('bookMarkList', {
     path: '/explore',
-    waitOn: -> [Meteor.subscribe('not_mine_bookmarks'), Meteor.subscribe('tags')]
+    waitOn: -> [Meteor.subscribe('all_bookmarks'), Meteor.subscribe('tags')]
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
