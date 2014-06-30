@@ -1,9 +1,18 @@
 @Tags = new Meteor.Collection('tags')
 @Tags.allow({
-  insert: (userId, doc)->
-    return !! userId
-  update: (userId, doc)->
-    return !! userId
-  remove: (userId, doc)->
-    return !! userId
+  insert: (userId, data)->
+    if userId
+      return userId == data.userId
+    else
+      return false
+  update: (userId, data)->
+    if userId
+      return userId == data.userId
+    else
+      return false
+  remove: (userId, data)->
+    if userId
+      return userId == data.userId
+    else
+      return false
 })
