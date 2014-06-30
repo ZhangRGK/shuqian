@@ -11,7 +11,8 @@ distinctBookmarks = (bookMarks)->
   _.uniq(bookMarks, false, (d)-> return d.url)
 
 getBookMarksByTag = (tag)->
-  Session.set('tag', tag)
+  Session.set('shuqianTag', tag)
+  Session.set('shuqianType', null)
   tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}}, {sort:{dateAdded:-1}})
@@ -55,14 +56,16 @@ getBookMarksBySearch = (value)->
 
 #回收站
 getGarbageBookMarks=->
-  Session.set('tag', 'garbage')
+  Session.set('shuqianTag', null)
+  Session.set('shuqianType', 'garbage')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls},stat:1})
 
 #黑名单
 getBlacklistBookMarks=->
-  Session.set('tag', 'blacklist')
+  Session.set('shuqianTag', null)
+  Session.set('shuqianType', 'blacklist')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls},stat:2})
@@ -96,7 +99,8 @@ Router.map(->
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
-      tags: getTags()
+      tags: getTags(),
+      showDel:true
       }
   })
   this.route('bookMarkList', {

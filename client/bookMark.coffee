@@ -8,24 +8,19 @@ Template.bookMark.helpers({
     encodeURIComponent(this.url)
   ,
   flag:->
-    console.log this
-    tags = Tags.find({url:this.url, stat:1}).fetch()
-    console.log tags.length
+    currentType = Session.get('shuqianType')
     f = false
-    if(tags.length == 0)
+    if(currentType == 'garbage')
       f = true
     return f
   date:->
-    console.log 'xxx'
     d = new Date(@dateAdded)
     return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+(d.getDay()+1)+"日"
 })
 Template.bookMark.events = {
   'click #tagUrl':  (evt, template)->
     increaseBookMarkCount(this.url)
-    console.log 'x'
   'click #tagDel': (evt, template)->
-    console.log this
     BookMarks.update({_id:this._id}, {$set: {stat:2}})
 
 }
