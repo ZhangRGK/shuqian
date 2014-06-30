@@ -30,6 +30,7 @@ Template.bookMark.events = {
       bm.url = this.url
       bm.title = this.title
       bm.stat = 2
+      console.log(bm.title)
       console.log(bm)
       BookMarks.insert(bm)
 }
