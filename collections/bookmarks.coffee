@@ -1,9 +1,18 @@
 @BookMarks = new Meteor.Collection('bookmarks')
 BookMarks.allow({
-  remove: (userId, id)->
-    return !! userId
-  insert: (userId, id)->
-    return !! userId
-  update: (userId, id)->
-    return !! userId
+  remove: (userId, data)->
+    if userId
+      return userId == data.userId
+    else
+      return false
+  insert: (userId, data)->
+    if userId
+      return userId == data.userId
+    else
+      return false
+  update: (userId, data)->
+    if userId
+      return userId == data.userId
+    else
+      return false
 })
