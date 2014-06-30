@@ -36,7 +36,7 @@ Meteor.startup(->
   Deps.autorun(->
     user = Meteor.user()
     if user
-    console.log user
+      console.log user
       if user.emails
         email = user.emails[0].address
       else
