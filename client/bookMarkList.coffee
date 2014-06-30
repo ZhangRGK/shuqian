@@ -7,15 +7,25 @@ Template.bookMarkList.helpers({
   uniqTag: ->
     Session.get('uniqTag')
   bookMarks: ->
-    array = _.uniq(this.bookMarks, false, (d)->
-      return d.url
-    )
-    records = []
-    i = 0
-    while i < 14
-      records = records.concat(array.splice(Math.round(Math.random() * array.length), 1))
-      i++;
-    return records;
+    if Session.get("shuqianType")=="explore"
+      array = _.uniq(this.bookMarks, false, (d)->
+        return d.url
+      )
+      records = []
+      i = 0
+      while i < 14
+        records = records.concat(array.splice(Math.round(Math.random() * array.length), 1))
+        i++
+      return records
+    else if Session.get("shuqianType")=="blacklist"
+      records = _.uniq(this.bookMarks, false, (d)->
+        return d.url
+      )
+      console.log(this.bookMarks)
+      console.log(records)
+      return records
+    else
+      return this.bookMarks
 })
 
 updateState = ->

@@ -21,6 +21,15 @@ Template.bookMark.events = {
   'click #tagUrl':  (evt, template)->
     increaseBookMarkCount(this.url)
   'click #tagDel': (evt, template)->
-    BookMarks.update({_id:this._id}, {$set: {stat:2}})
-
+    currentType = Session.get('shuqianType')
+    if currentType == "garbage"
+      BookMarks.update({_id:this._id}, {$set: {stat:2}})
+    else if currentType == "explore"
+      bm = this.constructor()
+      bm.userId = Meteor.userId
+      bm.url = this.url
+      bm.title = this.title
+      bm.stat = 2
+      console.log(bm)
+      BookMarks.insert(bm)
 }

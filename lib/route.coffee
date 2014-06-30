@@ -66,20 +66,22 @@ getGarbageBookMarks=->
 getBlacklistBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'blacklist')
-  tags = Tags.find({stat:1}).fetch()
-  urls = _.pluck(tags, 'url')
-  BookMarks.find({url: {$nin: urls},stat:2})
+#  tags = Tags.find().fetch()
+#  urls = _.pluck(tags, 'url')
+  BookMarks.find({stat:2}).fetch()
 
 #探索
 getNotMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'explore')
   tags = Tags.find().fetch()
-  urls = _.pluck(tags, 'url')
+  bms = _.pluck(BookMarks.find({"userId":Meteor.userId,"stat":2}).fetch(),"url")
+  urls = _.pluck(tags, 'url').concat(bms)
   BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 100}).fetch()
 
-
 getMyBookMarks=->
+  Session.set('shuqianTag', null)
+  Session.set('shuqianType', null)
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
