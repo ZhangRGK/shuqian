@@ -21,8 +21,8 @@ Template.bookMarkList.helpers({
       records = _.uniq(this.bookMarks, false, (d)->
         return d.url
       )
-      console.log(this.bookMarks)
-      console.log(records)
+      console.log(this.bookMarks.title)
+      console.log(records.title)
       return records
     else
       return this.bookMarks

@@ -26,10 +26,11 @@ Template.bookMark.events = {
       BookMarks.update({_id:this._id}, {$set: {stat:2}})
     else if currentType == "explore"
       bm = this.constructor()
-      bm.userId = Meteor.userId
+      bm.userId = Meteor.userId()
       bm.url = this.url
       bm.title = this.title
       bm.stat = 2
+      console.log(bm.title)
       console.log(bm)
       BookMarks.insert(bm)
 }
