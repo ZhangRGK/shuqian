@@ -51,7 +51,10 @@ Template.tHead.rendered = ->
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
 
-    currentTag = Session.get('tag')
+    currentTag = Session.get('shuqianTag')
+    currentType = Session.get('shuqianType')
+
+    console.log currentTag,currentType
 
     optionDOM = ""
     for tag in uniqTag
@@ -60,7 +63,7 @@ Template.tHead.rendered = ->
         optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
 
     #回收站就没有当前标签
-    if(currentTag == 'garbage' || currentTag == 'blacklist')
+    if(currentType == 'garbage' || currentType == 'blacklist')
       optionDOM +=  '<option data-role="divider"></option>' + '<option value="addtagvalue">新建标签</option>'
       #显示bookMark.html中的删除按钮
 
