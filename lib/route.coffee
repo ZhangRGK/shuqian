@@ -57,13 +57,11 @@ getGarbageBookMarks=->
   Session.set('tag', 'garbage')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
-  console.log(BookMarks.find())
   BookMarks.find({url: {$nin: urls}})
 
 getNotMyBookMarks=->
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
-  console.log(BookMarks.find())
   BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 
 getMyBookMarks=->
