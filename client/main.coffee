@@ -36,12 +36,12 @@ Meteor.startup(->
   Deps.autorun(->
     user = Meteor.user()
     if user
-      console.log user
       if user.emails
         email = user.emails[0].address
+        localStorage.setItem("userEmail", email)
       else
-        email = user.email
-
-      localStorage.setItem("userEmail", email)
+        Meteor.call("getUserInfo",(error, userInfo)->
+          localStorage.setItem("userEmail", userInfo.services.google.email)
+        )
   )
 )

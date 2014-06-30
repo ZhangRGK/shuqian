@@ -24,4 +24,3 @@ Meteor.publish('ddp_tags', (userId)->
 Meteor.publish('all_bookmarks', ->
   return BookMarks.find()
 )
-
