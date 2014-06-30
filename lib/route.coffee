@@ -184,4 +184,4 @@ Meteor.Router.add('/update','POST',->
 #  BookMarks.update({id: bookmark.id}, {$set: {index: bookmark.index, parentId: bookmark.parentId}})
 #)
 
-Router.onBeforeAction('loading');
+Router.onBeforeAction('loading')
