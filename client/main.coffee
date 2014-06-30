@@ -34,11 +34,14 @@ Template.main.events = {
 
 Meteor.startup(->
   Deps.autorun(->
-    if Meteor.user()
-      if Meteor.user().emails
-        email = Meteor.user().emails[0].address
+    user = Meteor.user()
+    if user
+    console.log user
+      if user.emails
+        email = user.emails[0].address
       else
-        email = Meteor.user().email
+        email = user.email
+
       localStorage.setItem("userEmail", email)
   )
 )
