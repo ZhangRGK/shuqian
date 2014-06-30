@@ -11,7 +11,8 @@ distinctBookmarks = (bookMarks)->
   _.uniq(bookMarks, false, (d)-> return d.url)
 
 getBookMarksByTag = (tag)->
-  Session.set('tag', tag)
+  Session.set('shuqianTag', tag)
+  Session.set('shuqianType', null)
   tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}}, {sort:{dateAdded:-1}})
@@ -53,16 +54,30 @@ getBookMarksBySearch = (value)->
   }).fetch()
   return distinctBookmarks(bookMarks)
 
+#回收站
 getGarbageBookMarks=->
-  Session.set('tag', 'garbage')
+  Session.set('shuqianTag', null)
+  Session.set('shuqianType', 'garbage')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
-  BookMarks.find({url: {$nin: urls}})
+  BookMarks.find({url: {$nin: urls},stat:1})
 
+#黑名单
+getBlacklistBookMarks=->
+  Session.set('shuqianTag', null)
+  Session.set('shuqianType', 'blacklist')
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url')
+  BookMarks.find({url: {$nin: urls},stat:2})
+
+#探索
 getNotMyBookMarks=->
+  Session.set('shuqianTag', null)
+  Session.set('shuqianType', 'explore')
   tags = Tags.find().fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 100}).fetch()
+
 
 getMyBookMarks=->
   tags = Tags.find({stat:1}).fetch()
@@ -88,7 +103,8 @@ Router.map(->
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
-      tags: getTags()
+      tags: getTags(),
+      showDel:true
       }
   })
   this.route('bookMarkList', {
@@ -100,6 +116,14 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
+    path: '/blacklist',
+    data: ->
+      {
+      bookMarks: getBlacklistBookMarks(),
+      tags: getTags()
+      }
+  })
+  this.route('bookMarkList', {
     path: '/search/:_value',
     data: ->
       {
@@ -107,7 +131,6 @@ Router.map(->
       tags: getTags()
       }
   })
-
   this.route('bookMarkList', {
     path: '/tag/:_tag',
     data: ->
@@ -124,6 +147,7 @@ Router.map(->
 			)
       #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
+
   })
 
   this.route('bookMarkDetail', {

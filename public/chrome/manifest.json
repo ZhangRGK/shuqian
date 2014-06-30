@@ -18,12 +18,11 @@
     "permissions": [
         "bookmarks",
         "tabs",
-        "http://shuqian.bigzhu.org/",
-        "http://localhost:3000/"
+        "http://shuqian.bigzhu.org/"
     ],
     "content_scripts": [
       {
-          "matches": ["http://shuqian.bigzhu.org/*", "http://localhost:3000/*"],
+          "matches": ["http://shuqian.bigzhu.org/*"],
           "js": ["jquery-2.1.1.min.js","content.js"]
       }
     ],
