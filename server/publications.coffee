@@ -36,7 +36,7 @@ Meteor.publish("explores", ->
   #bms = _.pluck(BookMarks.find({"userId":this.userId,"stat":2}).fetch(),"url")
   #urls = _.pluck(tags, 'url').concat(bms)
 
-  subHandle = BookMarks.find({userId: {$ne: this.userId}}
+  subHandle = BookMarks.find({userId: {$ne: this.userId}},{limit : 200}
   ).observeChanges({
       added: (id, fields)->
         sub.added("explores", id, fields)
