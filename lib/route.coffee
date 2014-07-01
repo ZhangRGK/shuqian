@@ -60,7 +60,7 @@ getGarbageBookMarks=->
   Session.set('shuqianType', 'garbage')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
-  BookMarks.find({url: {$nin: urls},stat:1})
+  BookMarks.find({url: {$nin: urls},stat:1},{sort:{dateAdded:-1}})
 
 #黑名单
 getBlacklistBookMarks=->
@@ -68,7 +68,7 @@ getBlacklistBookMarks=->
   Session.set('shuqianType', 'blacklist')
 #  tags = Tags.find().fetch()
 #  urls = _.pluck(tags, 'url')
-  BookMarks.find({stat:2}).fetch()
+  BookMarks.find({stat:2},{sort:{dateAdded:-1}}).fetch()
 
 #探索
 getNotMyBookMarks=->
@@ -81,6 +81,7 @@ getNotMyBookMarks=->
   console.log Explores.find().fetch()
   Explores.find()
 
+#根目录书签
 getMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', null)
