@@ -5,7 +5,8 @@ Template.main.events = {
       Router.go('/')
     else
       Router.go('/search/' + value)
-  ,
+    if evt.keyCode==13
+      $('.url')[0].click()
   'click #savetagbtn':(evt, template)->
 
     $('#myModal').modal('hide')
@@ -16,7 +17,6 @@ Template.main.events = {
       bookMark = BookMarks.findOne({_id:bookMarkId})
       addTag(bookMark, tag)
     )
-  ,
   'keypress #tagname':(evt, template)->
     if evt.keyCode==13
       $('#myModal').modal('hide')
