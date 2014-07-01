@@ -2,6 +2,10 @@
 <tr>
     <td><input type="checkbox" name="bookmark" value="{{_id}}"/></td>
     <td>
+        <a href="/d/{{encodeURL}}" class="glyphicon glyphicon-th-list on-show size">
+        </a>
+    </td>
+    <td>
         <a class='url' href="{{url}}" target="_blank">
             <div>
                 <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
@@ -10,16 +14,12 @@
         </a>
     </td>
     <td>
-        <a href="/d/{{encodeURL}}" class="glyphicon glyphicon-th-list on-show size">
-        </a>
-    </td>
-    <td>
         {{date}}
     </td>
+    {{#if flag}}
     <td>
-        {{#if flag}}
         <a href="#" class="glyphicon glyphicon-remove on-show size remove"></a>
-        {{/if}}
     </td>
+    {{/if}}
 </tr>
 </template>
