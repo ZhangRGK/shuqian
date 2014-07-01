@@ -7,9 +7,12 @@
         <a href='{{bookMark.url}}' target="_blank">{{bookMark.url}}</a>
         </p>
         <p>
-        <span class="glyphicon glyphicon-star size"></span>
-        {{#each thisTags}}
+        <div class="size bm-info"><span class="glyphicon glyphicon-star"></span><label>{{star}}</label><span class="glyphicon glyphicon-ban-circle"></span><label>{{black}}</label></div>
+        {{#each myTags}}
         <a href="/tag/{{title}}"><span class="badge">{{title}}</span></a>
+        {{/each}}
+        {{#each otherTags}}
+        <a href="/tag/{{title}}"><span class="badge" style="background-color:#ddd">{{title}}</span></a>
         {{/each}}
         </p>
     </div>

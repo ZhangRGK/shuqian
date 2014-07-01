@@ -20,6 +20,9 @@ Meteor.publish('ddp_tags', (userId)->
   return Tags.find({userId: userId, stat: 1})
 )
 
+Meteor.publish('all_tags', ->
+  return Tags.find()
+)
 
 Meteor.publish('all_bookmarks', ->
   return BookMarks.find()

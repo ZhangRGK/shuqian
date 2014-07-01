@@ -155,11 +155,12 @@ Router.map(->
 
   this.route('bookMarkDetail', {
     path: '/d/:_url',
-    waitOn: -> Meteor.subscribe('all_bookmarks'),
+    waitOn: ->
+      [Meteor.subscribe('all_bookmarks'),Meteor.subscribe("all_tags")]
+    ,
     data: ->
       {
       bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
-      thisTags: Tags.find({url: decodeURIComponent(@params._url)}),
       tags: getTags()
       }
   })
