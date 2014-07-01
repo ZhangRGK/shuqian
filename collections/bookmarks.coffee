@@ -16,3 +16,5 @@ BookMarks.allow({
     else
       return false
 })
+if Meteor.isClient
+  @Explores = new Meteor.Collection("explores")

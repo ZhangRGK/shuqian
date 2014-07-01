@@ -1,3 +1,6 @@
+
+
+
 Meteor.publish('bookmarks', ->
   if this.userId
     return BookMarks.find({userId:this.userId})
@@ -23,4 +26,29 @@ Meteor.publish('ddp_tags', (userId)->
 
 Meteor.publish('all_bookmarks', ->
   return BookMarks.find()
+)
+
+Meteor.publish("explores", ->
+  sub = this
+  subHandle = null
+
+  tags = Tags.find({userId:this.userId}).fetch()
+  bms = _.pluck(BookMarks.find({"userId":this.userId,"stat":2}).fetch(),"url")
+  urls = _.pluck(tags, 'url').concat(bms)
+
+  subHandle = BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 2000}
+  ).observeChanges({
+      added: (id, fields)->
+        sub.added("explores", id, fields)
+      changed: (id, fields)->
+        sub.changed("explores", id, fields)
+      removed: (id)->
+        sub.removed("explores", id)
+    })
+
+  sub.ready()
+
+  sub.onStop(->
+    subHandle.stop()
+  )
 )
