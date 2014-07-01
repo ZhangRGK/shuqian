@@ -60,11 +60,11 @@ Template.tHead.rendered = ->
     optionDOM = ''
 
     #回收站就没有当前标签
-    if(currentType == 'garbage' || currentType == 'blacklist')
+    if(currentType == 'garbage' || currentType == 'blacklist' || currentType = 'explore')
       optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
 
     else
-      #如果点击explore是没有标签，添加null判断
+      #如果没有当前标签，添加null判断
       if !currentTag
         optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
       else
