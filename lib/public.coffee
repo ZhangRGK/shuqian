@@ -1,5 +1,4 @@
 @addTag = (bookMark, tag, userId=null)->
-  console.log userId
   if userId == null
     userId = Meteor.userId()
   #查找是否是在其他用户的bookmark上加tag,如果是,copy到自已的上面来.
