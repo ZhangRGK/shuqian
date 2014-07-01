@@ -15,10 +15,15 @@
 
 <div class="navbar navbar-default" role="navigation">
     <div class="container">
+
+        {{#if currentUser}}
         <div class="navbar-header">
             <a class="navbar-brand" href='/'>常用</a>
         </div>
+        {{/if}}
         <div class="navbar-collapse collapse navbar-inverse-collapse">
+
+            {{#if currentUser}}
             <ul class="nav navbar-nav">
                 <li><a href="/explore">探索</a></li>
             </ul>
@@ -28,6 +33,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="/blacklist">黑名单</a></li>
             </ul>
+
+            {{/if}}
             <ul class="nav navbar-nav navbar-right">
                 {{> loginButtons }} <!-- here -->
             </ul>
@@ -36,9 +43,11 @@
 </div>
 
 <div id='app' class="container-fluid">
+    {{#if currentUser}}
     <div class="form-group">
         <input id='search' type="text" class="form-control" placeholder="Search">
     </div>
+    {{/if}}
     <div class="row">
         <div class="col-md-3">
             {{> tagList}}
