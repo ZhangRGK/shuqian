@@ -12,7 +12,7 @@ Template.bookMarkList.helpers({
         i++
       return records
     else if Session.get("shuqianType")=="blacklist"
-        return _.uniq(this.bookMarks, false, (d)-> return d.url)
+        return this.bookMarks
     else
       return this.bookMarks
 })
