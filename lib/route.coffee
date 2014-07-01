@@ -78,7 +78,7 @@ getNotMyBookMarks=->
   bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
 
   urls = _.pluck(tags, 'url').concat(bms)
-  BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 100})
+  BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 2000})
 
 getMyBookMarks=->
   Session.set('shuqianTag', null)
