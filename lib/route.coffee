@@ -74,7 +74,10 @@ getBlacklistBookMarks=->
 getNotMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'explore')
-  Explores.find()
+  tags = Tags.find({userId:this.userId}).fetch()
+  bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
+  urls = _.pluck(tags, 'url').concat(bms)
+  Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
 
 #根目录书签
 getMyBookMarks=->
