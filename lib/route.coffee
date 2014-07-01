@@ -2,9 +2,9 @@ log = (parm)->
   console.log parm
 
 Router.configure({
+  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores')],
   layoutTemplate: 'main',
-  loadingTemplate: 'loading',
-  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
+  loadingTemplate: 'loading'
 })
 
 distinctBookmarks = (bookMarks)->
@@ -74,11 +74,10 @@ getBlacklistBookMarks=->
 getNotMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'explore')
-  tags = Tags.find().fetch()
+  tags = Tags.find({userId:this.userId}).fetch()
   bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
-
   urls = _.pluck(tags, 'url').concat(bms)
-  BookMarks.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 2000})
+  Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
 
 #根目录书签
 getMyBookMarks=->
@@ -103,10 +102,11 @@ Router.map(->
   })
   this.route('bookMarkList', {
     path: '/explore',
-    waitOn: -> [Meteor.subscribe('all_bookmarks'), Meteor.subscribe('tags')]
+    #waitOn: -> [Meteor.subscribe('bookmarks', 'explore'), Meteor.subscribe('tags')]
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
+      #bookMarks: Explores.find(),
       tags: getTags()
       }
   })

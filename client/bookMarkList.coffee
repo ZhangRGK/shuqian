@@ -3,6 +3,7 @@ Template.bookMarkList.helpers({
     Session.get('uniqTag')
   bookMarks: ->
     if Session.get("shuqianType")=="explore"
+      return this.bookMarks
       bookMarks = this.bookMarks.fetch()
       array = _.uniq(bookMarks, false, (d)-> return d.url)
       records = []
@@ -18,23 +19,27 @@ Template.bookMarkList.helpers({
 })
 
 updateState = ->
-  $('option', $('#multi')).each((element)->
-    $(this).removeAttr('selected').prop('selected', false)
-  )
-  $('#multi').multiselect('refresh')
-
-  $('input[name="bookmark"]:checked').map(->
-    bookMarkId = $(this).val()
-    bookMark = BookMarks.findOne({_id: bookMarkId})
-    selectTags = Tags.find({url: bookMark.url, stat: 1}).fetch()
-    for selectTag in selectTags
-      $('#multi').multiselect('select', selectTag.title)
-  )
-
-  if $('input[name="bookmark"]:checked').val()
+  if(Session.get('shuqianType') == 'explore')
     $('#multith').css({visibility: "visible"})
   else
-    $('#multith').css({visibility: "hidden"})
+    $('option', $('#multi')).each((element)->
+      $(this).removeAttr('selected').prop('selected', false)
+    )
+    $('#multi').multiselect('refresh')
+
+
+    $('input[name="bookmark"]:checked').map(->
+      bookMarkId = $(this).val()
+      bookMark = BookMarks.findOne({_id: bookMarkId})
+      selectTags = Tags.find({url: bookMark.url, stat: 1}).fetch()
+      for selectTag in selectTags
+        $('#multi').multiselect('select', selectTag.title)
+    )
+
+    if $('input[name="bookmark"]:checked').val()
+      $('#multith').css({visibility: "visible"})
+    else
+      $('#multith').css({visibility: "hidden"})
 
 Template.bookMarkList.events = {
   'click #editor': (evt, template)->

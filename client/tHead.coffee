@@ -62,11 +62,14 @@ Template.tHead.rendered = ->
     #回收站就没有当前标签
     if(currentType == 'garbage' || currentType == 'blacklist')
       optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
-      #显示bookMark.html中的删除按钮
 
     else
-      optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' +  '<option data-role="divider"></option>'
-      #隐藏bookMark.html中的删除按钮
+      #如果点击explore是没有标签，添加null判断
+      if !currentTag
+        optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
+      else
+        optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' +  '<option data-role="divider"></option>'
+
 
     for tag in uniqTag
       if tag.title != currentTag
