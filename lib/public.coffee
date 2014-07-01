@@ -20,13 +20,12 @@
   userId = Meteor.userId()
   if userId
     bookMark = BookMarks.findOne({url:url, userId:userId})
-    if bookMark.count 
+    if !bookMark
+      return
+    if bookMark.count
       count = bookMark.count+1
     else
       count = 1
-    console.log count
-    console.log BookMarks.update({_id:bookMark._id}, {$set: {count:count}})
-    console.log BookMarks.findOne({url:url, userId:userId})
   return
 
 #铺平
