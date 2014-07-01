@@ -21,7 +21,7 @@ var init = function() {
     }
 }();
 
-$("#openApp").on("click", function () {
+$(".home").on("click", function () {
     chrome.tabs.create({"url": serviceUrl});
 });
 
