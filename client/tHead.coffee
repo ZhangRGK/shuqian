@@ -59,19 +59,25 @@ Template.tHead.rendered = ->
 
     optionDOM = ''
 
+    console.log currentTag,currentType
     #回收站就没有当前标签
     if(currentType == 'garbage' || currentType == 'blacklist')
       optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
       #显示bookMark.html中的删除按钮
 
     else
-      optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' +  '<option data-role="divider"></option>'
+      if !currentTag
+        optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
+      else
+        optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' +  '<option data-role="divider"></option>'
       #隐藏bookMark.html中的删除按钮
 
     for tag in uniqTag
       if tag.title != currentTag
         #data.push({label:tag.title, value:tag.title})
         optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
+
+    console.log optionDOM
 
     $('#multi').html(optionDOM)
     $('#multi').multiselect('rebuild')
