@@ -3,23 +3,21 @@ var userEmail = localStorage.getItem("userEmail");
 var serviceUrl = 'http://shuqian.bigzhu.org';
 
 var init = function() {
+    $("body,html").height("0px");
     if (userId === null || userId === "null") {
+        $("#logout").show();
+        $("#login").hide();
+
         $("#gravatar_button").hide();
-        $("#uploadToDefault").show();
-        $("#uploadToUser").hide();
-        $("html,body").css("height","40px");
     } else {
-        $("#uploadToDefault").hide();
-        $("#uploadToUser").show();
+        $("#logout").hide();
+        $("#login").show();
 
         url = "http://www.gravatar.com/avatar/"+MD5(userEmail);
         img = '<img src="'+url+'" class="img-thumbnail" width="48"/>';
 
         $("#gravatar").attr("src", url);
-        $("#gravatar_button").show();
-        $("#user").text(userEmail);
-
-        $("html,body").css("height","50px");
+        $("#userId").text(userEmail);
     }
 }();
 

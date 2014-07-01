@@ -1,5 +1,106 @@
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>书签</title>
+    <style type="text/css">
+            body,html,div{ margin:0; padding:0;}
+            body{ font:12px/1.5 \5FAE\8F6F\96C5\9ED1,\5B8B\4F53, Tahoma, Geneva, sans-serif; color:#222}
+            .item-box{border-top:1px solid #DDDDDD; min-width:190px; padding:0 0 3px 0}
+            .item-box:nth-child(1){border-top:0 none;}
+            .item{ position:relative; display:-webkit-box;-webkit-box-sizing:border-box; min-width:190px; height:25px;-webkit-box-align:center; padding-left:23px; padding-right:13px;border:1px solid #fff; margin-top:3px; cursor:pointer;}
+            .item:hover{border:1px solid #BBCCDD;-webkit-border-radius:3px; background:-webkit-gradient(linear,0 0,0 100%,from(#fdfeff),to(#EEF2F9),color-stop(0.5,rgba(237,242,249,1)),color-stop(0.33,rgba(237,242,249,1)))}
+            .item:after{ display:none; content:""; position:absolute; left:4px; top:7px; background:url(images/tick.png) no-repeat; width:12px; height:12px;}
+            .item-select:after{ display:block;}
+            .item-disable{ position:relative; display:-webkit-box;-webkit-box-sizing:border-box; min-width:190px; height:25px; -webkit-box-align:center; padding-left:23px; padding-right:13px;border:1px solid #fff; margin-top:3px; color:#aaa }
+            .userInfo{
+                text-align: center;
+                height: auto;
+                padding: 25px 5px;
+                background: #2ba3d4;
+                color: #fff;
+            }
+            .userId{
+                margin-top: 15px;
+            }
+            .userInfo img{
+                box-shadow: rgba(0,0,0,.068) 1px 1px 0px,#2ba3d4 0px 0px 0px,
+                rgba(0,0,0,.066) 2px 2px 0px,#2ba3d4 1px 1px 0px,
+                rgba(0,0,0,.064) 3px 3px 0px,#2ba3d4 2px 2px 0px,
+                rgba(0,0,0,.062) 4px 4px 0px,#2ba3d4 3px 3px 0px,
+                rgba(0,0,0,.060) 5px 5px 0px,#2ba3d4 4px 4px 0px,
+                rgba(0,0,0,.058) 6px 6px 0px,#2ba3d4 5px 5px 0px,
+                rgba(0,0,0,.056) 7px 7px 0px,#2ba3d4 6px 6px 0px,
+                rgba(0,0,0,.054) 8px 8px 0px,#2ba3d4 7px 7px 0px,
+                rgba(0,0,0,.052) 9px 9px 0px,#2ba3d4 8px 8px 0px,
+                rgba(0,0,0,.050) 10px 10px 0px,#2ba3d4 9px 9px 0px,
+                rgba(0,0,0,.048) 11px 11px 0px,#2ba3d4 10px 10px 0px,
+                rgba(0,0,0,.046) 12px 12px 0px,#2ba3d4 11px 11px 0px,
+                rgba(0,0,0,.044) 13px 13px 0px,#2ba3d4 12px 12px 0px,
+                rgba(0,0,0,.042) 14px 14px 0px,#2ba3d4 13px 13px 0px,
+                rgba(0,0,0,.040) 15px 15px 0px,#2ba3d4 14px 14px 0px,
+                rgba(0,0,0,.038) 16px 16px 0px,#2ba3d4 15px 15px 0px,
+                rgba(0,0,0,.036) 17px 17px 0px,#2ba3d4 16px 16px 0px,
+                rgba(0,0,0,.034) 18px 18px 0px,#2ba3d4 17px 17px 0px,
+                rgba(0,0,0,.032) 19px 19px 0px,#2ba3d4 18px 18px 0px,
+                rgba(0,0,0,.030) 20px 20px 0px,#2ba3d4 19px 19px 0px,
+                rgba(0,0,0,.028) 21px 21px 0px,#2ba3d4 20px 20px 0px,
+                rgba(0,0,0,.026) 22px 22px 0px,#2ba3d4 21px 21px 0px,
+                rgba(0,0,0,.024) 23px 23px 0px,#2ba3d4 22px 22px 0px,
+                rgba(0,0,0,.022) 24px 24px 0px,#2ba3d4 23px 23px 0px,
+                rgba(0,0,0,.020) 25px 25px 0px,#2ba3d4 24px 24px 0px,
+                rgba(0,0,0,.018) 26px 26px 0px,#2ba3d4 25px 25px 0px,
+                rgba(0,0,0,.016) 27px 27px 0px,#2ba3d4 26px 26px 0px,
+                rgba(0,0,0,.014) 28px 28px 0px,#2ba3d4 27px 27px 0px,
+                rgba(0,0,0,.012) 29px 29px 0px,#2ba3d4 28px 28px 0px,
+                rgba(0,0,0,.010) 30px 30px 0px,#2ba3d4 29px 29px 0px,
+                rgba(0,0,0,.008) 31px 31px 0px,#2ba3d4 30px 30px 0px,
+                rgba(0,0,0,.006) 32px 32px 0px,#2ba3d4 31px 31px 0px,
+                rgba(0,0,0,.004) 33px 33px 0px,#2ba3d4 32px 32px 0px,
+                rgba(0,0,0,.002) 34px 34px 0px,#2ba3d4 33px 33px 0px,
+                #2ba3d4 34px 34px 0px;
+            }
+        </style>
+</head>
+<body>
+    <div id="logout">
+        <div class="item-box">
+            <div class="item" id="uploadToDefault">访客身份上传书签</div>
+        </div>
+        <div class="item-box">
+            <!--选中的时候 class="item item-select"-->
+            <div class="item" id="openApp">使用Google+帐号登录</div>
+            <div class="item" id="signUp">用户登录</div>
+            <div class="item" id="signIn">用户注册</div>
+        </div>
+    </div>
+    <div id="login">
+        <div class="item-box" id="userInfo">
+            <div class="userInfo">
+                <img id="gravatar" width="48"/>
+                <div id="userId" class="userId"></div>
+            </div>
+        </div>
+        <div class="item-box">
+            <div class="item" id="home">首页</div>
+            <div class="item" id="uploadToUser">上传书签</div>
+            <div class="item" id="exit">退出</div>
+        </div>
+    </div>
+    <div class="item-box">
+        <div class="item" id="msg">反馈建议</div>
+        <div class="item" id="msg">关于</div>
+    </div>
+
+    <script src="jquery-2.1.1.min.js"></script>
+    <script src="md5.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="bigmarks.js"></script>
+</body>
+</html>
+
+<!--
+<html>
+<head>
 <meta meta charset="utf-8"/>
 <link rel="stylesheet" href="bootstrap.min.css"/>
 <link rel="stylesheet" href="popup.css"/>
@@ -30,3 +131,4 @@
 <script src="bigmarks.js"></script>
 </body>
 </html>
+-->
