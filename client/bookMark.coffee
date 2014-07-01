@@ -23,8 +23,7 @@ Template.bookMark.events = {
   'click .remove': (evt, template)->
     currentType = Session.get('shuqianType')
     if currentType == "garbage"
-      date = new Date().getTime()
-      BookMarks.update({_id:this._id}, {$set: {stat:2,dateAdded:date}})
+      BookMarks.update({_id:this._id}, {$set: {stat:2,dateAdded:new Date().getTime()}})
     else if currentType == "explore"
       bm = this.constructor()
       bm.userId = Meteor.userId()
