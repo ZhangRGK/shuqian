@@ -2,7 +2,7 @@
 <tr>
     <td><input type="checkbox" name="bookmark" value="{{_id}}"/></td>
     <td>
-        <a id='tagUrl' href="{{url}}" target="_blank">
+        <a class='url' href="{{url}}" target="_blank">
             <div>
                 <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
                 {{title}}
@@ -18,7 +18,7 @@
     </td>
     <td>
         {{#if flag}}
-        <a href="#" id='tagDel' class="glyphicon glyphicon-remove on-show size"></a>
+        <a href="#" class="glyphicon glyphicon-remove on-show size remove"></a>
         {{/if}}
     </td>
 </tr>

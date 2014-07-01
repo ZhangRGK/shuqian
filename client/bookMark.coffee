@@ -18,9 +18,9 @@ Template.bookMark.helpers({
     return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+(d.getDay()+1)+"日"
 })
 Template.bookMark.events = {
-  'click #tagUrl':  (evt, template)->
+  'click .url':  (evt, template)->
     increaseBookMarkCount(this.url)
-  'click #tagDel': (evt, template)->
+  'click .remove': (evt, template)->
     currentType = Session.get('shuqianType')
     if currentType == "garbage"
       BookMarks.update({_id:this._id}, {$set: {stat:2}})
@@ -31,7 +31,6 @@ Template.bookMark.events = {
       bm.title = this.title
       bm.stat = 2
       bm.dateAdded = this.dateAdded
-      console.log(Template.bookMarkList.bookMarks(),this)
-#      Template.bookMarkList.helpers.bookMarks.remove
       BookMarks.insert(bm)
+    return
 }
