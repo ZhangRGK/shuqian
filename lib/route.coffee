@@ -88,7 +88,6 @@ getMyBookMarks=->
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 
 getDetailBookMark=(url)->
-  #increaseBookMarkCount(url)
   BookMarks.findOne({url: url})
 
 Router.map(->
@@ -156,12 +155,12 @@ Router.map(->
   this.route('bookMarkDetail', {
     path: '/d/:_url',
     waitOn: ->
-      [Meteor.subscribe('all_bookmarks'),Meteor.subscribe("all_tags")]
+      [Meteor.subscribe('find_tags_by_url',decodeURIComponent(@params._url)),Meteor.subscribe("find_bookmarks_by_url",decodeURIComponent(@params._url))]
     ,
     data: ->
       {
       bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
-      tags: getTags()
+      tags: Tags.find()
       }
   })
 )

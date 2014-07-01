@@ -1,15 +1,8 @@
-
-
-
 Meteor.publish('bookmarks', ->
   if this.userId
     return BookMarks.find({userId:this.userId})
   else
     return BookMarks.find({userId:null})
-)
-
-Meteor.publish('ddp_bookmarks', (userId)->
-  return BookMarks.find({userId: userId, stat: 1})
 )
 
 Meteor.publish('tags', ->
@@ -19,16 +12,12 @@ Meteor.publish('tags', ->
       return Tags.find({userId:''})
 )
 
-Meteor.publish('ddp_tags', (userId)->
-  return Tags.find({userId: userId, stat: 1})
+Meteor.publish('find_tags_by_url', (url)->
+  return Tags.find("url":url)
 )
 
-Meteor.publish('all_tags', ->
-  return Tags.find()
-)
-
-Meteor.publish('all_bookmarks', ->
-  return BookMarks.find()
+Meteor.publish('find_bookmarks_by_url', (url)->
+  return BookMarks.find("url":url)
 )
 
 Meteor.publish("explores", ->
