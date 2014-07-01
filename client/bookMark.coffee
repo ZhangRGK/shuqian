@@ -31,7 +31,6 @@ Template.bookMark.events = {
       bm.title = this.title
       bm.stat = 2
       bm.dateAdded = new Date().getTime()
-      console.log bm.dateAdded
       BookMarks.insert(bm)
     return
 }
