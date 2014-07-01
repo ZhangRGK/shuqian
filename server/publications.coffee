@@ -2,7 +2,7 @@ Meteor.publish('bookmarks', ->
   if this.userId
     return BookMarks.find({userId:this.userId})
   else
-    return BookMarks.find({userId:null})
+    return BookMarks.find({userId:''})
 )
 
 Meteor.publish('tags', ->
