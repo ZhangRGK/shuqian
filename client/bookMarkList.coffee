@@ -3,9 +3,10 @@ Template.bookMarkList.helpers({
     Session.get('uniqTag')
   bookMarks: ->
     if Session.get("shuqianType")=="explore"
-      return this.bookMarks
       bookMarks = this.bookMarks.fetch()
       array = _.uniq(bookMarks, false, (d)-> return d.url)
+      return array
+
       records = []
       i = 0
       while i < 14
