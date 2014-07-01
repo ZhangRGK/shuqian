@@ -57,8 +57,6 @@ Template.tHead.rendered = ->
     currentTag = Session.get('shuqianTag')
     currentType = Session.get('shuqianType')
 
-    console.log currentTag,currentType
-
     optionDOM = ""
     for tag in uniqTag
       if tag.title != currentTag
