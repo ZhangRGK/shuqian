@@ -91,3 +91,10 @@ Template.tHead.rendered = ->
 
     selectMulti()
   )
+
+
+Template.tHead.helpers({
+  isExplore:->
+    currentType = Session.get('shuqianType')
+    return currentType == 'explore'
+})
