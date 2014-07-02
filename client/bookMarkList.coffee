@@ -25,6 +25,10 @@ updateState = ->
   )
   $('#multi').multiselect('refresh')
 
+  if $('input[name="bookmark"]:checked').val()
+    $('#multith').css({visibility: "visible"})
+  else
+    $('#multith').css({visibility: "hidden"})
 
   $('input[name="bookmark"]:checked').map(->
     bookMarkId = $(this).val()
@@ -38,11 +42,6 @@ updateState = ->
         $('#multi').multiselect('select', selectTag.title)
   )
 
-  if $('input[name="bookmark"]:checked').val()
-    $('#multith').css({visibility: "visible"})
-  else
-    $('#multith').css({visibility: "hidden"})
-
 Template.bookMarkList.events = {
   'click #editor': (evt, template)->
     $('input[type="checkbox"]').toggle()
@@ -51,6 +50,9 @@ Template.bookMarkList.events = {
     else
       $('#multi').multiselect('disable')
   'click input[type="checkbox"]': (evt, template)->
+    currentTag = Session.get('shuqianTag')
+    currentType = Session.get('shuqianType')
+    console.log currentTag,currentType
     if $(evt.target).prop('name') == 'selectall'
       if $(evt.target).prop('checked')
         $('input[name="bookmark"]').prop('checked', true)
