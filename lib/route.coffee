@@ -198,7 +198,7 @@ Meteor.Router.add('/upload', 'POST', ->
           findTag = {userId:userId, url:node.url, title:parentNode.title}
           if Tags.find(findTag).count() == 0
             Tags.insert(tag)
-  return '0'
+  return [200,'0']
 )
 
 Meteor.Router.add('/update','POST',->
