@@ -3,12 +3,20 @@
     <tr>
         <th width="13px"><input type="checkbox" name="selectall"/></th>
         <th width="20px">
+
         </th>
         <th id="multith" style="visibility:hidden">
             <select id="multi" class="multiselect"  multiple="multiple">
             </select>
         </th>
         <th width="120px">
+            {{#if isExplore}}
+            <a href="/blacklist" class="glyphicon glyphicon-remove-circle size">
+            </a>
+            {{else}}
+            <a href="/garbage" class="glyphicon glyphicon-trash size">
+            </a>
+            {{/if}}
             <a href="#" id='editor' class="glyphicon glyphicon-cog size"></a>
         </th>
         <th width="20px">

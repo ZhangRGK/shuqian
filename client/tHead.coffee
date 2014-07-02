@@ -69,7 +69,7 @@ Template.tHead.rendered = ->
     optionDOM = ''
 
     #回收站就没有当前标签
-    if(currentType == 'garbage' || currentType == 'blacklist' || currentType = 'explore')
+    if(currentType == 'garbage' || currentType == 'blacklist' || currentType == 'explore')
       optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
 
     else
@@ -95,3 +95,10 @@ Template.tHead.rendered = ->
 
     selectMulti()
   )
+
+
+Template.tHead.helpers({
+  isExplore:->
+    currentType = Session.get('shuqianType')
+    return currentType == 'explore'
+})

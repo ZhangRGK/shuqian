@@ -74,10 +74,11 @@ getBlacklistBookMarks=->
 getNotMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'explore')
-  tags = Tags.find({userId:Meteor.userId()}).fetch()
-  bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
-  urls = _.pluck(tags, 'url').concat(bms)
-  Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
+  explore()
+  #tags = Tags.find({userId:Meteor.userId()}).fetch()
+  #bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
+  #urls = _.pluck(tags, 'url').concat(bms)
+  #Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
 
 #根目录书签
 getMyBookMarks=->
@@ -91,8 +92,11 @@ getDetailBookMark=(url)->
   BookMarks.findOne({url: url})
 
 Router.map(->
+  this.route('description', {
+    path: '/'
+  })
   this.route('bookMarkList', {
-    path: '/',
+    path: '/common',
     data: ->
       {
       bookMarks: getMyBookMarks(),
@@ -101,11 +105,9 @@ Router.map(->
   })
   this.route('bookMarkList', {
     path: '/explore',
-    #waitOn: -> [Meteor.subscribe('bookmarks', 'explore'), Meteor.subscribe('tags')]
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
-      #bookMarks: Explores.find(),
       tags: getTags()
       }
   })
@@ -204,7 +206,7 @@ Meteor.Router.add('/upload', 'POST', ->
         stat = Statistical.findOne({"url": bookMark.url})
         final = _.uniq(stat.tags.concat(stat_tags))
         Statistical.update({"url": bookMark.url}, {"$set": {"star": stat.star+1, "tags": final}})
-  return '0'
+  return [200,'0']
 )
 
 Router.onBeforeAction('loading')

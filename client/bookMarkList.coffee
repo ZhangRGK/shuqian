@@ -25,6 +25,10 @@ updateState = ->
   )
   $('#multi').multiselect('refresh')
 
+  if $('input[name="bookmark"]:checked').val()
+    $('#multith').css({visibility: "visible"})
+  else
+    $('#multith').css({visibility: "hidden"})
 
   $('input[name="bookmark"]:checked').map(->
     bookMarkId = $(this).val()
@@ -37,11 +41,6 @@ updateState = ->
       for selectTag in selectTags
         $('#multi').multiselect('select', selectTag.title)
   )
-
-  if $('input[name="bookmark"]:checked').val()
-    $('#multith').css({visibility: "visible"})
-  else
-    $('#multith').css({visibility: "hidden"})
 
 Template.bookMarkList.events = {
   'click #editor': (evt, template)->

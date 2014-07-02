@@ -2,14 +2,14 @@ Meteor.publish('bookmarks', ->
   if this.userId
     return BookMarks.find({userId:this.userId})
   else
-    return BookMarks.find({userId:''})
+    return BookMarks.find({userId:''}, limit : 200)
 )
 
 Meteor.publish('tags', ->
   if this.userId
       return Tags.find({userId:this.userId})
     else
-      return Tags.find({userId:''})
+      return Tags.find({userId:''}, limit : 200)
 )
 
 Meteor.publish('statistical',()->
