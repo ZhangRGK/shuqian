@@ -66,11 +66,9 @@ Template.tHead.rendered = ->
 
     #回收站就没有当前标签
     if(currentType == 'garbage' || currentType == 'blacklist' || currentType == 'explore')
-      console.log '222'
       optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
 
     else
-      console.log '111'
       #如果没有当前标签，添加null判断
       if !currentTag
         optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
