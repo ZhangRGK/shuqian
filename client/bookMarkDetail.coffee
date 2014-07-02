@@ -10,7 +10,10 @@ Template.bookMarkDetail.helpers({
   black:->
     BookMarks.find({"stat":2}).count()
   myTags:->
-    Tags.find("stat":1,"userId":Meteor.userId())
+    _.uniq(Tags.find({"stat":1,"userId":Meteor.userId()}),"title")
   otherTags:->
-    Tags.find("stat":1,"userId":{$ne:Meteor.userId()})
+    _.uniq(Tags.find({"stat":1,"userId":{$ne:Meteor.userId()}}),"title")
+  tagList:->
+    if Meteor.userId()
+      Tags.find({"userId":Meteor.userId()})
 })
