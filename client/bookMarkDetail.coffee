@@ -6,22 +6,17 @@ Template.bookMarkDetail.helpers({
       a.href = this.bookMark.url
     return a.hostname
   star:->
-    BookMarks.find({"stat":1}).count()
+    BookMarks.find({"stat":1,"url":this.bookMark.url}).count()
   black:->
-    BookMarks.find({"stat":2}).count()
+    BookMarks.find({"stat":2,"url":this.bookMark.url}).count()
   myTags:->
     if Meteor.userId()
-      return _.uniq(Tags.find({"stat":1,"userId":Meteor.userId()}).fetch(),false,(d)-> return d.title)
+      return _.uniq(Tags.find({"stat":1,"userId":Meteor.userId(),"url":this.bookMark.url}).fetch(),false,(d)-> return d.title)
     else
-      return _.uniq(Tags.find({"stat":1}),"title")
+      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}),"title")
   otherTags:->
     if Meteor.userId()
-      return _.uniq(Tags.find({"stat":1,"userId":{$ne:Meteor.userId()}}).fetch(),false,(d)-> return d.title)
+      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url,"userId":{$ne:Meteor.userId()},"url":this.bookMark.url}).fetch(),"title")
     else
-      return _.uniq(Tags.find({"stat":1}).fetch(),"title")
-  tagList:->
-    if Meteor.userId()
-      return Tags.find({"userId":Meteor.userId()}).fetch()
-    else
-      return this.tags
+      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}).fetch(),"title")
 })
