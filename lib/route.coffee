@@ -159,7 +159,12 @@ Router.map(->
     ,
     data: ->
       {
-      bookMark: getDetailBookMark(decodeURIComponent(@params._url))
+      bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
+      tags: ()->
+        if Meteor.userId()
+          return _.uniq(Tags.find({"userId":Meteor.userId()}).fetch(),"title")
+        else
+          return _.uniq(Tags.find().fetch(),"title")
       }
   })
 )
