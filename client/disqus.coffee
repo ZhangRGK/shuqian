@@ -8,6 +8,6 @@ Template.disqus.rendered = ->
     DISQUS?.reset(
       reload: true
       config: ->
-        this.page.identifier = "newidentifier";
-        this.page.url = "http://example.com/#!newthread";
+        this.page.identifier = "bigmark"
+        this.page.url = window.location.href
     )
