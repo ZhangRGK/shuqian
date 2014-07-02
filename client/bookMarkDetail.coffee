@@ -11,12 +11,12 @@ Template.bookMarkDetail.helpers({
     BookMarks.find({"stat":2}).count()
   myTags:->
     if Meteor.userId()
-      return _.uniq(Tags.find({"stat":1,"userId":Meteor.userId()}).fetch(),"title")
+      return _.uniq(Tags.find({"stat":1,"userId":Meteor.userId()}).fetch(),false,(d)-> return d.title)
     else
       return _.uniq(Tags.find({"stat":1}),"title")
   otherTags:->
     if Meteor.userId()
-      return _.uniq(Tags.find({"stat":1,"userId":{$ne:Meteor.userId()}}).fetch(),"title")
+      return _.uniq(Tags.find({"stat":1,"userId":{$ne:Meteor.userId()}}).fetch(),false,(d)-> return d.title)
     else
       return _.uniq(Tags.find({"stat":1}).fetch(),"title")
   tagList:->
