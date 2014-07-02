@@ -13,10 +13,10 @@ Template.bookMarkDetail.helpers({
     if Meteor.userId()
       return _.uniq(Tags.find({"stat":1,"userId":Meteor.userId(),"url":this.bookMark.url}).fetch(),false,(d)-> return d.title)
     else
-      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}),"title")
+      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}),false,(d)-> return d.title)
   otherTags:->
     if Meteor.userId()
-      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url,"userId":{$ne:Meteor.userId()},"url":this.bookMark.url}).fetch(),"title")
+      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url,"userId":{$ne:Meteor.userId()},"url":this.bookMark.url}).fetch(),false,(d)-> return d.title)
     else
-      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}).fetch(),"title")
+      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}).fetch(),false,(d)-> return d.title)
 })
