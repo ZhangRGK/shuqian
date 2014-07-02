@@ -6,17 +6,20 @@ Template.bookMarkDetail.helpers({
       a.href = this.bookMark.url
     return a.hostname
   star:->
-    BookMarks.find({"stat":1,"url":this.bookMark.url}).count()
+    this.statistical.star
   black:->
-    BookMarks.find({"stat":2,"url":this.bookMark.url}).count()
+    this.statistical.black
   myTags:->
-    if Meteor.userId()
-      return _.uniq(Tags.find({"stat":1,"userId":Meteor.userId(),"url":this.bookMark.url}).fetch(),false,(d)->d.title)
-    else
-      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}),false,(d)->d.title)
+    myTags = []
+    stat_tags = this.statistical.tags
+    for tag in this.tags
+      if stat_tags.indexOf(tag)>=0
+        myTags.push(stat_tags[stat_tags.indexOf(tag)])
+    return myTags
   otherTags:->
-    if Meteor.userId()
-      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url,"userId":{$ne:Meteor.userId()}}).fetch(),false,(d)->d.title)
-    else
-      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}).fetch(),false,(d)->d.title)
+    stat_tags = this.statistical.tags.slice(0)
+    for tag in this.tags
+      if stat_tags.indexOf(tag) >=0
+        stat_tags.splice(stat_tags.indexOf(tag),1)
+    return stat_tags
 })

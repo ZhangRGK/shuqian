@@ -2,7 +2,7 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores')],
+  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores'), Meteor.subscribe('statistical')],
   layoutTemplate: 'main',
   loadingTemplate: 'loading'
 })
@@ -160,11 +160,8 @@ Router.map(->
     data: ->
       {
       bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
-      tags: ()->
-        if Meteor.userId()
-          return _.uniq(Tags.find({"userId":Meteor.userId(),"url":this.bookMark.url}).fetch(),false,(d)->d.title)
-        else
-          return _.uniq(Tags.find({"url":this.bookMark.url}).fetch(),false,(d)->d.title)
+      statistical: Statistical.findOne(@params._url),
+      tags: getTags()
       }
   })
 )
@@ -184,6 +181,7 @@ Meteor.Router.add('/upload', 'POST', ->
   nodes = []
   spread(body.data[0], nodes)
   for node in nodes
+    stat_tags = []
     if node.url
       bookMark = {userId:userId, url:node.url, title:node.title, dateAdded:parseInt(node.dateAdded), stat:1}
       #增加时间和状态不能纳入排重.会导致重复导入
@@ -198,21 +196,15 @@ Meteor.Router.add('/upload', 'POST', ->
           findTag = {userId:userId, url:node.url, title:parentNode.title}
           if Tags.find(findTag).count() == 0
             Tags.insert(tag)
+            stat_tags.push(tag)
+      #修改统计值
+      if Statistical.find({"url":bookMark.url}).count()==0
+        Statistical.insert({"url": bookMark.url, "star": 1, "black": 0, "count": 0, "tags": stat_tags})
+      else
+        stat = Statistical.findOne({"url": bookMark.url})
+        final = _.uniq(stat.tags.concat(stat_tags))
+        Statistical.update({"url": bookMark.url}, {"$set": {"star": stat.star+1, "tags": final}})
   return '0'
 )
-
-Meteor.Router.add('/update','POST',->
-  updateData = eval(this.request.body)
-  console.log(updateData)
-  bookmark = updateData.data
-  BookMarks.update({id: bookmark.id},{$set: {index: bookmark.index, parentId: bookmark.pa}})
-)
-#
-#Meteor.Router.add('/update', 'POST', ->
-#  console.log('update')
-#  bookmark = eval(this.request.body)
-#  log bookmark
-#  BookMarks.update({id: bookmark.id}, {$set: {index: bookmark.index, parentId: bookmark.parentId}})
-#)
 
 Router.onBeforeAction('loading')
