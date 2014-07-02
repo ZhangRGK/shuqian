@@ -50,9 +50,6 @@ Template.bookMarkList.events = {
     else
       $('#multi').multiselect('disable')
   'click input[type="checkbox"]': (evt, template)->
-    currentTag = Session.get('shuqianTag')
-    currentType = Session.get('shuqianType')
-    console.log currentTag,currentType
     if $(evt.target).prop('name') == 'selectall'
       if $(evt.target).prop('checked')
         $('input[name="bookmark"]').prop('checked', true)
