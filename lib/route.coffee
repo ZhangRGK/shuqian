@@ -164,7 +164,7 @@ Router.map(->
         if Meteor.userId()
           return _.uniq(Tags.find({"userId":Meteor.userId(),"url":this.bookMark.url}).fetch(),"title")
         else
-          return _.uniq(Tags.find().fetch({"url":this.bookMark.url}),"title")
+          return _.uniq(Tags.find({"url":this.bookMark.url}).fetch(),"title")
       }
   })
 )
