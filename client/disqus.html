@@ -15,23 +15,7 @@ var disqus_config = function () {
      dsq.async = true;
      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-
-    var head = document.getElementsByTagName('head')[0];
-    head.removeChild(head.lastElementChild);
-
  })();
-
-    var reset = function () {
-        DISQUS.reset({
-            reload: true,
-            config: function () {
-                this.page.identifier = "bigmark";
-                this.page.url = 'shuqian.bigzhu.org';
-                this.page.title = 'bigmark';
-                this.language = 'zh';
-            }
-    });
-};
 
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
