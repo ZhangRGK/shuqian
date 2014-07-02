@@ -19,9 +19,11 @@ Template.bookMarkDetail.helpers({
       return _.uniq(Tags.find({"stat":1,"userId":{$ne:Meteor.userId()}}).fetch(),"title")
     else
       return _.uniq(Tags.find({"stat":1}).fetch(),"title")
-  tagList:->
+  tags:->
+    console.log(Meteor.userId())
     if Meteor.userId()
+      console.log(Tags.find({"userId":Meteor.userId()}).fetch())
       return Tags.find({"userId":Meteor.userId()}).fetch()
     else
-      return this.tags
+      return _.uniq(Tags.find().fetch(),"title")
 })

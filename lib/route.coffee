@@ -159,8 +159,7 @@ Router.map(->
     ,
     data: ->
       {
-      bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
-      tags: Tags.find()
+      bookMark: getDetailBookMark(decodeURIComponent(@params._url))
       }
   })
 )
