@@ -45,6 +45,6 @@
 
 @explore = ->
   tags = Tags.find({userId:Meteor.userId()}).fetch()
-  bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
+  bms = _.pluck(BookMarks.find({"userId":Meteor.userId()}).fetch(),"url")
   urls = _.pluck(tags, 'url').concat(bms)
   Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
