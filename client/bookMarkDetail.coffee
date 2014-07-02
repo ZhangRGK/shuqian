@@ -11,7 +11,7 @@ Template.bookMarkDetail.helpers({
     BookMarks.find({"stat":2,"url":this.bookMark.url}).count()
   myTags:->
     if Meteor.userId()
-      return _.uniq(Tags.find({"stat":1,"userId":Meteor.userId(),"url":this.bookMark.url}).fetch(),false,(d)-> return d.title)
+      return _.uniq(Tags.find({"stat":1,"userId":Meteor.userId(),"url":this.bookMark.url}).fetch(),false,(d)->d.title)
     else
       return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}),false,(d)-> return d.title)
   otherTags:->
