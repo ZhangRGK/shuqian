@@ -93,6 +93,9 @@ getDetailBookMark=(url)->
   BookMarks.findOne({url: url})
 
 Router.map(->
+  this.route('description', {
+    path: '/'
+  })
   this.route('bookMarkList', {
     path: '/common',
     data: ->
