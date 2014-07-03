@@ -13,14 +13,14 @@ Meteor.publish('tags', ->
 )
 
 Meteor.publish('statistical',()->
-  urls = []
-  if this.userId
-    urls = BookMarks.find({userId:this.userId},{"fields":{"url":true,"_id":false}}).fetch()
-  else
-    urls = BookMarks.find({userId:''},{"fields":{"url":true,"_id":false}}).fetch()
-  console.log(this.userId)
-  console.log(urls)
-  return Statistical.find({"url":{"$in":urls}})
+#  urls = []
+#  if this.userId
+#    urls = BookMarks.find({userId:this.userId},{"fields":{"url":true,"_id":false}}).fetch()
+#  else
+#    urls = BookMarks.find({userId:''},{"fields":{"url":true,"_id":false}}).fetch()
+#  console.log(this.userId)
+#  console.log(urls)
+  return Statistical.find()
 )
 
 Meteor.publish("explores", ->

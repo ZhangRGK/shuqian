@@ -6,6 +6,7 @@ Router.configure({
   ,
   layoutTemplate: 'main',
   loadingTemplate: 'loading'
+#  onBeforeAction: 'loading'
 })
 
 distinctBookmarks = (bookMarks)->
@@ -206,4 +207,3 @@ Meteor.Router.add('/upload', 'POST', ->
   return [200,'0']
 )
 
-Router.onBeforeAction('loading')

@@ -42,11 +42,7 @@ Template.tHead.rendered = ->
       if checked
         $('input[name="bookmark"]:checked').map(->
           bookMarkId = $(this).val()
-          if(Session.get('shuqianType') == 'explore')
-            bookMark = Explores.findOne({_id: bookMarkId})
-            bookMark.userId = Meteor.userId()
-          else
-            bookMark = BookMarks.findOne({_id: bookMarkId})
+          bookMark = getBookmark(bookMarkId)
           addTag(bookMark, tag)
         )
       #删除
