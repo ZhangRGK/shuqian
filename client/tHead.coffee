@@ -2,6 +2,7 @@ removeTag = (bookMarkId, tag)->
   bookMark = BookMarks.findOne({_id:bookMarkId})
   tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
   doTag = Tags.findOne(tag)
+
   Tags.update({_id:doTag._id}, {$set: {stat:0}})
   stat = Statistical.findOne({"url": bookMark.url})
   final = stat.tags.slice(0)

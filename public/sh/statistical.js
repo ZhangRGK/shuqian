@@ -25,8 +25,6 @@ db.bookmarks.find().forEach(function (bookmark) {
         var tags = db.tags.find({"url": bookmark.url, "stat": 1}).map(function (u) {
             return u.title
         });
-        printjson(bookmark.url);
-        printjson(tags);
         tags = distinct(tags);
         var count = 0;
         for (var c in counts) {
