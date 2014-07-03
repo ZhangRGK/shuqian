@@ -23,6 +23,12 @@ var init = function() {
 $(".home").on("click", function () {
     chrome.tabs.create({"url": serviceUrl});
     });
+$("#tel").on("click", function () {
+    chrome.tabs.create({"url": serviceUrl+"/tel"});
+    });
+$("#about").on("click", function () {
+    chrome.tabs.create({"url": serviceUrl+"/about"});
+    });
 
 $("#uploadToDefault").on("click", function() {
     chrome.bookmarks.getTree(function(bookmarkTreeNodes) {

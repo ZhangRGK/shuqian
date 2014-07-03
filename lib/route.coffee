@@ -94,6 +94,9 @@ getDetailBookMark=(url)->
   BookMarks.findOne({url: url})
 
 Router.map(->
+  this.route('disqus', {
+    path: '/tell'
+  })
   this.route('description', {
     path: '/'
   })
