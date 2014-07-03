@@ -2,6 +2,9 @@ Template.bookMarkList.helpers({
   uniqTag: ->
     Session.get('uniqTag')
   bookMarks: ->
+    if !this.bookMarks
+      return
+
     if Session.get("shuqianType")=="explore"
       bookMarks = this.bookMarks.fetch()
       array = _.uniq(bookMarks, false, (d)-> return d.url)
