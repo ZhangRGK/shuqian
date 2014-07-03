@@ -4,10 +4,9 @@ removeTag = (bookMarkId, tag)->
   doTag = Tags.findOne(tag)
   Tags.update({_id:doTag._id}, {$set: {stat:0}})
   stat = Statistical.findOne({"url": bookMark.url})
-  console.log(stat)
   final = stat.tags.slice(0)
   final.splice(final.indexOf(tag),1)
-  Statistical.update({"url": bookMark.url}, {"$set": {"star": stat.star-1, "tags": final}})
+  Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star-1, "tags": final}})
 
 selectMulti = ->
   #根据选中checkbox,重新选中multiselect
