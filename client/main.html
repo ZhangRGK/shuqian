@@ -36,22 +36,9 @@
 </div>
 
 <div id='app' class="container-fluid">
-    {{#if isRoot}}
     <div class="row">
-        <div class="col-md-12">
-            {{> description}}
-        </div>
-    </div>
-    {{else}}
-    <div class="row">
-        <div class="col-md-3">
-            {{> tagList}}
-        </div>
-        <div class="col-md-9">
             {{> yield}}
-        </div>
     </div>
-    {{/if}}
 </div>
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">
