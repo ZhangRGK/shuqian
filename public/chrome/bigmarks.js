@@ -1,12 +1,6 @@
 var userId = localStorage.getItem('userId');
 var userEmail = localStorage.getItem("userEmail");
 var serviceUrl = 'http://shuqian.bigzhu.org';
-
-
-
-
-
-
 var init = function() {
   $("body,html").height("0px");
   if (userId === null || userId === "null") {
