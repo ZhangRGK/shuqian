@@ -1,6 +1,5 @@
 Template.main.events = {
   'click #savetagbtn':(evt, template)->
-
     $('#myModal').modal('hide')
     tag = $('#tagname').val()
     $('#tagname').val('')

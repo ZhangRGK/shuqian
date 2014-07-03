@@ -59,17 +59,17 @@
         spread(i, nodes)
   nodes.push(temp)
 
+#探索
 @explore = ->
   tags = Tags.find({userId:Meteor.userId()}).fetch()
   bms = _.pluck(BookMarks.find({"userId":Meteor.userId()}).fetch(),"url")
   urls = _.pluck(tags, 'url').concat(bms)
   Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
 
+#取bookMark
 @getBookmark = (bookMarkId)->
-          bookMark = BookMarks.findOne({_id: bookMarkId})
-          if !bookMark
-            bookMark = Explores.findOne({_id: bookMarkId})
-            bookMark.userId = Meteor.userId()
-          return bookMark
-
-
+  bookMark = BookMarks.findOne({_id: bookMarkId})
+  if !bookMark
+    bookMark = Explores.findOne({_id: bookMarkId})
+    bookMark.userId = Meteor.userId()
+  return bookMark
