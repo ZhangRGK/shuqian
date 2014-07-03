@@ -1,9 +1,14 @@
 <template name='bookMarkList'>
+{{#if currentUser}}
+<div class="form-group">
+    <input id='search' type="text" class="form-control" placeholder="Search">
+</div>
+{{/if}}
 <table class="table">
     {{> tHead}}
     <tbody>
     {{#each bookMarks}}
-        {{> bookMark}}
+    {{> bookMark}}
     {{/each}}
     </tbody>
 </table>
