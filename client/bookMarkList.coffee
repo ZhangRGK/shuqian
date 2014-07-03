@@ -3,6 +3,7 @@ Template.bookMarkList.helpers({
     Session.get('uniqTag')
   bookMarks: ->
     if Session.get("shuqianType")=="explore"
+      console.log this
       bookMarks = this.bookMarks.fetch()
       array = _.uniq(bookMarks, false, (d)-> return d.url)
       return array
@@ -32,14 +33,10 @@ updateState = ->
 
   $('input[name="bookmark"]:checked').map(->
     bookMarkId = $(this).val()
-    bookMark = {}
-    if(Session.get('shuqianType') == 'explore')
-      bookMark = Explores.findOne({_id: bookMarkId})
-    else
-      bookMark = BookMarks.findOne({_id: bookMarkId})
-      selectTags = Tags.find({url: bookMark.url, stat: 1}).fetch()
-      for selectTag in selectTags
-        $('#multi').multiselect('select', selectTag.title)
+    bookMark = getBookmark(bookMarkId)
+    selectTags = Tags.find({url: bookMark.url, stat: 1}).fetch()
+    for selectTag in selectTags
+      $('#multi').multiselect('select', selectTag.title)
   )
 
 Template.bookMarkList.events = {
