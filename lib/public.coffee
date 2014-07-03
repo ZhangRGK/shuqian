@@ -24,10 +24,10 @@
     Statistical.insert({"url": bookMark.url, "star": 1, "black": 0, "count": 0, "tags": [tag]})
   else
     stat = Statistical.findOne({"url": bookMark.url})
-    final = tags.slice(0)
-    if tags.indexOf(tag) < 0
+    final = stat.tags.slice(0)
+    if stat.tags.indexOf(tag) < 0
       final.push(tag)
-    Statistical.update({"url": bookMark.url}, {"$set": {"star": stat.star+1, "tags": final}})
+    Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star+1, "tags": final}})
   # 统计表修改完成
 
 @increaseBookMarkCount = (url)->
