@@ -9,10 +9,7 @@ Template.bookMark.helpers({
   ,
   flag:->
     currentType = Session.get('shuqianType')
-    f = false
-    if(currentType == 'garbage' || currentType == 'explore')
-      f = true
-    return f
+    return currentType == 'explore'
   date:->
     d = new Date(@dateAdded)
     return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+(d.getDay()+1)+"日"
