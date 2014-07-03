@@ -44,3 +44,7 @@ Meteor.startup(->
         )
   )
 )
+Template.main.helpers({
+  isRoot: ->
+    window.location.pathname == "/"
+})

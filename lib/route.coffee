@@ -5,6 +5,7 @@ Router.configure({
   waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores'), Meteor.subscribe('statistical')],
   layoutTemplate: 'main',
   loadingTemplate: 'loading'
+#  onBeforeAction: 'loading'
 })
 
 distinctBookmarks = (bookMarks)->
@@ -156,6 +157,7 @@ Router.map(->
 
   this.route('bookMarkDetail', {
     path: '/d/:_url',
+    onBeforeAction: 'loading',
     waitOn: ->
       [Meteor.subscribe('find_tags_by_url',decodeURIComponent(@params._url)),Meteor.subscribe("find_bookmarks_by_url",decodeURIComponent(@params._url))]
     ,
@@ -209,4 +211,3 @@ Meteor.Router.add('/upload', 'POST', ->
   return [200,'0']
 )
 
-Router.onBeforeAction('loading')
