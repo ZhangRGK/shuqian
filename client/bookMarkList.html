@@ -1,11 +1,21 @@
 <template name='bookMarkList'>
-<table class="table">
-    {{> tHead}}
-    <tbody>
-    {{#each bookMarks}}
+<div class="col-md-3">
+    {{> tagList}}
+</div>
+<div class="col-md-9">
+    {{#if currentUser}}
+    <div class="form-group">
+        <input id='search' type="text" class="form-control" placeholder="Search">
+    </div>
+    {{/if}}
+    <table class="table">
+        {{> tHead}}
+        <tbody>
+        {{#each bookMarks}}
         {{> bookMark}}
-    {{/each}}
-    </tbody>
-</table>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
 </template>
 

@@ -2,13 +2,18 @@ removeTag = (bookMarkId, tag)->
   bookMark = BookMarks.findOne({_id:bookMarkId})
   tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
   doTag = Tags.findOne(tag)
+
   Tags.update({_id:doTag._id}, {$set: {stat:0}})
+  stat = Statistical.findOne({"url": bookMark.url})
+  final = stat.tags.slice(0)
+  final.splice(final.indexOf(tag),1)
+  Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star-1, "tags": final}})
 
 selectMulti = ->
   #根据选中checkbox,重新选中multiselect
   $('input[name="bookmark"]:checked').map(->
     bookMarkId = $(this).val()
-    bookMark = BookMarks.findOne({_id:bookMarkId})
+    bookMark = getBookmark(bookMarkId)
     selectTags = Tags.find({url:bookMark.url, stat:1}).fetch()
     for selectTag in selectTags
       $('#multi').multiselect('select', selectTag.title)
@@ -37,18 +42,15 @@ Template.tHead.rendered = ->
       if checked
         $('input[name="bookmark"]:checked').map(->
           bookMarkId = $(this).val()
-          if(Session.get('shuqianType') == 'explore')
-            bookMark = Explores.findOne({_id: bookMarkId})
-            bookMark.userId = Meteor.userId()
-          else
-            bookMark = BookMarks.findOne({_id: bookMarkId})
+          bookMark = getBookmark(bookMarkId)
+          bookMark.stat = 1
           addTag(bookMark, tag)
         )
       #删除
       else
         $('input[name="bookmark"]:checked').map(->
           bookMarkId = $(this).val()
-          if(Session.get('shuqianType') != 'explore')
+          if(window.location.pathname != "/explore")
             removeTag(bookMarkId, tag)
         )
 
@@ -65,7 +67,7 @@ Template.tHead.rendered = ->
     optionDOM = ''
 
     #回收站就没有当前标签
-    if(currentType == 'garbage' || currentType == 'blacklist' || currentType = 'explore')
+    if(currentType == 'garbage' || currentType == 'blacklist' || currentType == 'explore')
       optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
 
     else
@@ -91,3 +93,11 @@ Template.tHead.rendered = ->
 
     selectMulti()
   )
+
+
+Template.tHead.helpers({
+  isExplore:->
+    window.location.pathname == "/explore"
+  isBlacklist: ->
+    window.location.pathname == "/blacklist"
+})

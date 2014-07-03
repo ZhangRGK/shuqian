@@ -1,22 +1,6 @@
 Template.bookMarkList.helpers({
   uniqTag: ->
     Session.get('uniqTag')
-  bookMarks: ->
-    if Session.get("shuqianType")=="explore"
-      bookMarks = this.bookMarks.fetch()
-      array = _.uniq(bookMarks, false, (d)-> return d.url)
-      return array
-
-      records = []
-      i = 0
-      while i < 14
-        records = records.concat(array.splice(Math.round(Math.random() * array.length), 1))
-        i++
-      return records
-    else if Session.get("shuqianType")=="blacklist"
-        return this.bookMarks
-    else
-      return this.bookMarks
 })
 
 updateState = ->
@@ -25,23 +9,18 @@ updateState = ->
   )
   $('#multi').multiselect('refresh')
 
-
-  $('input[name="bookmark"]:checked').map(->
-    bookMarkId = $(this).val()
-    bookMark = {}
-    if(Session.get('shuqianType') == 'explore')
-      bookMark = Explores.findOne({_id: bookMarkId})
-    else
-      bookMark = BookMarks.findOne({_id: bookMarkId})
-      selectTags = Tags.find({url: bookMark.url, stat: 1}).fetch()
-      for selectTag in selectTags
-        $('#multi').multiselect('select', selectTag.title)
-  )
-
   if $('input[name="bookmark"]:checked').val()
     $('#multith').css({visibility: "visible"})
   else
     $('#multith').css({visibility: "hidden"})
+
+  $('input[name="bookmark"]:checked').map(->
+    bookMarkId = $(this).val()
+    bookMark = getBookmark(bookMarkId)
+    selectTags = Tags.find({url: bookMark.url, stat: 1}).fetch()
+    for selectTag in selectTags
+      $('#multi').multiselect('select', selectTag.title)
+  )
 
 Template.bookMarkList.events = {
   'click #editor': (evt, template)->
@@ -57,4 +36,12 @@ Template.bookMarkList.events = {
       else
         $('input[name="bookmark"]').prop('checked', false)
     updateState()
+  'keyup #search': (evt, template)->
+    value = $(evt.target).val()
+    if value == ''
+      Router.go('/common')
+    else
+      Router.go('/search/' + value)
+    if evt.keyCode==13
+      $('.url')[0].click()
 }
