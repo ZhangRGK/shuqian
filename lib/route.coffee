@@ -55,7 +55,7 @@ getBookMarksBySearch = (value)->
   ]
   }, ).fetch()
   bookMarks = _.uniq(bookMarks, false, (d)-> return d.url)
-  _.sortBy(bookMarks, (d)-> d.count)
+  _.sortBy(bookMarks, (d)-> -d.count)
 
 #回收站
 getGarbageBookMarks=->

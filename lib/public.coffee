@@ -31,20 +31,22 @@
   # 统计表修改完成
 
 @increaseBookMarkCount = (url)->
+  statistical = Statistical.findOne({"url":url})
+  if statistical
+    Statistical.update({_id:statistical._id},{$set:{"count":statistical.count+1}})
+
   userId = Meteor.userId()
-  if userId
-    userId = ""
+  if !userId
+    userId = ''
   bookMark = BookMarks.findOne({url: url, userId: userId})
   if !bookMark
     return
-  stat_count = Statistical.findOne({"url":url})
-  Statistical.update({"url":url},{"$set":{"count":stat_count+1}})
+
   if bookMark.count
     count = bookMark.count + 1
   else
     count = 1
-  BookMarks.update({"url":url,"userId":userId},{"$set":{"count":count}})
-  return
+  BookMarks.update({_id:bookMark._id},{$set:{"count":count}})
 
 #铺平
 @spread = (node, nodes)->
