@@ -63,3 +63,12 @@
   urls = _.pluck(tags, 'url').concat(bms)
   console.log urls
   Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
+
+@getBookmark = (bookMarkId)->
+          bookMark = BookMarks.findOne({_id: bookMarkId})
+          if !bookMark
+            bookMark = Explores.findOne({_id: bookMarkId})
+            bookMark.userId = Meteor.userId()
+          return bookMark
+
+
