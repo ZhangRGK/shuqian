@@ -41,16 +41,16 @@ Template.tHead.rendered = ->
       #增加
       if checked
         $('input[name="bookmark"]:checked').map(->
-          console.log window.location.pathname
           bookMarkId = $(this).val()
           bookMark = getBookmark(bookMarkId)
+          bookMark.stat = 1
           addTag(bookMark, tag)
         )
       #删除
       else
         $('input[name="bookmark"]:checked').map(->
           bookMarkId = $(this).val()
-          if(Session.get('shuqianType') != 'explore')
+          if(window.location.pathname != "/explore")
             removeTag(bookMarkId, tag)
         )
 
@@ -97,6 +97,7 @@ Template.tHead.rendered = ->
 
 Template.tHead.helpers({
   isExplore:->
-    currentType = Session.get('shuqianType')
-    return currentType == 'explore'
+    window.location.pathname == "/explore"
+  isBlacklist: ->
+    window.location.pathname == "/blacklist"
 })
