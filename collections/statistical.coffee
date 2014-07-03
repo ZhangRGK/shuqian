@@ -1,5 +1,5 @@
 @Statistical = new Meteor.Collection('statistical')
-BookMarks.allow({
+Statistical.allow({
   insert: (userId, data)->
     return true;
   update: (userId, data)->
