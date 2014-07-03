@@ -23,8 +23,8 @@ var init = function() {
 $(".home").on("click", function () {
     chrome.tabs.create({"url": serviceUrl});
     });
-$("#tel").on("click", function () {
-    chrome.tabs.create({"url": serviceUrl+"/tel"});
+$("#tell").on("click", function () {
+    chrome.tabs.create({"url": serviceUrl+"/tell"});
     });
 $("#about").on("click", function () {
     chrome.tabs.create({"url": serviceUrl+"/about"});
