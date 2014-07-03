@@ -2,31 +2,21 @@ Template.bookMarkDetail.helpers({
   domain: ->
     a = document.createElement('a')
     #要取两次的奇怪问题
-    if this.bookMark
+    if @bookMark
       a.href = this.bookMark.url
     return a.hostname
   star:->
-    if this.bookMark
-      Statistical.findOne({"url":this.bookMark.url}).star
+    BookMarks.find({"stat":1,"url":this.bookMark.url}).count()
   black:->
-    if @bookMark
-      Statistical.findOne({"url":this.bookMark.url}).black
+    BookMarks.find({"stat":2,"url":this.bookMark.url}).count()
   myTags:->
-    if @bookMark
-      myTags = []
-      stat_tags = Statistical.findOne({"url":this.bookMark.url}).tags
-      for tag in this.tags
-        if stat_tags.indexOf(tag.title)>=0
-          myTags.push({"title":tag.title})
-      return myTags
+    if Meteor.userId()
+      return _.uniq(Tags.find({"stat":1,"userId":Meteor.userId(),"url":this.bookMark.url}).fetch(),false,(d)->d.title)
+    else
+      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}),false,(d)->d.title)
   otherTags:->
-    if @bookMark
-      otherTags = []
-      stat_tags = Statistical.findOne({"url":this.bookMark.url}).tags.slice(0)
-      for tag in this.tags
-        if stat_tags.indexOf(tag.title) >=0
-          stat_tags.splice(stat_tags.indexOf(tag.title),1)
-      for t in stat_tags
-        otherTags.push({"title":t})
-      return otherTags
+    if Meteor.userId()
+      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url,"userId":{$ne:Meteor.userId()}}).fetch(),false,(d)->d.title)
+    else
+      return _.uniq(Tags.find({"stat":1,"url":this.bookMark.url}).fetch(),false,(d)->d.title)
 })

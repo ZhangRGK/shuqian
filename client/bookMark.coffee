@@ -8,7 +8,11 @@ Template.bookMark.helpers({
     encodeURIComponent(this.url)
   ,
   flag:->
-    window.location.pathname == "/explore"
+    currentType = Session.get('shuqianType')
+    f = false
+    if(currentType == 'garbage' || currentType == 'explore')
+      f = true
+    return f
   date:->
     d = new Date(@dateAdded)
     return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+(d.getDay()+1)+"日"
@@ -17,7 +21,10 @@ Template.bookMark.events = {
   'click .url':  (evt, template)->
     increaseBookMarkCount(this.url)
   'click .remove': (evt, template)->
-    if window.location.pathname == "/explore"
+    currentType = Session.get('shuqianType')
+    if currentType == "garbage"
+      BookMarks.update({_id:this._id}, {$set: {stat:2,dateAdded:new Date().getTime()}})
+    else if currentType == "explore"
       bm = this.constructor()
       bm.userId = Meteor.userId()
       bm.url = this.url

@@ -2,25 +2,22 @@ Meteor.publish('bookmarks', ->
   if this.userId
     return BookMarks.find({userId:this.userId})
   else
-    return BookMarks.find({userId:''}, limit : 200)
+    return BookMarks.find({userId:''})
 )
 
 Meteor.publish('tags', ->
   if this.userId
       return Tags.find({userId:this.userId})
     else
-      return Tags.find({userId:''}, limit : 200)
+      return Tags.find({userId:''})
 )
 
-Meteor.publish('statistical',()->
-#  urls = []
-#  if this.userId
-#    urls = BookMarks.find({userId:this.userId},{"fields":{"url":true,"_id":false}}).fetch()
-#  else
-#    urls = BookMarks.find({userId:''},{"fields":{"url":true,"_id":false}}).fetch()
-#  console.log(this.userId)
-#  console.log(urls)
-  return Statistical.find()
+Meteor.publish('find_tags_by_url', (url)->
+  return Tags.find("url":url)
+)
+
+Meteor.publish('find_bookmarks_by_url', (url)->
+  return BookMarks.find("url":url)
 )
 
 Meteor.publish("explores", ->

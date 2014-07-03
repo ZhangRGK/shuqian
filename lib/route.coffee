@@ -2,11 +2,9 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores'), Meteor.subscribe('statistical')]
-  ,
+  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores')],
   layoutTemplate: 'main',
   loadingTemplate: 'loading'
-#  onBeforeAction: 'loading'
 })
 
 distinctBookmarks = (bookMarks)->
@@ -76,11 +74,10 @@ getBlacklistBookMarks=->
 getNotMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'explore')
-  explore()
-  #tags = Tags.find({userId:Meteor.userId()}).fetch()
-  #bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
-  #urls = _.pluck(tags, 'url').concat(bms)
-  #Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
+  tags = Tags.find({userId:Meteor.userId()}).fetch()
+  bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
+  urls = _.pluck(tags, 'url').concat(bms)
+  Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
 
 #根目录书签
 getMyBookMarks=->
@@ -94,14 +91,8 @@ getDetailBookMark=(url)->
   BookMarks.findOne({url: url})
 
 Router.map(->
-  this.route('disqus', {
-    path: '/tell'
-  })
-  this.route('description', {
-    path: '/'
-  })
   this.route('bookMarkList', {
-    path: '/common',
+    path: '/',
     data: ->
       {
       bookMarks: getMyBookMarks(),
@@ -110,9 +101,11 @@ Router.map(->
   })
   this.route('bookMarkList', {
     path: '/explore',
+    #waitOn: -> [Meteor.subscribe('bookmarks', 'explore'), Meteor.subscribe('tags')]
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
+      #bookMarks: Explores.find(),
       tags: getTags()
       }
   })
@@ -161,10 +154,17 @@ Router.map(->
 
   this.route('bookMarkDetail', {
     path: '/d/:_url',
+    waitOn: ->
+      [Meteor.subscribe('find_tags_by_url',decodeURIComponent(@params._url)),Meteor.subscribe("find_bookmarks_by_url",decodeURIComponent(@params._url))]
+    ,
     data: ->
       {
       bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
-      tags: getTags()
+      tags: ()->
+        if Meteor.userId()
+          return _.uniq(Tags.find({"userId":Meteor.userId(),"url":this.bookMark.url}).fetch(),false,(d)->d.title)
+        else
+          return _.uniq(Tags.find({"url":this.bookMark.url}).fetch(),false,(d)->d.title)
       }
   })
 )
@@ -184,7 +184,6 @@ Meteor.Router.add('/upload', 'POST', ->
   nodes = []
   spread(body.data[0], nodes)
   for node in nodes
-    stat_tags = []
     if node.url
       bookMark = {userId:userId, url:node.url, title:node.title, dateAdded:parseInt(node.dateAdded), stat:1}
       #增加时间和状态不能纳入排重.会导致重复导入
@@ -199,14 +198,21 @@ Meteor.Router.add('/upload', 'POST', ->
           findTag = {userId:userId, url:node.url, title:parentNode.title}
           if Tags.find(findTag).count() == 0
             Tags.insert(tag)
-            stat_tags.push(tag)
-      #修改统计值
-      if Statistical.find({"url":bookMark.url}).count()==0
-        Statistical.insert({"url": bookMark.url, "star": 1, "black": 0, "count": 0, "tags": stat_tags})
-      else
-        stat = Statistical.findOne({"url": bookMark.url})
-        final = _.uniq(stat.tags.concat(stat_tags))
-        Statistical.update({"url": bookMark.url}, {"$set": {"star": stat.star+1, "tags": final}})
-  return [200,'0']
+  return '0'
 )
 
+Meteor.Router.add('/update','POST',->
+  updateData = eval(this.request.body)
+  console.log(updateData)
+  bookmark = updateData.data
+  BookMarks.update({id: bookmark.id},{$set: {index: bookmark.index, parentId: bookmark.pa}})
+)
+#
+#Meteor.Router.add('/update', 'POST', ->
+#  console.log('update')
+#  bookmark = eval(this.request.body)
+#  log bookmark
+#  BookMarks.update({id: bookmark.id}, {$set: {index: bookmark.index, parentId: bookmark.parentId}})
+#)
+
+Router.onBeforeAction('loading')
