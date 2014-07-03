@@ -6,7 +6,6 @@ Template.bookMarkList.helpers({
       return
 
     if Session.get("shuqianType")=="explore"
-      console.log this
       bookMarks = this.bookMarks.fetch()
       array = _.uniq(bookMarks, false, (d)-> return d.url)
       return array
