@@ -18,6 +18,8 @@ Meteor.publish('statistical',()->
     urls = BookMarks.find({userId:this.userId},{"fields":{"url":true,"_id":false}}).fetch()
   else
     urls = BookMarks.find({userId:''},{"fields":{"url":true,"_id":false}}).fetch()
+  console.log(this.userId)
+  console.log(urls)
   return Statistical.find({"url":{"$in":urls}})
 )
 

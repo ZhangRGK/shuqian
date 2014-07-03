@@ -6,18 +6,18 @@ Template.bookMarkDetail.helpers({
       a.href = this.bookMark.url
     return a.hostname
   star:->
-    this.statistical.star
+    Statistical.findOne({"url":this.bookMark.url}).star
   black:->
-    this.statistical.black
+    Statistical.findOne({"url":this.bookMark.url}).black
   myTags:->
     myTags = []
-    stat_tags = this.statistical.tags
+    stat_tags = Statistical.findOne({"url":this.bookMark.url}).tags
     for tag in this.tags
       if stat_tags.indexOf(tag)>=0
         myTags.push(stat_tags[stat_tags.indexOf(tag)])
     return myTags
   otherTags:->
-    stat_tags = this.statistical.tags.slice(0)
+    stat_tags = Statistical.findOne({"url":this.bookMark.url}).tags.slice(0)
     for tag in this.tags
       if stat_tags.indexOf(tag) >=0
         stat_tags.splice(stat_tags.indexOf(tag),1)
