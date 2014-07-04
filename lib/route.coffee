@@ -99,7 +99,10 @@ Router.map(->
     path: '/tell'
   })
   this.route('description', {
-    path: '/'
+    path: '/',
+    onAfterAction: ->
+      if Meteor.userId()
+        Router.go('/common')
   })
   this.route('bookMarkList', {
     path: '/common',
