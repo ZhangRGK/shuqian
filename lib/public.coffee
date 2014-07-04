@@ -2,6 +2,9 @@
   bookMark = getBookmark(bookMarkId)
   tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
   doTag = Tags.findOne(tag)
+  #选择多个checkbox时,会出现剔除没有标记这个tag的bookmakrs的情况
+  if !doTag
+    return
 
   Tags.update({_id:doTag._id}, {$set: {stat:0}})
   stat = Statistical.findOne({"url": bookMark.url})

@@ -45,8 +45,10 @@ Template.tHead.rendered = ->
 
     #取消选中的
     onDropdownHide:->
+      console.log 'bigzhu'
       $('input[name="bookmark"]:checked').map(->
-        $(this).click()
+        if $(this).is(':checked')
+          $(this).click()
       )
   })
 
