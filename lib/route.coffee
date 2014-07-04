@@ -3,9 +3,8 @@ log = (parm)->
 
 Router.configure({
   waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores'), Meteor.subscribe('statistical')]
-,
-  layoutTemplate: 'main',
-  loadingTemplate: 'loading',
+  layoutTemplate: 'main'
+  loadingTemplate: 'loading'
   onAfterAction:->
     cleanCheckedBookMarks()
 #  onBeforeAction: 'loading'
