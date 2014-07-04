@@ -1,4 +1,4 @@
-Template.bookMarkList.events = {
+Template.search.events = {
   'keyup #search': (evt, template)->
     value = $(evt.target).val()
     if value == ''

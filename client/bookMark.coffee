@@ -26,4 +26,9 @@ Template.bookMark.events = {
       bm.dateAdded = new Date().getTime()
       BookMarks.insert(bm)
     return
+  'click input[name="bookmark"]': (evt, template)->
+    if $(evt.target).is(':checked')
+      setCheckedBookMarks($(evt.target).val())
+    else
+      popCheckedBookMarks($(evt.target).val())
 }

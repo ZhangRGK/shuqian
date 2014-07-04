@@ -36,10 +36,4 @@ Template.bookMarkList.events = {
       else
         $('input[name="bookmark"]').prop('checked', false)
     updateState()
-  
-  'click input[name="bookmark"]': (evt, template)->
-    if $(evt.target).is(':checked')
-      setCheckedBookMarks($(evt.target).val())
-    else
-      popCheckedBookMarks($(evt.target).val())
 }
