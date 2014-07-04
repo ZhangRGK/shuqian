@@ -19,11 +19,11 @@ getBookMarksByTag = (tag)->
   Session.set('shuqianType', null)
   tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
-  BookMarks.find({url: {$in: urls}}, {sort:{dateAdded:-1}})
 
   checkedBookMarks = Session.get("checkedBookMarks")||[]
-  theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}}]
-  BookMarks.find({$or: theOr}, {sort:{dateAdded:-1}})
+  theOr = {$or:[{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}}]}
+  sort = {sort:{dateAdded:-1}}
+  BookMarks.find(theOr, sort)
 
 getTags = ->
   tags = Tags.find({stat:1}).fetch()
@@ -95,6 +95,13 @@ getMyBookMarks=->
   Session.set('shuqianType', null)
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
+
+  checkedBookMarks = Session.get("checkedBookMarks")||[]
+  theOr = {$or: [{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
+  sort = {sort:{count:-1}, limit : 14}
+  BookMarks.find(theOr, sort)
+
+
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 
 getDetailBookMark=(url)->
