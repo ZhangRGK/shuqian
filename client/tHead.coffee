@@ -42,6 +42,12 @@ Template.tHead.rendered = ->
           bookMarkId = $(this).val()
           removeTag(bookMarkId, tag)
         )
+
+    #取消选中的
+    onDropdownHide:->
+      $('input[name="bookmark"]:checked').map(->
+        $(this).click()
+      )
   })
 
   Deps.autorun(->
