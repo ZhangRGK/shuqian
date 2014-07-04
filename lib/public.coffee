@@ -77,10 +77,8 @@
   urls = _.pluck(tags, 'url').concat(bms)
   #Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
   checkedBookMarks = Session.get("checkedBookMarks")||[]
-  Explores.find({'$or': [
-      { _id: {$in: checkedBookMarks}},
-      {url: {$nin: urls}, stat:1}
-    ]}, {sort:{count:-1}, limit : 200})
+  theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$nin: urls}, stat:1}]
+  Explores.find({$or: theOr}, {sort:{count:-1}, limit : 200})
 #取bookMark
 @getBookmark = (bookMarkId)->
   bookMark = BookMarks.findOne({_id: bookMarkId})
@@ -98,3 +96,5 @@
     bookMarks = Session.get("checkedBookMarks")
     bookMarks.splice(bookMarks.indexOf(bookMarkId),1)
     Session.set("checkedBookMarks", bookMarks)
+@cleanCheckedBookMarks = ->
+    Session.set("checkedBookMarks", [])

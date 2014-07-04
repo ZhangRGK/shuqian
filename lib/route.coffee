@@ -5,8 +5,11 @@ Router.configure({
   waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores'), Meteor.subscribe('statistical')]
   ,
   layoutTemplate: 'main',
-  loadingTemplate: 'loading'
+  loadingTemplate: 'loading',
+  onAfterAction:->
+    cleanCheckedBookMarks()
 #  onBeforeAction: 'loading'
+
 })
 
 distinctBookmarks = (bookMarks)->
@@ -18,6 +21,10 @@ getBookMarksByTag = (tag)->
   tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}}, {sort:{dateAdded:-1}})
+
+  checkedBookMarks = Session.get("checkedBookMarks")||[]
+  theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}}]
+  BookMarks.find({$or: theOr}, {sort:{dateAdded:-1}})
 
 getTags = ->
   tags = Tags.find({stat:1}).fetch()
