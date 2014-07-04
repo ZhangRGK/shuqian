@@ -9,7 +9,7 @@
   Tags.update({_id:doTag._id}, {$set: {stat:0}})
   stat = Statistical.findOne({"url": bookMark.url})
   final = stat.tags.slice(0)
-  final.splice(final.indexOf(tag),1)
+  final.splice(final.indexOf(tag.title),1)
   Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star-1, "tags": final}})
 
 @addTag = (bookMark, tag, userId = null)->
@@ -34,12 +34,13 @@
     tag.stat = 1
     Tags.insert(tag)
   # 修改统计表
+
   if Statistical.find({"url": bookMark.url}).count() == 0
     Statistical.insert({"url": bookMark.url, "star": 1, "black": 0, "count": 0, "tags": [tag]})
   else
     stat = Statistical.findOne({"url": bookMark.url})
     final = stat.tags.slice(0)
-    if stat.tags.indexOf(tag) < 0
+    if stat.tags.indexOf(tag.title) < 0
       final.push(tag.title)
     Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star+1, "tags": final}})
   # 统计表修改完成
