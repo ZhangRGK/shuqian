@@ -55,14 +55,14 @@ getTagsByURL = (url)->
   #找到所有的tag
   BookMarks.find({id: {$in: tagIds}})
 getBookMarksBySearch = (value)->
-  bookMarks = BookMarks.find({'$or': [
-    { 'url': {'$regex': value} },
-    { 'title': {'$regex': value} },
-  ]
-  }, ).fetch()
-  bookMarks = _.uniq(bookMarks, false, (d)-> return d.url)
-  _.sortBy(bookMarks, (d)-> -d.count)
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url')
+  sort = {sort:{count:-1}}
+  where = {'$or': [ { 'url': {'$regex': value} }, { 'title': {'$regex': value} }, ], stat:1, url:{$in:urls}}
+  BookMarks.find(where, sort)
 
+  #bookMarks = _.uniq(bookMarks, false, (d)-> return d.url)
+  #_.sortBy(bookMarks, (d)-> -d.count)
 #回收站
 getGarbageBookMarks=->
   Session.set('shuqianTag', null)
