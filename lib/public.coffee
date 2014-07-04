@@ -94,6 +94,7 @@
     if !bookMarks
       bookMarks = []
     bookMarks.push(bookMarkId)
+    bookMarks = _.uniq(bookMarks)
     Session.set("checkedBookMarks", bookMarks)
 @popCheckedBookMarks = (bookMarkId)->
     bookMarks = Session.get("checkedBookMarks")
