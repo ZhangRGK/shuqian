@@ -65,7 +65,11 @@
   bms = _.pluck(BookMarks.find({"userId":Meteor.userId()}).fetch(),"url")
   urls = _.pluck(tags, 'url').concat(bms)
   Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
-
+  #checkedBookMarks = Session.get("checkedBookMarks")||[]
+  #Explores.find({'$or': [
+  #    { _id: {$in: value} },
+  #    {url: {$nin: urls}, stat:1}
+  #  ]}, {sort:{count:-1}, limit : 200})
 #取bookMark
 @getBookmark = (bookMarkId)->
   bookMark = BookMarks.findOne({_id: bookMarkId})
@@ -73,3 +77,7 @@
     bookMark = Explores.findOne({_id: bookMarkId})
     bookMark.userId = Meteor.userId()
   return bookMark
+@setCheckedBookMarks = (bookMarkId)->
+    bookMarks = Session.get("checkedBookMarks")||[]
+    bookMarks.append(bookMarkId)
+    Session.set("checkedBookMarks", bookMarks)

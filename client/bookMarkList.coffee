@@ -36,6 +36,11 @@ Template.bookMarkList.events = {
       else
         $('input[name="bookmark"]').prop('checked', false)
     updateState()
+  
+  'click input[name="bookmark"]': (evt, template)->
+    console.log $(evt.target).val()
+
+
   'keyup #search': (evt, template)->
     value = $(evt.target).val()
     if value == ''

@@ -53,6 +53,17 @@ Template.tHead.rendered = ->
           if(window.location.pathname != "/explore")
             removeTag(bookMarkId, tag)
         )
+    onDropdownHide:->
+      if window.location.pathname == "/explore"
+        $('input[name="bookmark"]:checked').map(->
+          bookMarkId = $(this).val()
+          $('input[name="multiselect"]:checked').map(->
+            tag =  $(this).val()
+            bookMark = getBookmark(bookMarkId)
+            bookMark.stat = 1
+            addTag(bookMark, tag)
+          )
+        )
 
   })
 
