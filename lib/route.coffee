@@ -53,8 +53,9 @@ getBookMarksBySearch = (value)->
     { 'url': {'$regex': value} },
     { 'title': {'$regex': value} },
   ]
-  }).fetch()
-  return distinctBookmarks(bookMarks)
+  }, ).fetch()
+  bookMarks = _.uniq(bookMarks, false, (d)-> return d.url)
+  _.sortBy(bookMarks, (d)-> -d.count)
 
 #回收站
 getGarbageBookMarks=->
@@ -98,7 +99,10 @@ Router.map(->
     path: '/tell'
   })
   this.route('description', {
-    path: '/'
+    path: '/',
+    onAfterAction: ->
+      if Meteor.userId()
+        Router.go('/common')
   })
   this.route('bookMarkList', {
     path: '/common',
