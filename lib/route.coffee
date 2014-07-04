@@ -3,10 +3,13 @@ log = (parm)->
 
 Router.configure({
   waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores'), Meteor.subscribe('statistical')]
-  ,
+,
   layoutTemplate: 'main',
-  loadingTemplate: 'loading'
+  loadingTemplate: 'loading',
+  onAfterAction:->
+    cleanCheckedBookMarks()
 #  onBeforeAction: 'loading'
+
 })
 
 distinctBookmarks = (bookMarks)->
@@ -18,6 +21,10 @@ getBookMarksByTag = (tag)->
   tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$in: urls}}, {sort:{dateAdded:-1}})
+
+  checkedBookMarks = Session.get("checkedBookMarks")||[]
+  theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}}]
+  BookMarks.find({$or: theOr}, {sort:{dateAdded:-1}})
 
 getTags = ->
   tags = Tags.find({stat:1}).fetch()
@@ -69,8 +76,8 @@ getGarbageBookMarks=->
 getBlacklistBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'blacklist')
-#  tags = Tags.find().fetch()
-#  urls = _.pluck(tags, 'url')
+  #  tags = Tags.find().fetch()
+  #  urls = _.pluck(tags, 'url')
   BookMarks.find({stat:2},{sort:{dateAdded:-1}}).fetch()
 
 #探索
@@ -78,10 +85,10 @@ getNotMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'explore')
   explore()
-  #tags = Tags.find({userId:Meteor.userId()}).fetch()
-  #bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
-  #urls = _.pluck(tags, 'url').concat(bms)
-  #Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
+#tags = Tags.find({userId:Meteor.userId()}).fetch()
+#bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
+#urls = _.pluck(tags, 'url').concat(bms)
+#Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
 
 #根目录书签
 getMyBookMarks=->
@@ -158,7 +165,7 @@ Router.map(->
       $('input[name="bookmark"]').prop("checked", false)
       $('option', $('#multi')).each((element)->
         $(this).removeAttr('selected').prop('selected', false)
-			)
+      )
       #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
   })
