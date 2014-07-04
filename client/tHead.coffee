@@ -1,13 +1,3 @@
-removeTag = (bookMarkId, tag)->
-  bookMark = BookMarks.findOne({_id:bookMarkId})
-  tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
-  doTag = Tags.findOne(tag)
-
-  Tags.update({_id:doTag._id}, {$set: {stat:0}})
-  stat = Statistical.findOne({"url": bookMark.url})
-  final = stat.tags.slice(0)
-  final.splice(final.indexOf(tag),1)
-  Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star-1, "tags": final}})
 
 selectMulti = ->
   #根据选中checkbox,重新选中multiselect
@@ -50,21 +40,8 @@ Template.tHead.rendered = ->
       else
         $('input[name="bookmark"]:checked').map(->
           bookMarkId = $(this).val()
-          if(window.location.pathname != "/explore")
-            removeTag(bookMarkId, tag)
+          removeTag(bookMarkId, tag)
         )
-    onDropdownHide:->
-      if window.location.pathname == "/explore"
-        $('input[name="bookmark"]:checked').map(->
-          bookMarkId = $(this).val()
-          $('input[name="multiselect"]:checked').map(->
-            tag =  $(this).val()
-            bookMark = getBookmark(bookMarkId)
-            bookMark.stat = 1
-            addTag(bookMark, tag)
-          )
-        )
-
   })
 
   Deps.autorun(->

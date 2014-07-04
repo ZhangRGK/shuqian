@@ -38,8 +38,10 @@ Template.bookMarkList.events = {
     updateState()
   
   'click input[name="bookmark"]': (evt, template)->
-    console.log $(evt.target).val()
-
+    if $(evt.target).is(':checked')
+      setCheckedBookMarks($(evt.target).val())
+    else
+      popCheckedBookMarks($(evt.target).val())
 
   'keyup #search': (evt, template)->
     value = $(evt.target).val()

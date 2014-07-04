@@ -1,3 +1,14 @@
+@removeTag = (bookMarkId, tag)->
+  bookMark = getBookmark(bookMarkId)
+  tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
+  doTag = Tags.findOne(tag)
+
+  Tags.update({_id:doTag._id}, {$set: {stat:0}})
+  stat = Statistical.findOne({"url": bookMark.url})
+  final = stat.tags.slice(0)
+  final.splice(final.indexOf(tag),1)
+  Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star-1, "tags": final}})
+
 @addTag = (bookMark, tag, userId = null)->
   if userId == null
     userId = Meteor.userId()
@@ -64,12 +75,12 @@
   tags = Tags.find({userId:Meteor.userId()}).fetch()
   bms = _.pluck(BookMarks.find({"userId":Meteor.userId()}).fetch(),"url")
   urls = _.pluck(tags, 'url').concat(bms)
-  Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
-  #checkedBookMarks = Session.get("checkedBookMarks")||[]
-  #Explores.find({'$or': [
-  #    { _id: {$in: value} },
-  #    {url: {$nin: urls}, stat:1}
-  #  ]}, {sort:{count:-1}, limit : 200})
+  #Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
+  checkedBookMarks = Session.get("checkedBookMarks")||[]
+  Explores.find({'$or': [
+      { _id: {$in: checkedBookMarks}},
+      {url: {$nin: urls}, stat:1}
+    ]}, {sort:{count:-1}, limit : 200})
 #取bookMark
 @getBookmark = (bookMarkId)->
   bookMark = BookMarks.findOne({_id: bookMarkId})
@@ -78,6 +89,12 @@
     bookMark.userId = Meteor.userId()
   return bookMark
 @setCheckedBookMarks = (bookMarkId)->
-    bookMarks = Session.get("checkedBookMarks")||[]
-    bookMarks.append(bookMarkId)
+    bookMarks = Session.get("checkedBookMarks")
+    if !bookMarks
+      bookMarks = []
+    bookMarks.push(bookMarkId)
+    Session.set("checkedBookMarks", bookMarks)
+@popCheckedBookMarks = (bookMarkId)->
+    bookMarks = Session.get("checkedBookMarks")
+    bookMarks.splice(bookMarks.indexOf(bookMarkId),1)
     Session.set("checkedBookMarks", bookMarks)
