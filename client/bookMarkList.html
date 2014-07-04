@@ -4,9 +4,8 @@
 </div>
 <div class="col-md-9">
     {{#if currentUser}}
-    <div class="form-group">
-        <input id='search' type="text" class="form-control" placeholder="Search">
-    </div>
+
+    {{> search}}
     {{/if}}
     <table class="table">
         {{> tHead}}

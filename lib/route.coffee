@@ -106,21 +106,22 @@ Router.map(->
     path: '/tell'
   })
   this.route('description', {
-    path: '/',
+    path: '/'
     onAfterAction: ->
       if Meteor.userId()
         Router.go('/common')
   })
   this.route('bookMarkList', {
-    path: '/common',
+    path: '/common'
     data: ->
       {
       bookMarks: getMyBookMarks(),
       tags: getTags()
       }
+    onBeforeAction: 'loading'
   })
   this.route('bookMarkList', {
-    path: '/explore',
+    path: '/explore'
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
@@ -128,7 +129,7 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
-    path: '/garbage',
+    path: '/garbage'
     data: ->
       {
       bookMarks: getGarbageBookMarks(),
@@ -136,7 +137,7 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
-    path: '/blacklist',
+    path: '/blacklist'
     data: ->
       {
       bookMarks: getBlacklistBookMarks(),
@@ -144,7 +145,7 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
-    path: '/search/:_value',
+    path: '/search/:_value'
     data: ->
       {
       bookMarks: getBookMarksBySearch(@params._value),
@@ -152,7 +153,7 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
-    path: '/tag/:_tag',
+    path: '/tag/:_tag'
     data: ->
       {
       bookMarks: getBookMarksByTag(@params._tag),
@@ -167,11 +168,10 @@ Router.map(->
 			)
       #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
-
   })
 
   this.route('bookMarkDetail', {
-    path: '/d/:_url',
+    path: '/d/:_url'
     data: ->
       {
       bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
