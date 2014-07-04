@@ -11,11 +11,11 @@ var distinct = function(array) {
 
 db.bookmarks.find().forEach(function (bookmark) {
     if (db.statistical.count({"url": bookmark.url}) == 0) {
-        var tag = db.tags.findOne({"url": bookmark.url, "stat": 1});
-        if(tag == null) {
-            tag = {"title":null}
-        }
-        db.statistical.insert({"url": bookmark.url, "tags": [tag.title], "count": 0, "star": 1, "black": 0});
+        var tag = db.tags.find({"url": bookmark.url, "stat": 1}).map(function (u) {
+            return u.title
+        });
+        tag = distinct(tag);
+        db.statistical.insert({"url": bookmark.url, "tags": tag, "count": 0, "star": 1, "black": 0});
     } else {
         var star = db.tags.count({"url": bookmark.url, "stat": 1});
         var black = db.tags.count({"url": bookmark.url, "stat": 2});
