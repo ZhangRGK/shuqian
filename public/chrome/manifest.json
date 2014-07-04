@@ -1,6 +1,6 @@
 {
-    "name": "bigmarks",
-    "version": "1.1",
+    "name": "书签",
+    "version": "1.2",
     "manifest_version": 2,
     "description": "用来同步Chrome书签到互联网",
     "browser_action": {
