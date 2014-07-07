@@ -7,7 +7,6 @@ Template.bookMarkDetail.helpers({
     return a.hostname
   bmTitle: ->
     if @statistical
-      console.log @statistical
       @statistical.title
   star:->
     if @statistical
