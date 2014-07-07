@@ -7,10 +7,10 @@
     return
 
   Tags.update({_id:doTag._id}, {$set: {stat:0}})
-  stat = Statistical.findOne({"url": bookMark.url})
-  final = stat.tags.slice(0)
-  final.splice(final.indexOf(tag.title),1)
-  Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star-1, "tags": final}})
+#  stat = Statistical.findOne({"url": bookMark.url})
+#  final = stat.tags.slice(0)
+#  final.splice(final.indexOf(tag.title),1)
+#  Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star-1, "tags": final}})
 
 @addTag = (bookMark, tag, userId = null)->
   if userId == null
