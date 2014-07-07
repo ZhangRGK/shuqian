@@ -85,7 +85,7 @@
   urls = _.pluck(tags, 'url').concat(bms)
 
   #屏蔽被其他人列入黑名单内的
-  where = {star:{$gt:2}, black:{$lt:2}, count:{$gt:10},url:{$nin:urls}}
+  where = {star:{$gt:2}, black:{$lt:2}, count:{$gt:3},url:{$nin:urls}}
   Statistical.find({})
 
   checkedBookMarks = Session.get("checkedBookMarks")||[]
