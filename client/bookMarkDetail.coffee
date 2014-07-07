@@ -33,3 +33,13 @@ Template.bookMarkDetail.helpers({
         otherTags.push({"title":t})
       return otherTags
 })
+
+Template.bookMarkDetail.events = {
+  'click a[name="myTags"]': (evt, template)->
+    bookmarkUrl = $('a[name="bookmarkUrl"]').prop('text')
+
+    console.log $('a[name="myTags"]').prop('text')
+  ,
+  'click a[name="otherTags"]':(evt,template)->
+    console.log $('a[name="otherTags"]').prop('text')
+}
