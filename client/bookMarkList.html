@@ -3,10 +3,13 @@
     {{> tagList}}
 </div>
 <div class="col-md-9">
+    {{#if isEmpty}}
+    <div class="alert alert-info" role="alert">没有可显示的数据!</div>
+    {{else}}
     {{#if currentUser}}
-
     {{> search}}
     {{/if}}
+
     <table class="table">
         {{> tHead}}
         <tbody>
@@ -15,6 +18,8 @@
         {{/each}}
         </tbody>
     </table>
+    {{/if}}
+
 </div>
 </template>
 
