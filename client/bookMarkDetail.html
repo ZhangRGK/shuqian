@@ -4,15 +4,15 @@
     <div class="panel-body">
         <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>{{bmTitle}}
         <p>
-        <a name="bookmarkUrl" href='{{url}}' target="_blank">{{url}}</a>
+        <a id="bookmarkUrl" href='{{url}}' target="_blank">{{url}}</a>
         </p>
         <p>
         <div class="bm-info"><span class="glyphicon glyphicon-star"></span><label>{{star}}</label><span class="glyphicon glyphicon-ban-circle"></span><label>{{black}}</label></div>
         {{#each myTags}}
-        <a name="myTags" href="#"><span class="badge">{{title}}</span></a>
+        <a id="myTags" href="#"><span class="badge">{{title}}</span></a>
         {{/each}}
         {{#each otherTags}}
-        <a name="otherTags" href="#"><span class="badge" style="background-color:#ddd">{{title}}</span></a>
+        <a id="otherTags" href="#"><span class="badge" style="background-color:#ddd">{{title}}</span></a>
         {{/each}}
         </p>
     </div>

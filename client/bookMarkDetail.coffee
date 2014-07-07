@@ -35,11 +35,17 @@ Template.bookMarkDetail.helpers({
 })
 
 Template.bookMarkDetail.events = {
-  'click a[name="myTags"]': (evt, template)->
-    bookmarkUrl = $('a[name="bookmarkUrl"]').prop('text')
+  'click #myTags': (evt, template)->
+    url = $('#bookmarkUrl').prop('text')
+    tag = $('#myTags').prop('text')
 
-    console.log $('a[name="myTags"]').prop('text')
+    bookMark = BookMarks.findOne({url: url})
+    removeTag(bookMark._id, tag)
   ,
-  'click a[name="otherTags"]':(evt,template)->
-    console.log $('a[name="otherTags"]').prop('text')
+  'click #otherTags':(evt,template)->
+    url = $('#bookmarkUrl').prop('text')
+    tag = $('#myTags').prop('text')
+
+    bookMark = BookMarks.findOne({url: url})
+    addTag(bookMark,tag)
 }
