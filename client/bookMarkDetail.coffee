@@ -6,6 +6,7 @@ Template.bookMarkDetail.helpers({
       a.href = this.bookMark.url
     return a.hostname
   star:->
+    console.log this.bookMark
     if this.bookMark
       Statistical.findOne({"url":this.bookMark.url}).star
   black:->
