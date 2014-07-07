@@ -77,12 +77,20 @@
 #探索
 @explore = ->
   tags = Tags.find({userId:Meteor.userId()}).fetch()
+  tagTitles = _.pluck(tags,"title")
+
+
+
   bms = _.pluck(BookMarks.find({"userId":Meteor.userId()}).fetch(),"url")
   urls = _.pluck(tags, 'url').concat(bms)
-  #Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
+
   checkedBookMarks = Session.get("checkedBookMarks")||[]
-  theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$nin: urls}, stat:1}]
-  Explores.find({$or: theOr}, {sort:{count:-1}, limit : 200})
+  theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$nin: urls}, title:{$in:tagTitles}, stat:1}]
+  explores = Explores.find({$or: theOr}, {sort:{count:-1}, limit : 20})
+  if explores.count() == 0
+    theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$nin: urls}, stat:1}]
+    explores = Explores.find({$or: theOr}, {sort:{count:-1}, limit : 20})
+  return explores
 #取bookMark
 @getBookmark = (bookMarkId)->
   bookMark = BookMarks.findOne({_id: bookMarkId})
