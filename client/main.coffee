@@ -20,6 +20,12 @@ Template.main.events = {
         bookMark = getBookmark(bookMarkId)
         addTag(bookMark, tag)
       )
+  'click #test':(evt, template)->
+    console.log 'bigzhu'
+    Meteor.loginWithGoogle({},  (err)->
+      if (err)
+        console.log err
+    )
 }
 
 Meteor.startup(->
