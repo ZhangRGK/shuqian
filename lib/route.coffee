@@ -2,7 +2,7 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores'), Meteor.subscribe('statistical')]
+  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('statistical')]
   layoutTemplate: 'main'
   loadingTemplate: 'loading'
   onAfterAction:->
