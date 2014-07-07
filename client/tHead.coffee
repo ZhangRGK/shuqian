@@ -46,8 +46,10 @@ Template.tHead.rendered = ->
     #取消选中的
     onDropdownHide:->
       $('input[name="bookmark"]:checked').map(->
-        if $(this).is(':checked')
-          $(this).click()
+        #新建标签modal显示时,不能取消选中的checkbox
+        if $('#myModal').attr('class') != 'modal fade in'
+          if $(this).is(':checked')
+            $(this).click()
       )
   })
 
