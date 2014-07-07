@@ -15,7 +15,7 @@ db.bookmarks.find().forEach(function (bookmark) {
             return u.title
         });
         tag = distinct(tag);
-        db.statistical.insert({"url": bookmark.url, "tags": tag, "count": 0, "star": 1, "black": 0});
+        db.statistical.insert({"url": bookmark.url,"title":bookmark.title,"createUser":bookmark.userId,"createDate":bookmark.dateAdded, "tags": tag, "count": 0, "star": 1, "black": 0});
     } else {
         var star = db.tags.count({"url": bookmark.url, "stat": 1});
         var black = db.tags.count({"url": bookmark.url, "stat": 2});

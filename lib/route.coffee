@@ -2,7 +2,7 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores'), Meteor.subscribe('statistical')]
+  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('statistical')]
   layoutTemplate: 'main'
   loadingTemplate: 'loading'
   onAfterAction:->
@@ -104,11 +104,15 @@ getMyBookMarks=->
 
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 
-getDetailBookMark=(url)->
-  bookMark = BookMarks.findOne({url: url})
-  if !bookMark
-    bookMark = Explores.findOne({url: url})
-  return bookMark
+#getDetailBookMark=(url)->
+#  console.log("url",url)
+#  bookMark = BookMarks.findOne({url: url})
+#  console.log("from bookmarks",bookMark)
+#  if !bookMark
+#    bookMark = Explores.findOne({url: url})
+#    console.log("from explores",bookMark)
+#  console.log("final",bookMark)
+#  return bookMark
 
 Router.map(->
   this.route('about', {
@@ -189,7 +193,8 @@ Router.map(->
     path: '/d/:_url'
     data: ->
       {
-      bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
+      url: decodeURIComponent(@params._url),
+      statistical:Statistical.findOne({"url":@params._url}),
       tags: getTags()
       }
   })

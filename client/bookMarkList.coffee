@@ -1,6 +1,12 @@
 Template.bookMarkList.helpers({
   uniqTag: ->
     Session.get('uniqTag')
+  isEmpty:->
+    if @bookMarks
+      return @bookMarks.count() == 0
+    else
+      return false
+    
 })
 
 updateState = ->
