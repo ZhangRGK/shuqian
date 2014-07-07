@@ -104,15 +104,15 @@ getMyBookMarks=->
 
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 
-getDetailBookMark=(url)->
-  console.log("url",url)
-  bookMark = BookMarks.findOne({url: url})
-  console.log("from bookmarks",bookMark)
-  if !bookMark
-    bookMark = Explores.findOne({url: url})
-    console.log("from explores",bookMark)
-  console.log("final",bookMark)
-  return bookMark
+#getDetailBookMark=(url)->
+#  console.log("url",url)
+#  bookMark = BookMarks.findOne({url: url})
+#  console.log("from bookmarks",bookMark)
+#  if !bookMark
+#    bookMark = Explores.findOne({url: url})
+#    console.log("from explores",bookMark)
+#  console.log("final",bookMark)
+#  return bookMark
 
 Router.map(->
   this.route('about', {
@@ -193,7 +193,7 @@ Router.map(->
     path: '/d/:_url'
     data: ->
       {
-      bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
+      url: decodeURIComponent(@params._url),
       tags: getTags()
       }
   })
