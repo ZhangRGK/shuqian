@@ -5,24 +5,28 @@ Template.bookMarkDetail.helpers({
     if this.url
       a.href = this.url
     return a.hostname
+  bmTitle: ->
+    if @statistical
+      console.log @statistical
+      @statistical.title
   star:->
-    if this.url
-      Statistical.findOne({"url":this.url}).star
+    if @statistical
+      @statistical.star
   black:->
-    if this.url
-      Statistical.findOne({"url":this.url}).black
+    if @statistical
+      @statistical.black
   myTags:->
-    if this.url
+    if @statistical
       myTags = []
-      stat_tags = Statistical.findOne({"url":this.url}).tags
+      stat_tags = @statistical.tags
       for tag in this.tags
         if stat_tags.indexOf(tag.title)>=0
           myTags.push({"title":tag.title})
       return myTags
   otherTags:->
-    if this.url
+    if @statistical
       otherTags = []
-      stat_tags = Statistical.findOne({"url":this.url}).tags.slice(0)
+      stat_tags = @statistical.tags.slice(0)
       for tag in this.tags
         if stat_tags.indexOf(tag.title) >=0
           stat_tags.splice(stat_tags.indexOf(tag.title),1)

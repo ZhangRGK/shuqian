@@ -194,6 +194,7 @@ Router.map(->
     data: ->
       {
       url: decodeURIComponent(@params._url),
+      statistical:Statistical.findOne({"url":@params._url}),
       tags: getTags()
       }
   })
