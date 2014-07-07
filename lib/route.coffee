@@ -105,7 +105,10 @@ getMyBookMarks=->
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 
 getDetailBookMark=(url)->
-  BookMarks.findOne({url: url})
+  bookMark = BookMarks.findOne({url: url})
+  if !bookMark
+    bookMark = Explores.findOne({url: url})
+  return bookMark
 
 Router.map(->
   this.route('about', {
