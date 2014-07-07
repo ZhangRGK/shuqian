@@ -1,16 +1,20 @@
 <template name='bookMarkList'>
-{{#if currentUser}}
-<div class="form-group">
-    <input id='search' type="text" class="form-control" placeholder="Search">
+<div class="col-md-3">
+    {{> tagList}}
 </div>
-{{/if}}
-<table class="table">
-    {{> tHead}}
-    <tbody>
-    {{#each bookMarks}}
-    {{> bookMark}}
-    {{/each}}
-    </tbody>
-</table>
+<div class="col-md-9">
+    {{#if currentUser}}
+
+    {{> search}}
+    {{/if}}
+    <table class="table">
+        {{> tHead}}
+        <tbody>
+        {{#each bookMarks}}
+        {{> bookMark}}
+        {{/each}}
+        </tbody>
+    </table>
+</div>
 </template>
 

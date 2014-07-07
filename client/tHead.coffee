@@ -1,13 +1,3 @@
-removeTag = (bookMarkId, tag)->
-  bookMark = BookMarks.findOne({_id:bookMarkId})
-  tag = {userId:Meteor.userId(), url:bookMark.url, title:tag, stat:1}
-  doTag = Tags.findOne(tag)
-
-  Tags.update({_id:doTag._id}, {$set: {stat:0}})
-  stat = Statistical.findOne({"url": bookMark.url})
-  final = stat.tags.slice(0)
-  final.splice(final.indexOf(tag),1)
-  Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star-1, "tags": final}})
 
 selectMulti = ->
   #根据选中checkbox,重新选中multiselect
@@ -41,19 +31,26 @@ Template.tHead.rendered = ->
       #增加
       if checked
         $('input[name="bookmark"]:checked').map(->
-          console.log window.location.pathname
           bookMarkId = $(this).val()
           bookMark = getBookmark(bookMarkId)
+          bookMark.stat = 1
           addTag(bookMark, tag)
         )
       #删除
       else
         $('input[name="bookmark"]:checked').map(->
           bookMarkId = $(this).val()
-          if(Session.get('shuqianType') != 'explore')
-            removeTag(bookMarkId, tag)
+          removeTag(bookMarkId, tag)
         )
 
+    #取消选中的
+    onDropdownHide:->
+      $('input[name="bookmark"]:checked').map(->
+        #新建标签modal显示时,不能取消选中的checkbox
+        if $('#myModal').attr('class') != 'modal fade in'
+          if $(this).is(':checked')
+            $(this).click()
+      )
   })
 
   Deps.autorun(->
@@ -97,6 +94,7 @@ Template.tHead.rendered = ->
 
 Template.tHead.helpers({
   isExplore:->
-    currentType = Session.get('shuqianType')
-    return currentType == 'explore'
+    window.location.pathname == "/explore"
+  isBlacklist: ->
+    window.location.pathname == "/blacklist"
 })

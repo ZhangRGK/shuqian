@@ -1,14 +1,13 @@
-<template name="main">
 <head>
 <meta charset='utf-8'>
 <title>书签</title>
-<link rel="shortcut icon" href="/images/favicon32.ico?v=3" type="image/x-icon" />
+<link rel="shortcut icon" href="/chrome/icon128.png" type="image/x-icon" />
 </head>
-<body>
+<template name="main">
 <div style="background:url(/img/Polish_Wikinews_header_image_new.png) no-repeat;">
     <div class="container">
         <div class="page-header pull-right">
-            <h2><a href="/">BigMarks</a><small>让你的chrome书签活起来</small></h2>
+            <h2><a href="/">叶脉书签</a><small>让你的chrome书签活起来</small></h2>
         </div>
     </div>
 </div>
@@ -36,22 +35,9 @@
 </div>
 
 <div id='app' class="container-fluid">
-    {{#if isRoot}}
     <div class="row">
-        <div class="col-md-12">
-            {{> description}}
-        </div>
-    </div>
-    {{else}}
-    <div class="row">
-        <div class="col-md-3">
-            {{> tagList}}
-        </div>
-        <div class="col-md-9">
             {{> yield}}
-        </div>
     </div>
-    {{/if}}
 </div>
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">
@@ -75,5 +61,4 @@
         </div>
     </div>
 </div>
-</body>
 </template>

@@ -3,10 +3,12 @@ log = (parm)->
 
 Router.configure({
   waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('explores'), Meteor.subscribe('statistical')]
-  ,
-  layoutTemplate: 'main',
+  layoutTemplate: 'main'
   loadingTemplate: 'loading'
+  onAfterAction:->
+    cleanCheckedBookMarks()
 #  onBeforeAction: 'loading'
+
 })
 
 distinctBookmarks = (bookMarks)->
@@ -17,7 +19,11 @@ getBookMarksByTag = (tag)->
   Session.set('shuqianType', null)
   tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
-  BookMarks.find({url: {$in: urls}}, {sort:{dateAdded:-1}})
+
+  checkedBookMarks = Session.get("checkedBookMarks")||[]
+  theOr = {$or:[{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}}]}
+  sort = {sort:{dateAdded:-1}}
+  BookMarks.find(theOr, sort)
 
 getTags = ->
   tags = Tags.find({stat:1}).fetch()
@@ -49,13 +55,14 @@ getTagsByURL = (url)->
   #找到所有的tag
   BookMarks.find({id: {$in: tagIds}})
 getBookMarksBySearch = (value)->
-  bookMarks = BookMarks.find({'$or': [
-    { 'url': {'$regex': value} },
-    { 'title': {'$regex': value} },
-  ]
-  }).fetch()
-  return distinctBookmarks(bookMarks)
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url')
+  sort = {sort:{count:-1}}
+  where = {'$or': [ { 'url': {'$regex': value} }, { 'title': {'$regex': value} }, ], stat:1, url:{$in:urls}}
+  BookMarks.find(where, sort)
 
+  #bookMarks = _.uniq(bookMarks, false, (d)-> return d.url)
+  #_.sortBy(bookMarks, (d)-> -d.count)
 #回收站
 getGarbageBookMarks=->
   Session.set('shuqianTag', null)
@@ -68,8 +75,8 @@ getGarbageBookMarks=->
 getBlacklistBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'blacklist')
-#  tags = Tags.find().fetch()
-#  urls = _.pluck(tags, 'url')
+  #  tags = Tags.find().fetch()
+  #  urls = _.pluck(tags, 'url')
   BookMarks.find({stat:2},{sort:{dateAdded:-1}}).fetch()
 
 #探索
@@ -77,10 +84,10 @@ getNotMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'explore')
   explore()
-  #tags = Tags.find({userId:Meteor.userId()}).fetch()
-  #bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
-  #urls = _.pluck(tags, 'url').concat(bms)
-  #Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
+#tags = Tags.find({userId:Meteor.userId()}).fetch()
+#bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
+#urls = _.pluck(tags, 'url').concat(bms)
+#Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
 
 #根目录书签
 getMyBookMarks=->
@@ -88,25 +95,45 @@ getMyBookMarks=->
   Session.set('shuqianType', null)
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
+
+  checkedBookMarks = Session.get("checkedBookMarks")||[]
+  theOr = {$or: [{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
+  sort = {sort:{count:-1}, limit : 14}
+  BookMarks.find(theOr, sort)
+
+
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 
 getDetailBookMark=(url)->
   BookMarks.findOne({url: url})
 
 Router.map(->
+  this.route('about', {
+    path: '/about'
+  })
+  this.route('disqus', {
+    path: '/tell'
+  })
   this.route('description', {
     path: '/'
+    action: ->
+      if this.ready()
+        if Meteor.userId()
+          Router.go('/common')
+    loadingTemplate:'description'
+    onBeforeAction: 'loading'
   })
   this.route('bookMarkList', {
-    path: '/common',
+    path: '/common'
     data: ->
       {
       bookMarks: getMyBookMarks(),
       tags: getTags()
       }
+    onBeforeAction: 'loading'
   })
   this.route('bookMarkList', {
-    path: '/explore',
+    path: '/explore'
     data: ->
       {
       bookMarks: getNotMyBookMarks(),
@@ -114,7 +141,7 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
-    path: '/garbage',
+    path: '/garbage'
     data: ->
       {
       bookMarks: getGarbageBookMarks(),
@@ -122,7 +149,7 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
-    path: '/blacklist',
+    path: '/blacklist'
     data: ->
       {
       bookMarks: getBlacklistBookMarks(),
@@ -130,7 +157,7 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
-    path: '/search/:_value',
+    path: '/search/:_value'
     data: ->
       {
       bookMarks: getBookMarksBySearch(@params._value),
@@ -138,7 +165,7 @@ Router.map(->
       }
   })
   this.route('bookMarkList', {
-    path: '/tag/:_tag',
+    path: '/tag/:_tag'
     data: ->
       {
       bookMarks: getBookMarksByTag(@params._tag),
@@ -150,14 +177,13 @@ Router.map(->
       $('input[name="bookmark"]').prop("checked", false)
       $('option', $('#multi')).each((element)->
         $(this).removeAttr('selected').prop('selected', false)
-			)
+      )
       #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
-
   })
 
   this.route('bookMarkDetail', {
-    path: '/d/:_url',
+    path: '/d/:_url'
     data: ->
       {
       bookMark: getDetailBookMark(decodeURIComponent(@params._url)),
