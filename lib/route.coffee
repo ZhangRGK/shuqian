@@ -27,6 +27,7 @@ getBookMarksByTag = (tag)->
 
 getTags = ->
   tags = Tags.find({stat:1}).fetch()
+  console.log("tags",tags)
   uniqTag = _.uniq(tags, false, (d)-> return d.title)
   for tag in uniqTag
     tag.count = Tags.find({title:tag.title, stat:1}).count()
