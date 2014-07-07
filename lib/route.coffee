@@ -84,10 +84,6 @@ getNotMyBookMarks=->
   Session.set('shuqianTag', null)
   Session.set('shuqianType', 'explore')
   explore()
-#tags = Tags.find({userId:Meteor.userId()}).fetch()
-#bms = _.pluck(BookMarks.find({"userId":Meteor.userId(),"stat":2}).fetch(),"url")
-#urls = _.pluck(tags, 'url').concat(bms)
-#Explores.find({url: {$nin: urls}, stat:1}, {sort:{count:-1}, limit : 200})
 
 #根目录书签
 getMyBookMarks=->
@@ -103,17 +99,6 @@ getMyBookMarks=->
 
 
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
-
-#getDetailBookMark=(url)->
-#  console.log("url",url)
-#  bookMark = BookMarks.findOne({url: url})
-#  console.log("from bookmarks",bookMark)
-#  if !bookMark
-#    bookMark = Explores.findOne({url: url})
-#    console.log("from explores",bookMark)
-#  console.log("final",bookMark)
-#  return bookMark
-
 Router.map(->
   this.route('about', {
     path: '/about'
