@@ -105,7 +105,7 @@
 @getBookmarkById = (bookMarkId)->
   bookMark = BookMarks.findOne({_id: bookMarkId})
   if !bookMark
-    bookMark = Explores.findOne({_id: bookMarkId})
+    bookMark = Statistical.findOne({_id: bookMarkId})
     bookMark.userId = Meteor.userId()
   return bookMark
 
