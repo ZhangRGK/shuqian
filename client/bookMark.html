@@ -16,11 +16,22 @@
     <span>{{title}}</span>
 </a>
 <span class="label label-sm btn-success">+10</span>
-{{#if flag}}
-<a href="#" class="glyphicon glyphicon-remove on-show size remove"></a>
+
+
+
+<small class="pull-right text-muted">{{date}}&nbsp;&nbsp;</small>
+
+
+
+
+{{#if isExplore}}
+<small class="pull-right text-muted on-show"> 
+<a href="#" class="glyphicon glyphicon-remove remove"></a>
+&nbsp;&nbsp;
+</small>
 {{/if}}
 
-<small class="pull-right text-muted">{{date}} &nbsp;&nbsp;</small>
 </li>
+
 
 </template>
