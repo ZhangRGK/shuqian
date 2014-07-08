@@ -3,7 +3,7 @@ log = (parm)->
 
 Router.configure({
   waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('statistical')]
-  layoutTemplate: 'main'
+  #layoutTemplate: 'main'
   loadingTemplate: 'loading'
   onAfterAction:->
     cleanCheckedBookMarks()
@@ -100,6 +100,9 @@ getMyBookMarks=->
 
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 Router.map(->
+  this.route('index', {
+    path: '/index'
+  })
   this.route('login', {
     path: '/login'
   })
