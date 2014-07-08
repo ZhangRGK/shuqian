@@ -37,13 +37,19 @@ Meteor.startup(->
     if user
       if user.emails
         email = user.emails[0].address
+        localStorage.setItem("userEmail", email)
+        console.log(email)
         url = "http://www.gravatar.com/avatar/"+MD5(email);
         $("#user-avatar").attr("src",url)
         $("#user-email").html(email)
-        localStorage.setItem("userEmail", email)
       else
         Meteor.call("getUserInfo",(error, userInfo)->
-          localStorage.setItem("userEmail", userInfo.services.google.email)
+          email = userInfo.services.google.email
+          localStorage.setItem("userEmail", email)
+          console.log(email)
+          url = "http://www.gravatar.com/avatar/"+MD5(email);
+          $("#user-avatar").attr("src",url)
+          $("#user-email").html(email)
         )
   )
 )
