@@ -21,7 +21,7 @@
                     </article>
                     <div class="clear"></div>
                     <article class="welcome-btn">
-                        <a href="javascript:;" id="openLogin" class="active-links hide">注册/登录</a>
+                        <a href="javascript:;" id="openLogin" class="active-links">注册/登录</a>
                         <a href="javascript:;" id="loginWithGoogle" class="active-links"><img src="images/google_logo.png" width="25" height="25"> 使用Google帐号登录</a>
                     </article>
                 </div>
@@ -37,10 +37,10 @@
                     <img src="images/login-logo.png" alt=""/>
                 </div>
                 <div class="login-wrap">
-                    <input type="text" class="form-control" placeholder="用户名" autofocus>
-                    <input type="password" class="form-control" placeholder="密码">
+                    <input id="signIn_email" type="text" class="form-control" placeholder="用户名" autofocus>
+                    <input id="signIn_pwd" type="password" class="form-control" placeholder="密码">
 
-                    <button class="btn btn-lg btn-login btn-block" type="submit"> <i class="fa fa-check"></i>
+                    <button id="signIn" class="btn btn-lg btn-login btn-block" type="button"> <i class="fa fa-check"></i>
                         登录
                     </button>
                     <div class="mtop30">
@@ -63,15 +63,15 @@
                 </div>
 
                 <div class="login-wrap">
-                    <input type="text" autofocus="" placeholder="请输入您的邮箱" class="form-control">
-                    <input type="password" placeholder="请输入密码" class="form-control">
-                    <input type="password" placeholder="请再次输入密码" class="form-control">
+                    <input type="text" id="reg_email" autofocus="" placeholder="请输入您的邮箱" class="form-control">
+                    <input type="password" id="reg_pwd" placeholder="请输入至少6个字符的密码" class="form-control">
+                    <input type="password" id="reg_repwd" placeholder="请再次输入密码" class="form-control">
                     <label class="checkbox">
-                        <input type="checkbox" value="agree this condition">
+                        <input id="reg_agree" type="checkbox" value="agree this condition">
                         同意
                         <a href="#">叶脉服务条款</a>
                     </label>
-                    <button type="submit" class="btn btn-lg btn-login btn-block">
+                    <button id="reg" type="button" class="btn btn-lg btn-login btn-block" disabled="disabled">
                         <i class="fa fa-check"></i>
                         注册
                     </button>
