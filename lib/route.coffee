@@ -119,8 +119,8 @@ Router.map(->
       if this.ready()
         if Meteor.userId()
           Router.go('/common')
-    #loadingTemplate:'login'
-    #onBeforeAction: 'loading'
+    loadingTemplate:'login'
+    onBeforeAction: 'loading'
   })
   this.route('bookMarkList', {
     path: '/common'
