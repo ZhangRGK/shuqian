@@ -113,14 +113,12 @@ Router.map(->
   this.route('disqus', {
     path: '/tell'
   })
-  this.route('description', {
+  this.route('login', {
     path: '/'
     action: ->
       if this.ready()
         if Meteor.userId()
           Router.go('/common')
-        else
-          Router.go('/login')
     loadingTemplate:'description'
     onBeforeAction: 'loading'
   })
