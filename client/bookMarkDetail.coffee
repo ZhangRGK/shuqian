@@ -16,17 +16,19 @@ Template.bookMarkDetail.helpers({
       @statistical.black
   myTags:->
     if @statistical
+      allTags = Tags.find({"url":@statistical.url,stat:1}).fetch()
       myTags = []
       stat_tags = @statistical.tags
-      for tag in this.tags
+      for tag in allTags
         if stat_tags.indexOf(tag.title)>=0
           myTags.push({"title":tag.title})
       return myTags
   otherTags:->
     if @statistical
+      allTags = Tags.find({"url":@statistical.url,stat:1}).fetch()
       otherTags = []
       stat_tags = @statistical.tags.slice(0)
-      for tag in this.tags
+      for tag in allTags
         if stat_tags.indexOf(tag.title) >=0
           stat_tags.splice(stat_tags.indexOf(tag.title),1)
       for t in stat_tags
