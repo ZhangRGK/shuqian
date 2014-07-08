@@ -142,9 +142,8 @@
     $('#multith').css({visibility: "hidden"})
 
   $('input[name="bookmark"]:checked').map(->
-    bookMarkId = $(this).val()
-    bookMark = getBookmarkById(bookMarkId)
-    selectTags = Tags.find({url: bookMark.url, stat: 1}).fetch()
+    url = $(this).val()
+    selectTags = Tags.find({url: url, stat: 1}).fetch()
     for selectTag in selectTags
       $('#multi').multiselect('select', selectTag.title)
   )
