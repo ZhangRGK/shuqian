@@ -1,7 +1,12 @@
 <template name='tag'>
-<a href="/tag/{{title}}" class="list-group-item 
-    {{#if selected}}
-    panel-footer
-    {{/if}}
-    ">{{title}}<span class="badge">{{count}}</span></a>
+<li class="
+{{#if selected}}
+active
+{{/if}}
+">
+<a href="/tag/{{title}}"> <i class="fa fa-bullhorn"></i>
+    <span>{{title}}</span>
+    <span class="badge">{{count}}</span>
+</a>
+</li>
 </template>
