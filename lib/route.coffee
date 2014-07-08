@@ -100,6 +100,9 @@ getMyBookMarks=->
 
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 Router.map(->
+  this.route('login', {
+    path: '/login'
+  })
   this.route('about', {
     path: '/about'
   })
@@ -112,6 +115,8 @@ Router.map(->
       if this.ready()
         if Meteor.userId()
           Router.go('/common')
+        else
+          Router.go('/login')
     loadingTemplate:'description'
     onBeforeAction: 'loading'
   })
