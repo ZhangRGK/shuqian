@@ -105,6 +105,7 @@ Router.map(->
   })
   this.route('login', {
     path: '/login'
+    layoutTemplate: ''
   })
   this.route('about', {
     path: '/about'
