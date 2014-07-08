@@ -115,6 +115,7 @@ Router.map(->
   })
   this.route('login', {
     path: '/'
+    layoutTemplate: ''
     action: ->
       if this.ready()
         if Meteor.userId()
