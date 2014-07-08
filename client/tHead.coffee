@@ -98,3 +98,14 @@ Template.tHead.helpers({
   isBlacklist: ->
     window.location.pathname == "/blacklist"
 })
+
+Template.tHead.events = {
+  'keyup #search': (evt, template)->
+    value = $(evt.target).val()
+    if value == ''
+      Router.go('/')
+    else
+      Router.go('/search/' + value)
+    if evt.keyCode==13
+      $('.url')[0].click()
+}

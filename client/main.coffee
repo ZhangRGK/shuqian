@@ -37,6 +37,9 @@ Meteor.startup(->
     if user
       if user.emails
         email = user.emails[0].address
+        url = "http://www.gravatar.com/avatar/"+MD5(email);
+        $("#user-avatar").attr("src",url)
+        $("#user-email").html(email)
         localStorage.setItem("userEmail", email)
       else
         Meteor.call("getUserInfo",(error, userInfo)->
