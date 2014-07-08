@@ -29,6 +29,14 @@ Template.main.events = {
 
   'click #signOut':(evt)->
     Meteor.logout()
+  'click #toResponsive':(evt)->
+    $("#container").removeClass('container')
+    $(".fixedItem").removeClass('container').addClass('container-fluid')
+    $("#left-side").removeClass('left_boxed')
+  'click #toBoxed':(evt)->
+    $("#container").addClass('container')
+    $(".fixedItem").removeClass('container-fluid').addClass('container')
+    $("#left-side").addClass('left_boxed')
 }
 
 Meteor.startup(->
