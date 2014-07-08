@@ -8,8 +8,8 @@
 </a>
 
 <small class="pull-right text-muted"> 
-<a href="/d/{{encodeURL}}" class="fa fa-chevron-right">
-</a>
+    <a href="/d/{{encodeURL}}" class="fa fa-chevron-right">
+    </a>
 </small>
 
 <a class="" href="{{url}}" target="_blank">
@@ -17,15 +17,19 @@
 </a>
 
 {{#if star}}
-<span class="label label-sm btn-success">{{star}}</span>
+<a href="/d/{{encodeURL}}">
+    <span  class="label label-sm btn-success">
+        {{star}}
+    </span>
+</a>
 {{/if}}
 
 <small class="pull-right text-muted">{{date}}&nbsp;&nbsp;</small>
 
 {{#if isExplore}}
 <small class="pull-right text-muted on-show"> 
-<a href="#" class="glyphicon glyphicon-remove remove"></a>
-&nbsp;&nbsp;
+    <a href="#" class="glyphicon glyphicon-remove remove"></a>
+    &nbsp;&nbsp;
 </small>
 {{/if}}
 
