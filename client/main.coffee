@@ -5,7 +5,7 @@ Template.main.events = {
     $('#tagname').val('')
     $('input[name="bookmark"]:checked').map(->
       bookMarkId = $(this).val()
-      bookMark = getBookmark(bookMarkId)
+      bookMark = getBookmarkById(bookMarkId)
       addTag(bookMark, tag)
     )
   'keypress #tagname':(evt, template)->
@@ -17,7 +17,7 @@ Template.main.events = {
       $('#tagname').val('')
       $('input[name="bookmark"]:checked').map(->
         bookMarkId = $(this).val()
-        bookMark = getBookmark(bookMarkId)
+        bookMark = getBookmarkById(bookMarkId)
         addTag(bookMark, tag)
       )
 }

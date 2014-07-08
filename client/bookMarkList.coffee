@@ -27,7 +27,7 @@ updateState = ->
 
   $('input[name="bookmark"]:checked').map(->
     bookMarkId = $(this).val()
-    bookMark = getBookmark(bookMarkId)
+    bookMark = getBookmarkById(bookMarkId)
     selectTags = Tags.find({url: bookMark.url, stat: 1}).fetch()
     for selectTag in selectTags
       $('#multi').multiselect('select', selectTag.title)
