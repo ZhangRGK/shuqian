@@ -26,6 +26,9 @@ Template.main.events = {
       if (err)
         console.log err
     )
+
+  'click #signOut':(evt)->
+    Meteor.logout()
 }
 
 Meteor.startup(->

@@ -43,7 +43,7 @@
                     </li>
                 </ul>
 
-                {{#if currentUser}}
+
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -58,6 +58,7 @@
                         </li>
                     </ul>
                     </li>
+                    {{#if currentUser}}
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img alt="" src="images/user-avatar.png">
@@ -68,14 +69,14 @@
                         <a href="#">修改密码</a>
                         </li>
                         <li>
-                        <a href="#">退出</a>
+                        <a id="signOut">退出</a>
                         </li>
                     </ul>
                     </li>
+                    {{else}}
+                    <li><a href="login">登录</a></li>
+                    {{/if}}
                 </ul>
-                {{else}}
-                {{> loginButtons }} <!-- here -->
-                {{/if}}
             </div>
         </div>
     </nav>
