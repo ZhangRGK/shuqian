@@ -1,25 +1,18 @@
 <template name='bookMark'>
-<tr>
-    <td><input type="checkbox" name="bookmark" value="{{_id}}"/></td>
-    <td>
-        <a href="/d/{{encodeURL}}" class="glyphicon glyphicon-th-list on-show size">
-        </a>
-    </td>
-    <td>
-        <a class='url' href="{{url}}" target="_blank">
-            <div>
-                <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
-                {{title}}
-            </div>
-        </a>
-    </td>
-    <td>
-        {{date}}
-    </td>
-    <td>
-        {{#if flag}}
-        <a href="#" class="glyphicon glyphicon-remove on-show size remove"></a>
-        {{/if}}
-    </td>
-</tr>
+<li class="list-group-item">
+<span class="pull-left chk">
+    <input type="checkbox" name="bookmark" value="{{_id}}"/>
+</span>
+<a class="thumb pull-left" href="#">
+    <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
+</a>
+<a class="" href="{{url}}" target="_blank">
+    <small class="pull-right text-muted">{{date}}</small>
+    <span>{{title}}</span>
+    <span class="label label-sm btn-success">+10</span>
+    {{#if flag}}
+    <a href="#" class="glyphicon glyphicon-remove on-show size remove"></a>
+    {{/if}}
+</a>
+</li>
 </template>

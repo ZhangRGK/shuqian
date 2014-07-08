@@ -1,18 +1,18 @@
 <template name='tHead'>
-<thead>
-    <tr>
-        <th width="13px"><input type="checkbox" name="selectall"/></th>
-        <th width="20px">
-
-        </th>
-        <th id="multith" style="visibility:hidden">
-            <select id="multi" class="multiselect"  multiple="multiple">
-            </select>
-        </th>
-        <th width="120px">
-        </th>
-        <th width="20px">
-        </th>
-    </tr>
-</thead>
+<header class="header">
+    <div class="btn-group pull-left">
+        <input type="checkbox" name="selectall"/>
+    </div>
+    <div class="btn-group pull-left" id="multith" style="visibility:hidden">
+        <select id="multi" class="multiselect"  multiple="multiple">
+        </select>
+    </div>
+    <div class="btn-group">
+        <input type="text" class="form-control" placeholder="搜索">
+    </div>
+    <div class="btn-group pull-right">
+        <button class="btn btn-sm btn-primary" type="button">模块</button>
+        <button class="btn btn-sm btn-primary" type="button">列表</button>
+    </div>
+</header>
 </template>
