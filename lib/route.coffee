@@ -223,7 +223,7 @@ Meteor.Router.add('/upload', 'POST', ->
           findTag = {userId:userId, url:node.url, title:parentNode.title}
           if Tags.find(findTag).count() == 0
             Tags.insert(tag)
-            stat_tags.push(tag)
+            stat_tags.push(tag.title)
       #修改统计值
       if Statistical.find({"url":bookMark.url}).count()==0
         Statistical.insert({"url": bookMark.url, "star": 1, "black": 0, "count": 0, "tags": stat_tags})
