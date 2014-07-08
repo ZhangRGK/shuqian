@@ -7,7 +7,7 @@ Template.bookMark.helpers({
   encodeURL:->
     encodeURIComponent(this.url)
   ,
-  flag:->
+  isExplore:->
     window.location.pathname == "/explore"
   date:->
     d = new Date(@dateAdded)

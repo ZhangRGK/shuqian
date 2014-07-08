@@ -1,21 +1,23 @@
 <template name='bookMarkList'>
-{{> tagList}}
 
-<div class="main-content">
-    <div class="wrapper">
-        <div class="fav-box">
-            <section class="fav-box-info">
-                {{> tHead}}
-                <section class="fav-list">
-                    <ul class="list-group ">
-                        {{#each bookMarks}}
-                        {{> bookMark}}
-                        {{/each}}
-                    </ul>
+<div id="container">
+    {{> tagList}}
+    <div class="main-content">
+        <div class="wrapper">
+            <div class="fav-box">
+                <section class="fav-box-info">
+                    {{> tHead}}
+                    <section class="fav-list">
+                        <ul class="list-group ">
+                            {{#each bookMarks}}
+                            {{> bookMark}}
+                            {{/each}}
+                        </ul>
+                    </section>
                 </section>
-            </section>
-        </div>
+            </div>
 
+        </div>
     </div>
 </div>
 </template>

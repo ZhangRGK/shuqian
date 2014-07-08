@@ -93,7 +93,8 @@
     { _id: {$in: checkedBookMarks}},
     where
   ]
-  statistical = Statistical.find({$or: theOr}, {sort: {start: -1, black: 1, count: -1}, limit: 20})
+  #statistical = Statistical.find({$or: theOr}, {sort: {start: -1, black: 1, count: -1}, limit: 20})
+  statistical = Statistical.find()
   #
   #  if explores.count() == 0
   #    theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$nin: urls}, stat:1}]

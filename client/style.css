@@ -158,21 +158,21 @@ body {
     margin-top: 80px;
 }
 .welcome-btn a {
-    padding: 10px 30px;
+    border: 1px solid #fff;
+    padding: 8px 30px;
     color: #fff;
     font-size: 24px;
     text-shadow: 1px 1px 0 rgba(1, 1, 1, 0.1);
     font-weight: bold;
     text-decoration: none;
-    background: #14a6a3;
 }
 .welcome-btn a:hover {
-    background: #0c9794;
+    border: 1px solid #14a6a3;
+    background: #14a6a3;
 }
 #login {
     position: absolute;
     z-index: 50;
-    overflow: auto;
     top: 0px;
     left: 0px;
     right: 0px;
@@ -425,13 +425,13 @@ footer {
     position: static;
     bottom: 0;
     width: 100%;
-    border-top: 1px solid #eff0f4;
+    border-top: 1px solid #aaaaaa;
 }
 footer.sticky-footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 99;
+    z-index: 99999;
     height: 50px;
 }
 .container footer {
@@ -443,8 +443,18 @@ footer.sticky-footer {
 /* -----------------------------
 MAIN
 ------------------------------ */
+#container{
+    position: relative;
+}
 .main-content {
     margin-left: 240px;
+    padding: 50px 0px;
+    background: #eff0f4;
+    min-height: 100%;
+}
+
+.main-content2 {
+    margin-left: 0px;
     padding: 50px 0px;
     background: #eff0f4;
     min-height: 100%;
@@ -494,7 +504,10 @@ BOXED VIEW
 /*---------------------------------
             LEFT SIDE
 ----------------------------------*/
-
+.left_boxed{
+    position: absolute!important;
+    left: 60px!important;
+}
 .left-side {
     width: 240px;
     position: absolute;
@@ -506,11 +519,16 @@ BOXED VIEW
 }
 .sticky-left-side {
     position: fixed;
-    overflow-y: auto;
     z-index: 100;
     background: #f6f6f6;
     top: 50px;
     bottom: 50px;
+    overflow-y:auto; 
+    outline: none;
+    overflow: hidden;
+}
+.sticky-left-side:hover{
+    overflow-y: auto;
 }
 
 .sticky-left-side .custom-nav {
@@ -528,7 +546,7 @@ BOXED VIEW
 
 .left-side-inner {
     padding: 0px;
-    margin-bottom: 50px;
+    width: 240px;
 }
 
 .left-side .searchform {
@@ -589,7 +607,7 @@ BOXED VIEW
     margin-top: 0px;
 }
 .custom-nav {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .custom-nav > li > a {
@@ -717,11 +735,6 @@ BOXED VIEW
     width: 100%;
     height: 100%;
 }
-
-.fav-box .form-control{
-    height: 32px;
-
-}
 .fav-box > aside, .fav-box > section {
     display: table-cell;
     float: none;
@@ -823,7 +836,9 @@ ul.labels-info li a:hover, ul.labels-info li a:focus {
     border-radius: 0;
     -webkit-border-radius: 0;
 }
-
+.fav-list .list-group-item:hover{
+    background: #f3f9f7;
+}
 
 .list-group {
     margin-bottom: 0px;
