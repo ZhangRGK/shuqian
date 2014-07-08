@@ -38,12 +38,19 @@ Template.bookMarkDetail.helpers({
 
 Template.bookMarkDetail.events = {
   'click a[name="myTags"]': (evt, template)->
+    #没有登录就返回
+    if(!Meteor.userId())
+      return
+
     url = $('a[name="bookmarkUrl"]').prop('text')
     tag = $(evt.target).html()
     bookMark = getBookmarkByUrl(url)
     removeTag(bookMark._id, tag)
   ,
   'click a[name="otherTags"]':(evt,template)->
+    #没有登录就返回
+    if(!Meteor.userId())
+      return
     url = $('a[name="bookmarkUrl"]').prop('text')
     tag = $(evt.target).html()
     bookMark = getBookmarkByUrl(url)
