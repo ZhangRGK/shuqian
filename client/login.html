@@ -1,0 +1,94 @@
+<head>
+<meta charset="utf-8">
+<title>叶脉</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<template name="login">
+<div id="hello" class="section">
+    <div id="welcome" class="welcome">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <article>
+                        <img src="images/logo3.png">
+                        <h1>
+                            叶脉
+                            <span>测试版</span>
+                        </h1>
+                        <h3>以前说:看什么书决定了一个人的品位和视野</h3>
+                        <h3>现在说:上什么网决定了一个人的品位和视野</h3>
+                    </article>
+                    <div class="clear"></div>
+                    <article class="welcome-btn">
+                        <a href="javascript:;" id="openLogin" class="active-links">注册/登录</a>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="login" class="section">
+
+    <div class="container">
+        <form class="form-signin" action="#">
+            <div class="form-signin-heading text-center">
+                <h1 class="sign-title"></h1>
+                <img src="images/login-logo.png" alt=""/>
+            </div>
+            <div class="login-wrap">
+                <input type="text" class="form-control" placeholder="用户名" autofocus>
+                <input type="password" class="form-control" placeholder="密码">
+
+                <button class="btn btn-lg btn-login btn-block" type="submit"> <i class="fa fa-check"></i>
+                    登录
+                </button>
+                <div class="registration">
+                    没有帐号？
+                    <a href="javascript:;" class="">点此注册</a>
+                </div>
+            </div>
+
+        </form>
+
+        <form class="form-signin" action="#" style="display:none;">
+            <div class="form-signin-heading text-center">
+                <h1 class="sign-title"></h1>
+                <img src="images/login-logo.png" alt=""/>
+            </div>
+
+            <div class="login-wrap">
+                <input type="text" autofocus="" placeholder="请输入您的邮箱" class="form-control">
+                <input type="password" placeholder="请输入密码" class="form-control">
+                <input type="password" placeholder="请再次输入密码" class="form-control">
+                <label class="checkbox">
+                    <input type="checkbox" value="agree this condition">同意叶脉服务条款</label>
+                <button type="submit" class="btn btn-lg btn-login btn-block"> <i class="fa fa-check"></i>
+                    注册
+                </button>
+
+                <div class="registration">
+                    已有帐号？
+                    <a href="javascript:;" class="">点此登录</a>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<article>
+    <ul id="cbp-bislideshow" class="cbp-bislideshow">
+        <li style="background-image: url(images/2.jpg);"></li>
+    </ul>
+</article>
+
+<script type="text/javascript" src="scripts/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="scripts/hello.js"></script>
+</template>

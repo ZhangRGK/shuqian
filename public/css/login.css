@@ -1,0 +1,128 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: "微软雅黑", "Microsoft YaHei UI", Arial, Verdana, serif;
+    overflow-x:hidden; 
+}
+.clear{
+    clear: both;
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background: rgba(42, 42, 42, 0.8);
+    -webkit-box-shadow: none;
+}
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    -webkit-box-shadow: none;
+}
+#hello {
+    width: 100%;
+    height: 100%;
+}
+section#hello {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 50;
+    overflow: auto;
+    top: 0px;
+    left: 0px;
+    background: url(../images/pattern.png) repeat;
+}
+#welcome{
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.welcome { 
+    padding-top: 140px;
+}
+.cbp-bislideshow {
+    list-style: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    padding: 0;
+    margin: 0;
+}
+.backgroundsize .cbp-bislideshow li {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+}
+.cbp-bislideshow li {
+    position: absolute;
+    width: 101%;
+    height: 101%;
+    top: -0.5%;
+    left: -0.5%;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    transition: opacity 1s;
+    background-position: center center;
+    min-height: 600px;
+}
+#hello article h1 {
+    font-weight: 700;
+    color: #fff;
+    font-size: 70px;
+    margin-bottom: 30px;
+    text-shadow: rgba(0, 0, 0, .3) 3px 3px 3px;
+    font-family: "微软雅黑", "Microsoft YaHei UI", Arial, Verdana, serif;
+}
+#hello article h1 span{
+    font-size: 14px;
+    background: #428bca;
+    text-shadow:none;
+    padding: 3px 5px;
+    border-radius: 5px;
+}
+#hello article h3 {
+    font-weight: 700;
+    color: #fff;
+    font-size: 20px;
+    text-shadow: rgba(0, 0, 0, .3) 1px 1px 2px;
+    font-family: "微软雅黑", "Microsoft YaHei UI", Arial, Verdana, serif;
+}
+.welcome-btn{
+    margin-top: 80px;
+}
+.welcome-btn a {
+    border: 1px solid #fff;
+    padding: 8px 30px;
+    color: #fff;
+    font-size: 24px;
+    text-shadow: 1px 1px 0 rgba(1, 1, 1, 0.1);
+    font-weight: bold;
+    text-decoration: none;
+}
+.welcome-btn a:hover {
+    border: 1px solid #14a6a3;
+    background: #14a6a3;
+}
+section#login {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 50;
+    overflow: auto;
+    top: 0px;
+    left: 100%;
+    background: url(../images/pattern.png) repeat;
+}
+#login .loginform{
+    margin: 200px auto 0px;
+    width: 500px;
+    padding: 50px;
+    background: rgba(255,255,255,0.5);
+}
