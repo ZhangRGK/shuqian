@@ -5,43 +5,88 @@
 <title>叶脉书签</title>
 <link rel="shortcut icon" href="/chrome/icon128.png" type="image/x-icon" />
 </head>
+
 <template name="main">
-<div style="background:url(/img/Polish_Wikinews_header_image_new.png) no-repeat;">
-    <div class="container">
-        <div class="page-header pull-right">
-            <h2><a href="/">叶脉</a><small>让你的chrome书签活起来</small></h2>
-        </div>
-    </div>
-</div>
+<div class="topBar">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">菜单</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index-2.html">
+                    <img src="images/logo.png" alt=""></a>
+            </div>
 
-<div class="navbar navbar-default" role="navigation">
-    <div class="container">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
 
-        {{#if currentUser}}
-        <div class="navbar-header">
-            <a class="navbar-brand" href='/common'>常用</a>
-        </div>
-        {{/if}}
-        <div class="navbar-collapse collapse navbar-inverse-collapse">
+                    {{#if currentUser}}
+                    <li>
+                    <a href="#">我的书签</a>
+                    </li>
+                    <li>
+                    <a href="#">探索</a>
+                    </li>
+                    {{/if}}
+                    <li class="">
+                    <a href="#">客户端</a>
+                    </li>
+                    <li class="">
+                    <a href="#">帮助</a>
+                    </li>
+                    <li class="">
+                    <a href="#">关于</a>
+                    </li>
+                </ul>
 
-            {{#if currentUser}}
-            <ul class="nav navbar-nav">
-                <li><a href="/explore">探索</a></li>
-            </ul>
-            {{/if}}
-            <ul class="nav navbar-nav navbar-right">
+                {{#if currentUser}}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        设置 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                        <a href="#">宽屏</a>
+                        </li>
+                        <li>
+                        <a href="#">窄屏</a>
+                        </li>
+                    </ul>
+                    </li>
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img alt="" src="images/user-avatar.png">
+                        bigzhu <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                        <a href="#">修改密码</a>
+                        </li>
+                        <li>
+                        <a href="#">退出</a>
+                        </li>
+                    </ul>
+                    </li>
+                </ul>
+                {{else}}
                 {{> loginButtons }} <!-- here -->
-            </ul>
+                {{/if}}
+            </div>
         </div>
-    </div>
+    </nav>
 </div>
 
-<div id='app' class="container-fluid">
-    <button id="test">bigzhu</button>
-    <div class="row">
-        {{> yield}}
-    </div>
-</div>
+{{> yield}}
+
+
+
+<footer class="sticky-footer">Copyright &copy; 2014 highwe.com</footer>
+
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">

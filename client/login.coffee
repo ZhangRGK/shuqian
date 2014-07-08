@@ -1,5 +1,5 @@
 Template.login.events = {
-  'click #openLogin':(evt, template)->
+  'click #loginWithGoogle':(evt, template)->
     Meteor.loginWithGoogle({},  (err)->
       if (err)
         console.log err

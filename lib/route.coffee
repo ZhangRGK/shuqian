@@ -100,8 +100,12 @@ getMyBookMarks=->
 
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 Router.map(->
+  this.route('index', {
+    path: '/index'
+  })
   this.route('login', {
     path: '/login'
+    layoutTemplate: ''
   })
   this.route('about', {
     path: '/about'
