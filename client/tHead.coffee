@@ -108,4 +108,10 @@ Template.tHead.events = {
       Router.go('/search/' + value)
     if evt.keyCode==13
       $('.url')[0].click()
+  'click .selectall': (evt, template)->
+    if $(evt.target).prop('checked')
+      $('input[name="bookmark"]').prop('checked', true)
+    else
+      $('input[name="bookmark"]').prop('checked', false)
+    showMultith()
 }

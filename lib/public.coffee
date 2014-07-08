@@ -129,3 +129,22 @@
   Session.set("checkedBookMarks", bookMarks)
 @cleanCheckedBookMarks = ->
   Session.set("checkedBookMarks", [])
+
+@showMultith = ->
+  $('option', $('#multi')).each((element)->
+    $(this).removeAttr('selected').prop('selected', false)
+  )
+  $('#multi').multiselect('refresh')
+
+  if $('input[name="bookmark"]:checked').val()
+    $('#multith').css({visibility: "visible"})
+  else
+    $('#multith').css({visibility: "hidden"})
+
+  $('input[name="bookmark"]:checked').map(->
+    bookMarkId = $(this).val()
+    bookMark = getBookmarkById(bookMarkId)
+    selectTags = Tags.find({url: bookMark.url, stat: 1}).fetch()
+    for selectTag in selectTags
+      $('#multi').multiselect('select', selectTag.title)
+  )

@@ -20,13 +20,6 @@ Template.main.events = {
         bookMark = getBookmarkById(bookMarkId)
         addTag(bookMark, tag)
       )
-  'click #test':(evt, template)->
-    console.log 'bigzhu'
-    Meteor.loginWithGoogle({},  (err)->
-      if (err)
-        console.log err
-    )
-
   'click #signOut':(evt)->
     Meteor.logout()
   'click #toResponsive':(evt)->

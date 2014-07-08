@@ -16,6 +16,7 @@ Template.bookMark.helpers({
 Template.bookMark.events = {
   'click .url':  (evt, template)->
     increaseBookMarkCount(this.url)
+    evt.stopPropagation()
   'click .remove': (evt, template)->
     if window.location.pathname == "/explore"
       bm = this.constructor()
@@ -25,10 +26,15 @@ Template.bookMark.events = {
       bm.stat = 2
       bm.dateAdded = new Date().getTime()
       BookMarks.insert(bm)
+    evt.stopPropagation()
     return
   'click input[name="bookmark"]': (evt, template)->
     if $(evt.target).is(':checked')
       setCheckedBookMarks($(evt.target).val())
     else
       popCheckedBookMarks($(evt.target).val())
+    showMultith()
+    evt.stopPropagation()
+  'click .list-group-item': (evt, template)->
+    $(evt.target).find('input[name="bookmark"]').click()
 }
