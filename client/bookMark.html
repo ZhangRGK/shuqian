@@ -6,16 +6,21 @@
 <a class="thumb pull-left" href="#">
     <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
 </a>
-<a href="/d/{{encodeURL}}" class="fa fa-file-o">
-</a>
 
-    <small class="pull-right text-muted">{{date}}</small>
+<small class="pull-right text-muted"> 
+<a href="/d/{{encodeURL}}" class="fa fa-chevron-right">
+</a>
+</small>
+
 <a class="" href="{{url}}" target="_blank">
     <span>{{title}}</span>
-    <span class="label label-sm btn-success">+10</span>
-    {{#if flag}}
-    <a href="#" class="glyphicon glyphicon-remove on-show size remove"></a>
-    {{/if}}
 </a>
+<span class="label label-sm btn-success">+10</span>
+{{#if flag}}
+<a href="#" class="glyphicon glyphicon-remove on-show size remove"></a>
+{{/if}}
+
+<small class="pull-right text-muted">{{date}} &nbsp;&nbsp;</small>
 </li>
+
 </template>
