@@ -1,110 +1,108 @@
 <head>
 <meta charset="utf-8">
 <title>叶脉</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></head>
 <template name="login">
-<div id="hello" class="section">
-    <div id="welcome" class="welcome">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <article>
-                        <img src="images/logo3.png">
-                        <h1>
-                            叶脉
-                            <span>测试版</span>
-                        </h1>
-                        <h3>以前说:看什么书决定了一个人的品位和视野</h3>
-                        <h3>现在说:上什么网决定了一个人的品位和视野</h3>
-                    </article>
-                    <div class="clear"></div>
-                    <article class="welcome-btn">
-                        <a href="javascript:;" id="openLogin" class="active-links">注册/登录</a>
-                        <a href="javascript:;" id="loginWithGoogle" class="active-links"><img src="images/google_logo.png" width="25" height="25"> 使用Google帐号登录</a>
-                    </article>
+    <div id="hello" class="section">
+        <div id="welcome" class="welcome">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <article>
+                            <img src="images/logo3.png">
+                            <h1>
+                                叶脉
+                                <span>测试版</span>
+                            </h1>
+                            <h3>以前说:看什么书决定了一个人的品位和视野</h3>
+                            <h3>现在说:上什么网决定了一个人的品位和视野</h3>
+                        </article>
+                        <div class="clear"></div>
+                        <article class="welcome-btn">
+                            <a href="javascript:;" id="openLogin" class="active-links">注册/登录</a>
+                            <a href="javascript:;" id="loginWithGoogle" class="active-links">
+                                <img src="images/google_logo.png" width="25" height="25">使用Google帐号登录</a>
+                        </article>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div id="login" class="container">
+            <div class="pad">
+                <form id="login_pad" class="form-signin" action="#">
+                    <div class="form-signin-heading text-center">
+                        <img src="images/login-logo.png" alt=""/>
+                    </div>
+                    <div class="login-wrap">
+                        <input id="signIn_email" type="text" class="form-control" placeholder="用户名" autofocus>
+                        <input id="signIn_pwd" type="password" class="form-control" placeholder="密码">
+
+                        <button id="signIn" class="btn btn-lg btn-login btn-block" type="button"> <i class="fa fa-check"></i>
+                            登录
+                        </button>
+                        <div class="mtop30">
+                            <button class="btn btn-block btn-default" type="submit"> <i class="fa fa-google"></i>
+                                使用Google帐号登录
+                            </button>
+                        </div>
+                        <div class="registration mtop20">
+                            没有帐号？
+                            <a id="toReg" href="javascript:;" class="">点此注册</a>
+                        </div>
+                    </div>
+
+                </form>
+
+                <form id="reg_pad" class="form-signin" action="#" style="display:none;">
+                    <div class="form-signin-heading text-center">
+                        <img src="images/login-logo.png" alt=""/>
+                    </div>
+
+                    <div class="login-wrap">
+                        <input type="text" id="reg_email" autofocus="" placeholder="请输入您的邮箱" class="form-control">
+                        <input type="password" id="reg_pwd" placeholder="请输入至少6个字符的密码" class="form-control">
+                        <input type="password" id="reg_repwd" placeholder="请再次输入密码" class="form-control">
+                        <label class="checkbox">
+                            <input id="reg_agree" type="checkbox" value="agree this condition">
+                            同意
+                            <a href="#">叶脉服务条款</a>
+                        </label>
+                        <button id="reg" type="button" class="btn btn-lg btn-login btn-block" disabled="disabled">
+                            <i class="fa fa-check"></i>
+                            注册
+                        </button>
+
+                        <div class="registration">
+                            已有帐号？
+                            <a id="toLogin" href="javascript:;" class="">点此登录</a>
+                        </div>
+
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
 
-    <div id="login" class="container">
-        <div class="pad">
-            <form id="login_pad" class="form-signin" action="#">
-                <div class="form-signin-heading text-center">
-                    <h1 class="sign-title">登录</h1>
-                    <img src="images/login-logo.png" alt=""/>
-                </div>
-                <div class="login-wrap">
-                    <input id="signIn_email" type="text" class="form-control" placeholder="用户名" autofocus>
-                    <input id="signIn_pwd" type="password" class="form-control" placeholder="密码">
-
-                    <button id="signIn" class="btn btn-lg btn-login btn-block" type="button"> <i class="fa fa-check"></i>
-                        登录
-                    </button>
-                    <div class="mtop30">
-                        <button class="btn btn-block btn-default" type="submit"> <i class="fa fa-check"></i>
-                            使用Google+帐号登录
-                        </button>
-                    </div>
-                    <div class="registration mtop20">
-                        没有帐号？
-                        <a id="toReg" href="javascript:;" class="">点此注册</a>
-                    </div>
-                </div>
-
-            </form>
-
-            <form id="reg_pad" class="form-signin" action="#" style="display:none;">
-                <div class="form-signin-heading text-center">
-                    <h1 class="sign-title">注册</h1>
-                    <img src="images/login-logo.png" alt=""/>
-                </div>
-
-                <div class="login-wrap">
-                    <input type="text" id="reg_email" autofocus="" placeholder="请输入您的邮箱" class="form-control">
-                    <input type="password" id="reg_pwd" placeholder="请输入至少6个字符的密码" class="form-control">
-                    <input type="password" id="reg_repwd" placeholder="请再次输入密码" class="form-control">
-                    <label class="checkbox">
-                        <input id="reg_agree" type="checkbox" value="agree this condition">
-                        同意
-                        <a href="#">叶脉服务条款</a>
-                    </label>
-                    <button id="reg" type="button" class="btn btn-lg btn-login btn-block" disabled="disabled">
-                        <i class="fa fa-check"></i>
-                        注册
-                    </button>
-
-                    <div class="registration">
-                        已有帐号？
-                        <a id="toLogin" href="javascript:;" class="">点此登录</a>
-                    </div>
-
-                </div>
-
-            </form>
-        </div>
+    <div id="changeTheme">
+        <ul>
+            <li style="background:#d0d030;"></li>
+            <li style="background:#679327;"></li>
+            <li style="background:#2f619c;"></li>
+            <li style="background:#8571d4;"></li>
+        </ul>
     </div>
-</div>
+    <article>
+        <div class="bgCoverStyle"></div>
+        <ul id="cbp-bislideshow" class="cbp-bislideshow">
+            <li class="hide" style="background-image: url(images/4.jpg);"></li>
+            <li class="hide" style="background-image: url(images/3.jpg);"></li>
+            <li class="hide" style="background-image: url(images/1.jpg);"></li>
+            <li style="background-image: url(images/2.jpg);"></li>
+        </ul>
+    </article>
 
-<div id="changeTheme">
-    <ul>
-        <li style="background:#d0d030;"></li>
-        <li style="background:#679327;"></li>
-        <li style="background:#2f619c;"></li>
-        <li style="background:#8571d4;"></li>
-    </ul>
-</div>
-<article>
-    <ul id="cbp-bislideshow" class="cbp-bislideshow">
-        <li class="hide" style="background-image: url(images/4.jpg);"></li>
-        <li class="hide" style="background-image: url(images/3.jpg);"></li>
-        <li class="hide" style="background-image: url(images/1.jpg);"></li>
-        <li style="background-image: url(images/2.jpg);"></li>
-    </ul>
-</article>
-
-<script type="text/javascript" src="scripts/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="scripts/hello.js"></script>
+    <script type="text/javascript" src="scripts/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="scripts/hello.js"></script>
 </template>

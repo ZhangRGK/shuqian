@@ -32,6 +32,23 @@ Template.main.events = {
     $("#left-side").addClass('left_boxed')
 }
 
+Template.main.rendered = ->
+  user = Meteor.user()
+  if user
+    if user.emails
+      email = Meteor.user().emails[0].address
+      url = "http://www.gravatar.com/avatar/"+MD5(email);
+      $("#user-avatar").attr("src",url)
+      $("#user-email").html(email)
+    else
+      Meteor.call("getUserInfo",(error, userInfo)->
+        name = userInfo.services.google.name
+        $("#user-avatar").attr("src",userInfo.services.google.picture)
+        $("#user-email").html(name)
+      )
+
+
+
 Meteor.startup(->
   Deps.autorun(->
     user = Meteor.user()
@@ -39,18 +56,10 @@ Meteor.startup(->
       if user.emails
         email = user.emails[0].address
         localStorage.setItem("userEmail", email)
-        console.log(email)
-        url = "http://www.gravatar.com/avatar/"+MD5(email);
-        $("#user-avatar").attr("src",url)
-        $("#user-email").html(email)
       else
         Meteor.call("getUserInfo",(error, userInfo)->
           email = userInfo.services.google.email
           localStorage.setItem("userEmail", email)
-          console.log(email)
-          url = "http://www.gravatar.com/avatar/"+MD5(email);
-          $("#user-avatar").attr("src",url)
-          $("#user-email").html(email)
         )
   )
 )
