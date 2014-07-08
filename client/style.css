@@ -456,6 +456,16 @@ MAIN
     background: #eff0f4;
     min-height: 100%;
 }
+/* -------------------------
+详情,关于,帮助等页面
+------------------------- */
+.main-content2 {
+    margin-left: 0px;
+    padding: 50px 0px;
+    background: #eff0f4;
+    min-height: 100%;
+}
+
 .page-heading {
     padding: 15px;
     position: relative;
