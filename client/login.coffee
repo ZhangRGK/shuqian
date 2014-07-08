@@ -3,5 +3,7 @@ Template.login.events = {
     Meteor.loginWithGoogle({},  (err)->
       if (err)
         console.log err
+      else
+        Router.go('/common')
     )
 }
