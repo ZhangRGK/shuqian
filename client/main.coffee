@@ -43,6 +43,7 @@ Template.main.rendered = ->
     else
       Meteor.call("getUserInfo",(error, userInfo)->
         name = userInfo.services.google.name
+        console.log name,userInfo.services.google.picture
         $("#user-avatar").attr("src",userInfo.services.google.picture)
         $("#user-email").html(name)
       )
