@@ -1,5 +1,5 @@
 html{
-    min-height: 100%;
+    height: 100%;
     background: #eff0f4;
 }
 body {
@@ -9,6 +9,7 @@ body {
     font-size: 14px;
     margin: 0px;
     padding: 0px;
+    height: 100%;
 }
 input, select, textarea {
     color: #767676;
@@ -413,6 +414,11 @@ bar
     vertical-align: middle;
     width: 18px;
 }
+.topBar .navbar-nav > li > a {
+    padding-top: 13px;
+    padding-bottom: 0px;
+    height: 50px;
+}
 
 /* --------------------------------
 FOOTER
@@ -445,16 +451,10 @@ MAIN
 ------------------------------ */
 #container{
     position: relative;
+    height: 100%;
 }
 .main-content {
     margin-left: 240px;
-    padding: 50px 0px;
-    background: #eff0f4;
-    min-height: 100%;
-}
-
-.main-content2 {
-    margin-left: 0px;
     padding: 50px 0px;
     background: #eff0f4;
     min-height: 100%;
@@ -506,7 +506,7 @@ BOXED VIEW
 ----------------------------------*/
 .left_boxed{
     position: absolute!important;
-    left: 60px!important;
+    left: 15px!important;
 }
 .left-side {
     width: 240px;
@@ -835,6 +835,7 @@ ul.labels-info li a:hover, ul.labels-info li a:focus {
 .fav-list .list-group-item {
     border-radius: 0;
     -webkit-border-radius: 0;
+    min-height: 43px;
 }
 .fav-list .list-group-item:hover{
     background: #f3f9f7;
