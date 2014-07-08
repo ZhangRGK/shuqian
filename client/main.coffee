@@ -42,10 +42,9 @@ Template.main.rendered = ->
       $("#user-email").html(email)
     else
       Meteor.call("getUserInfo",(error, userInfo)->
-        email = userInfo.services.google.email
-        console.log userInfo
-        $("#user-avatar").attr("src",url)
-        $("#user-email").html(email)
+        name = userInfo.services.google.name
+        $("#user-avatar").attr("src",userInfo.services.google.picture)
+        $("#user-email").html(name)
       )
 
 
