@@ -3,7 +3,7 @@ log = (parm)->
 
 Router.configure({
   waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('statistical')]
-  #layoutTemplate: 'main'
+  layoutTemplate: 'main'
   loadingTemplate: 'loading'
   onAfterAction:->
     cleanCheckedBookMarks()
@@ -115,6 +115,8 @@ Router.map(->
       if this.ready()
         if Meteor.userId()
           Router.go('/common')
+        else
+          Router.go('/login')
     loadingTemplate:'description'
     onBeforeAction: 'loading'
   })
