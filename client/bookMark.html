@@ -15,7 +15,10 @@
 <a class="" href="{{url}}" target="_blank">
     <span>{{title}}</span>
 </a>
-<span class="label label-sm btn-success">+10</span>
+
+{{#if star}}
+<span class="label label-sm btn-success">{{star}}</span>
+{{/if}}
 
 <small class="pull-right text-muted">{{date}}&nbsp;&nbsp;</small>
 
