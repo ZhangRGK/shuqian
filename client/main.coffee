@@ -20,13 +20,13 @@ Template.main.events = {
         bookMark = getBookmarkById(bookMarkId)
         addTag(bookMark, tag)
       )
-  'click #signOut':(evt)->
+  'click #signOut':->
     Meteor.logout()
-  'click #toResponsive':(evt)->
+  'click #toResponsive':->
     $("#container").removeClass('container')
     $(".fixedItem").removeClass('container').addClass('container-fluid')
     $("#left-side").removeClass('left_boxed')
-  'click #toBoxed':(evt)->
+  'click #toBoxed':->
     $("#container").addClass('container')
     $(".fixedItem").removeClass('container-fluid').addClass('container')
     $("#left-side").addClass('left_boxed')
@@ -43,7 +43,6 @@ Template.main.rendered = ->
     else
       Meteor.call("getUserInfo",(error, userInfo)->
         name = userInfo.services.google.name
-        console.log name,userInfo.services.google.picture
         $("#user-avatar").attr("src",userInfo.services.google.picture)
         $("#user-email").html(name)
       )
