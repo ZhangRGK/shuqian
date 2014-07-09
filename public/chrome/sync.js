@@ -9,7 +9,8 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
-var serviceUrl = 'http://shuqian.bigzhu.org';
+//var serviceUrl = 'http://shuqian.bigzhu.org';
+var serviceUrl = 'http://yemai.in';
 
 //浏览器新增bookmarks
 chrome.bookmarks.onCreated.addListener(function(id,bookmark) {

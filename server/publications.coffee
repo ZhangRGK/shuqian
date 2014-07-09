@@ -63,6 +63,7 @@ Meteor.publish("explores", ->
 Meteor.methods({
   #增加统计表的次数
   addStatTag:(url, tag)->
+    console.log tag
     if Statistical.find({"url": url}).count() == 0
       Statistical.insert({"url": url, "star": 1, "black": 0, "count": 0, "tags": [tag]})
     else
