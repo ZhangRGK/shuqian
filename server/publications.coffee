@@ -1,18 +1,20 @@
 Meteor.publish('bookmarks', ->
   if this.userId
-    return BookMarks.find({userId:this.userId})
+    return BookMarks.find({userId:@userId})
 )
 
 Meteor.publish('tags', ->
   if this.userId
-      return Tags.find({userId:this.userId})
+      return Tags.find({userId:@userId})
 )
 
-Meteor.publish('statistical',(url, checkedBookMarks)->
+Meteor.publish('statistical',(url)->
   #自已的tag
   if url == 'explore'
+    #if !checkedBookMarks
+    #  checkedBookMarks = []
     tags = Tags.find({userId: @userId}).fetch()
-    tagTitles = _.pluck(tags, "title")
+    #tagTitles = _.pluck(tags, "title")
 
     #屏蔽曾经和当前收藏的和黑名单的
     bms = _.pluck(BookMarks.find({"userId": @userId}).fetch(), "url")
@@ -20,13 +22,14 @@ Meteor.publish('statistical',(url, checkedBookMarks)->
 
     #屏蔽被其他人列入黑名单内的
     where = {star: {$gt: 1}, black: {$lt: 2}, count: {$gt: 3}, url: {$nin: urls}}
-    #checkedBookMarks = Session.get("checkedBookMarks") || []
-    theOr = [
-      { _id: {$in: checkedBookMarks}},
-      where
-    ]
-    statistical = Statistical.find({$or: theOr}, {sort: {start: -1, black: 1, count: -1}, limit: 20})
-    #statistical = Statistical.find({},limit: 10)
+    #where = {url: {$nin: urls}}
+
+    #theOr = [
+    #  {url: {$in: checkedBookMarks}},
+    #  where
+    #]
+
+    statistical = Statistical.find(where, {sort: {start: -1, black: 1, count: -1}, limit: 20})
     return statistical
   else
     return Statistical.find({"url":url})
@@ -56,3 +59,16 @@ Meteor.publish("explores", ->
     subHandle.stop()
   )
 )
+
+Meteor.methods({
+  #增加统计表的次数
+  addStatTag:(url, tag)->
+    if Statistical.find({"url": url}).count() == 0
+      Statistical.insert({"url": url, "star": 1, "black": 0, "count": 0, "tags": [tag]})
+    else
+      stat = Statistical.findOne({"url": url})
+      final = stat.tags.slice(0)
+      if stat.tags.indexOf(tag.title) < 0
+        final.push(tag.title)
+      Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star + 1, "tags": final}})
+})

@@ -58,27 +58,10 @@ Template.tHead.rendered = ->
     tags = Tags.find({stat:1}).fetch()
     uniqTag = _.uniq(tags, false, (d)-> return d.title)
 
-    currentTag = Session.get('shuqianTag')
-    currentType = Session.get('shuqianType')
-
-    optionDOM = ''
-
-    #回收站就没有当前标签
-    if(currentType == 'garbage' || currentType == 'blacklist' || currentType == 'explore')
-      optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
-
-    else
-      #如果没有当前标签，添加null判断
-      if !currentTag
-        optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
-      else
-        optionDOM += '<option value="addtagvalue">新建标签</option>' + '<option value="' + currentTag + '">' + currentTag + '</option>' +  '<option data-role="divider"></option>'
-
+    optionDOM = '<option value="addtagvalue">新建标签</option>' + '<option data-role="divider"></option>'
 
     for tag in uniqTag
-      if tag.title != currentTag
-        #data.push({label:tag.title, value:tag.title})
-        optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
+      optionDOM += '<option value="' + tag.title + '">' + tag.title + '</option>'
 
     $('#multi').html(optionDOM)
     $('#multi').multiselect('rebuild')

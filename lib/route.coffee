@@ -15,13 +15,12 @@ distinctBookmarks = (bookMarks)->
   _.uniq(bookMarks, false, (d)-> return d.url)
 
 getBookMarksByTag = (tag)->
-  Session.set('shuqianTag', tag)
-  Session.set('shuqianType', null)
   tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
 
   checkedBookMarks = Session.get("checkedBookMarks")||[]
-  theOr = {$or:[{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}}]}
+  console.log checkedBookMarks
+  theOr = {$or:[{ url: {$in: checkedBookMarks}}, {url: {$in: urls}}]}
   sort = {sort:{dateAdded:-1}}
   BookMarks.find(theOr, sort)
 
@@ -65,35 +64,27 @@ getBookMarksBySearch = (value)->
   #_.sortBy(bookMarks, (d)-> -d.count)
 #回收站
 getGarbageBookMarks=->
-  Session.set('shuqianTag', null)
-  Session.set('shuqianType', 'garbage')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls},stat:1},{sort:{dateAdded:-1}})
 
 #黑名单
 getBlacklistBookMarks=->
-  Session.set('shuqianTag', null)
-  Session.set('shuqianType', 'blacklist')
   #  tags = Tags.find().fetch()
   #  urls = _.pluck(tags, 'url')
   BookMarks.find({stat:2},{sort:{dateAdded:-1}}).fetch()
 
 #探索
 getNotMyBookMarks=->
-  Session.set('shuqianTag', null)
-  Session.set('shuqianType', 'explore')
   explore()
 
 #根目录书签
 getMyBookMarks=->
-  Session.set('shuqianTag', null)
-  Session.set('shuqianType', null)
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
 
   checkedBookMarks = Session.get("checkedBookMarks")||[]
-  theOr = {$or: [{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
+  theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
   sort = {sort:{count:-1}, limit : 14}
   BookMarks.find(theOr, sort)
 
@@ -143,7 +134,7 @@ Router.map(->
       tags: getTags()
       }
     onBeforeAction:->
-      Meteor.subscribe('statistical', 'explore', Session.get("checkedBookMarks"))
+      @subscribe('statistical', 'explore')
   })
   this.route('bookMarkList', {
     path: '/garbage'
