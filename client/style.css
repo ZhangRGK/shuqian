@@ -114,7 +114,7 @@ body {
     padding: 0;
     margin: 0;
 }
-.backgroundsize .cbp-bislideshow li {
+.cbp-bislideshow li {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -131,6 +131,14 @@ body {
     transition: opacity 1s;
     background-position: center center;
     min-height: 700px;
+}
+.cbp-bislideshow li .img{
+    width: 100%;
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    background-position: center center;
 }
 #hello article h1 {
     font-weight: 700;
