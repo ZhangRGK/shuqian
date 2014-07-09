@@ -19,7 +19,6 @@ getBookMarksByTag = (tag)->
   urls = _.pluck(tags, 'url')
 
   checkedBookMarks = Session.get("checkedBookMarks")||[]
-  console.log checkedBookMarks
   theOr = {$or:[{ url: {$in: checkedBookMarks}}, {url: {$in: urls}}]}
   sort = {sort:{dateAdded:-1}}
   BookMarks.find(theOr, sort)
