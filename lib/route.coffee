@@ -115,9 +115,8 @@ Router.map(->
   })
   this.route('login', {
     path: '/'
+    waitOn: ->
     layoutTemplate: ''
-    loadingTemplate:'login'
-    onBeforeAction: 'loading'
     onBeforeAction: ->
       if this.ready()
         if Meteor.userId()

@@ -35,7 +35,15 @@
                     <div class="login-wrap">
                         <input id="signIn_email" type="text" class="form-control" placeholder="用户名" autofocus>
                         <input id="signIn_pwd" type="password" class="form-control" placeholder="密码">
-                        <button id="signIn" class="btn btn-lg btn-login btn-block" type="button">
+
+                        <div class="alert alert-block alert-danger hide">
+                            <button type="button" class="close close-sm" data-dismiss="alert">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            密码错误
+                        </div>
+                        
+                        <button id="signIn" class="btn btn-lg btn-login btn-block" type="button"> <i class="fa fa-check"></i>
                             登录
                         </button>
                         <div class="mtop30">
@@ -65,6 +73,12 @@
                             同意
                             <a href="#">叶脉服务条款</a>
                         </label>
+                        <div class="alert alert-block alert-danger">
+                            <button type="button" class="close close-sm" data-dismiss="alert">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            E-mail已被使用
+                        </div>
                         <button id="reg" type="button" class="btn btn-lg btn-login btn-block" disabled="disabled">
                             注册
                         </button>
