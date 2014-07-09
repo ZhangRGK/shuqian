@@ -21,7 +21,8 @@ getBookMarksByTag = (tag)->
   urls = _.pluck(tags, 'url')
 
   checkedBookMarks = Session.get("checkedBookMarks")||[]
-  theOr = {$or:[{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}}]}
+  console.log checkedBookMarks
+  theOr = {$or:[{ url: {$in: checkedBookMarks}}, {url: {$in: urls}}]}
   sort = {sort:{dateAdded:-1}}
   BookMarks.find(theOr, sort)
 
@@ -93,7 +94,7 @@ getMyBookMarks=->
   urls = _.pluck(tags, 'url')
 
   checkedBookMarks = Session.get("checkedBookMarks")||[]
-  theOr = {$or: [{ _id: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
+  theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
   sort = {sort:{count:-1}, limit : 14}
   BookMarks.find(theOr, sort)
 
@@ -143,7 +144,7 @@ Router.map(->
       tags: getTags()
       }
     onBeforeAction:->
-      Meteor.subscribe('statistical', 'explore', Session.get("checkedBookMarks"))
+      @subscribe('statistical', 'explore')
   })
   this.route('bookMarkList', {
     path: '/garbage'
