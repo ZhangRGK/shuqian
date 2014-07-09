@@ -21,7 +21,12 @@ Template.main.events = {
         addTag(bookMark, tag)
       )
   'click #signOut':->
-    Meteor.logout()
+    Meteor.logout((error)->
+      if error
+        console.log error
+      else
+        Router.go("/login")
+    )
   'click #toResponsive':->
     $("#container").removeClass('container')
     $(".fixedItem").removeClass('container').addClass('container-fluid')
