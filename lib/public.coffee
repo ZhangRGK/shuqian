@@ -84,7 +84,6 @@
     bookMarks = []
   bookMarks.push(bookMarkId)
   bookMarks = _.uniq(bookMarks)
-  console.log bookMarks
   Session.set("checkedBookMarks", bookMarks)
 @popCheckedBookMarks = (bookMarkId)->
   bookMarks = Session.get("checkedBookMarks")
