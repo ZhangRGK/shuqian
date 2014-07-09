@@ -2,7 +2,8 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
+  waitOn: ->
+    [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('statistical', 'explore')]
   layoutTemplate: 'main'
   loadingTemplate: 'loading'
   onAfterAction:->
@@ -74,7 +75,8 @@ getBlacklistBookMarks=->
   BookMarks.find({stat:2},{sort:{dateAdded:-1}}).fetch()
 
 #探索
-getNotMyBookMarks= ()->
+getNotMyBookMarks= ->
+  
   #黑名单的不要查出来
   blacks = BookMarks.find({stat:2}).fetch()
   urls = _.pluck(blacks, 'url')
@@ -86,7 +88,6 @@ getNotMyBookMarks= ()->
   #当前勾住的,不要动
   checkedBookMarks = Session.get("checkedBookMarks")
   theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$nin: urls}}]}
-
 
   explores = Statistical.find(theOr)
   return explores
@@ -150,12 +151,11 @@ Router.map(->
     path: '/explore'
     data: ->
       {
-      bookMarks: getNotMyBookMarks(),
+      bookMarks:getNotMyBookMarks(),
       tags: getTags()
       }
-    #onBeforeAction:->
-    waitOn:->
-      @subscribe('statistical', 'explore')
+    #waitOn:->
+    #  Meteor.subscribe('statistical', 'explore')
   })
   this.route('bookMarkList', {
     path: '/garbage'
