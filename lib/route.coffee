@@ -15,8 +15,6 @@ distinctBookmarks = (bookMarks)->
   _.uniq(bookMarks, false, (d)-> return d.url)
 
 getBookMarksByTag = (tag)->
-  Session.set('shuqianTag', tag)
-  Session.set('shuqianType', null)
   tags = Tags.find({title:tag, stat:1}).fetch()
   urls = _.pluck(tags, 'url')
 
@@ -66,30 +64,22 @@ getBookMarksBySearch = (value)->
   #_.sortBy(bookMarks, (d)-> -d.count)
 #回收站
 getGarbageBookMarks=->
-  Session.set('shuqianTag', null)
-  Session.set('shuqianType', 'garbage')
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
   BookMarks.find({url: {$nin: urls},stat:1},{sort:{dateAdded:-1}})
 
 #黑名单
 getBlacklistBookMarks=->
-  Session.set('shuqianTag', null)
-  Session.set('shuqianType', 'blacklist')
   #  tags = Tags.find().fetch()
   #  urls = _.pluck(tags, 'url')
   BookMarks.find({stat:2},{sort:{dateAdded:-1}}).fetch()
 
 #探索
 getNotMyBookMarks=->
-  Session.set('shuqianTag', null)
-  Session.set('shuqianType', 'explore')
   explore()
 
 #根目录书签
 getMyBookMarks=->
-  Session.set('shuqianTag', null)
-  Session.set('shuqianType', null)
   tags = Tags.find({stat:1}).fetch()
   urls = _.pluck(tags, 'url')
 
