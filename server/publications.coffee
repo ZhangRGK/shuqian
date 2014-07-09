@@ -71,4 +71,7 @@ Meteor.methods({
       if stat.tags.indexOf(tag.title) < 0
         final.push(tag.title)
       Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star + 1, "tags": final}})
+  increaseStatCount:(url)->
+    statistical = Statistical.findOne({"url": url})
+    Statistical.update({_id: statistical._id}, {$set: {"count": statistical.count + 1}})
 })
