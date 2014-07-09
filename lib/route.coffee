@@ -130,6 +130,10 @@ Router.map(->
       tags: getTags()
       }
     onBeforeAction: 'loading'
+    onBeforeAction: ->
+      if this.ready()
+        if !Meteor.userId()
+          Router.go('/')
   })
   this.route('bookMarkList', {
     path: '/explore'
