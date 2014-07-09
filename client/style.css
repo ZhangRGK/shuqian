@@ -843,6 +843,10 @@ ul.labels-info li a:hover, ul.labels-info li a:focus {
     border-radius: 0;
     -webkit-border-radius: 0;
     min-height: 43px;
+    overflow: hidden;
+    white-space: nowrap;  
+    -o-text-overflow: ellipsis;  
+    text-overflow: ellipsis; 
 }
 .fav-list .list-group-item:hover{
     background: #f3f9f7;

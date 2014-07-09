@@ -130,6 +130,10 @@ Router.map(->
       tags: getTags()
       }
     onBeforeAction: 'loading'
+    onBeforeAction: ->
+      if this.ready()
+        if !Meteor.userId()
+          Router.go('/')
   })
   this.route('bookMarkList', {
     path: '/explore'
@@ -179,6 +183,10 @@ Router.map(->
       )
       #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
+    onBeforeAction: ->
+      if this.ready()
+        if !Meteor.userId()
+          Router.go('/')
   })
 
   this.route('bookMarkDetail', {
@@ -186,9 +194,10 @@ Router.map(->
     data: ->
       {
       url: @params._url,
-      statistical:Statistical.findOne({"url":@params._url}),
+      statistical:Statistical.find(),
       tags: getTags()
       }
+    waitOn: -> Meteor.subscribe('statistical', @params._url)
   })
 )
 
