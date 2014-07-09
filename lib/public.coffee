@@ -75,7 +75,8 @@
   nodes.push(temp)
 
 #探索
-@explore = ->
+@explore = =>
+  console.log this.userId
   #自已的tag
   tags = Tags.find({userId: Meteor.userId()}).fetch()
   tagTitles = _.pluck(tags, "title")
@@ -94,7 +95,7 @@
     where
   ]
   statistical = Statistical.find({$or: theOr}, {sort: {start: -1, black: 1, count: -1}, limit: 20})
-  #statistical = Statistical.find()
+  #statistical = Statistical.find({},limit: 10)
   #
   #  if explores.count() == 0
   #    theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$nin: urls}, stat:1}]

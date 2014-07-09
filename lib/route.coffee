@@ -139,9 +139,10 @@ Router.map(->
     path: '/explore'
     data: ->
       {
-      bookMarks: getNotMyBookMarks(),
+      bookMarks: Statistical.find(),
       tags: getTags()
       }
+    waitOn: -> Meteor.subscribe('statistical', 'explore', Session.get("checkedBookMarks"))
   })
   this.route('bookMarkList', {
     path: '/garbage'
