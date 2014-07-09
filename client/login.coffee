@@ -30,10 +30,11 @@ Template.login.events = {
     $("#login_pad").addClass("open3D")
     $("#reg_pad").addClass("close3D")
 
-  'click #changeTheme li':->
-    n=$("#changeTheme li").index($(this))
+  'click #changeTheme li':(evt)->
+    n=$("#changeTheme li").index($(evt.target))
     $("#cbp-bislideshow li").addClass('hide')
     $("#cbp-bislideshow li:eq("+n+")").removeClass('hide')
+    window.localStorage.setItem("themeNum",n)
 
   # login
   'keypress #signIn_email':(evt)->
@@ -142,4 +143,9 @@ checkReg = ->
   else
     $("#reg").attr("disabled","disabled")
 
-#$("#cbp-bislideshow li:eq("+Math.floor(Math.random() * $('#changeTheme ul>li').length)+")").removeClass('hide');
+Template.login.rendered = ->
+  n = window.localStorage.getItem("themeNum")
+  if n
+    $("#cbp-bislideshow li:eq("+n+")").removeClass('hide');
+  else
+    $("#cbp-bislideshow li:eq("+Math.floor(Math.random() * $('#changeTheme ul>li').length)+")").removeClass('hide');
