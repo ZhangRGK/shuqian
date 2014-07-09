@@ -37,10 +37,7 @@
 # 统计表修改完成
 
 @increaseBookMarkCount = (url)->
-  statistical = Statistical.findOne({"url": url})
-  if statistical
-    Statistical.update({_id: statistical._id}, {$set: {"count": statistical.count + 1}})
-
+  Meteor.call('increaseStatCount', url)
   userId = Meteor.userId()
   if !userId
     userId = ''
@@ -64,34 +61,6 @@
       for i in node[key]
         spread(i, nodes)
   nodes.push(temp)
-
-#探索
-@explore = =>
-  console.log this.userId
-  #自已的tag
-  tags = Tags.find({userId: Meteor.userId()}).fetch()
-  tagTitles = _.pluck(tags, "title")
-
-  #屏蔽曾经和当前收藏的和黑名单的
-  bms = _.pluck(BookMarks.find({"userId": Meteor.userId()}).fetch(), "url")
-  urls = _.pluck(tags, 'url').concat(bms)
-
-  #屏蔽被其他人列入黑名单内的
-  where = {star: {$gt: 1}, black: {$lt: 2}, count: {$gt: 3}, url: {$nin: urls}}
-  Statistical.find({})
-
-  checkedBookMarks = Session.get("checkedBookMarks") || []
-  theOr = [
-    { _id: {$in: checkedBookMarks}},
-    where
-  ]
-  statistical = Statistical.find({$or: theOr}, {sort: {start: -1, black: 1, count: -1}, limit: 20})
-  #statistical = Statistical.find({},limit: 10)
-  #
-  #  if explores.count() == 0
-  #    theOr = [{ _id: {$in: checkedBookMarks}}, {url: {$nin: urls}, stat:1}]
-  #    explores = Explores.find({$or: theOr}, {sort:{count:-1}, limit : 20})
-  return statistical
 
 #取bookMark
 @getBookmarkById = (bookMarkId)->
