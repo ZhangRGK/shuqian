@@ -1,2 +1,2 @@
-export ROOT_URL=http://shuqian.bigzhu.org
+export ROOT_URL=http://yemai.in
 nohup mrt --production &
