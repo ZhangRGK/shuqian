@@ -14,6 +14,9 @@ Template.bookMarkDetail.helpers({
   black:->
     if @statistical
       @statistical.black
+  count:->
+    if @statistical
+      @statistical.count
   myTags:->
     if @statistical
       allTags = Tags.find({"url":@statistical.url,stat:1}).fetch()
