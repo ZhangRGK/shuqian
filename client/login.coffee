@@ -108,7 +108,7 @@ signIn = ->
       if error
         console.log error
       else
-        Router.go("/")
+        Router.go("/common")
     )
 
 checkReg = ->
@@ -116,3 +116,5 @@ checkReg = ->
     $("#reg").removeAttr("disabled")
   else
     $("#reg").attr("disabled","disabled")
+
+#$("#cbp-bislideshow li:eq("+Math.floor(Math.random() * $('#changeTheme ul>li').length)+")").removeClass('hide');
