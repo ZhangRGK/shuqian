@@ -1,3 +1,4 @@
+
 html{
     height: 100%;
 }
@@ -748,7 +749,7 @@ BOXED VIEW
 }
 
 /*-------------------------
-         MAIL INBOX
+         BOX
 --------------------------*/
 
 .fav-box {
@@ -876,3 +877,39 @@ ul.labels-info li a:hover, ul.labels-info li a:focus {
 input[type="checkbox"].selectall{
     margin: 11px 10px 0px 0px;
 }
+
+/*-------------------------
+         ALONEPAGE
+--------------------------*/
+
+.profile-pic img {
+    border: 5px solid #F1F2F7;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    height: 150px;
+    margin: 10px 0;
+    width: 150px;
+}
+ul.p-info {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+ul.p-info li{
+    height: 40px;
+}
+ul.p-info .title {
+    width: 40%;
+}
+ul.p-info .title, ul.p-info .desk {
+    float: left;
+}
+ul.p-info .desk {
+    width: 60%;
+    color: #65cea7;
+}
+
+
+/*-------------------------
+         OTHERS
+--------------------------*/
