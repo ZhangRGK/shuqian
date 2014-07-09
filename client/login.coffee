@@ -84,6 +84,18 @@ Template.login.events = {
     checkReg()
     return
 
+  'blur #reg_email':(evt)->
+    reg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/
+    email = $(evt.target).val()
+    if !reg.test(email)
+      $(evt.target).css("border-color","#a94442")
+      reg_emailCheck = false
+    else
+      $(evt.target).css("border-color","#3c763d")
+      reg_emailCheck = true
+    checkReg()
+    return
+
   #TODO 验证两次密码输入
   'blur #reg_repwd,#reg_pwd':(evt)->
     if evt.target.value.length < 6
