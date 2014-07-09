@@ -1,165 +1,80 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="shortcut icon" href="#" type="image/png">
-
-    <title>叶脉</title>
-
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet"></head>
-
-<body class="bg">
-    <div class="topBar">
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="fixedItem container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">菜单</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index-2.html">
-                        <img src="images/logo.png" alt=""></a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="active">
-                            <a href="#">我的书签</a>
-                        </li>
-                        <li>
-                            <a href="#">探索</a>
-                        </li>
-                        <li class="">
-                            <a href="#">客户端</a>
-                        </li>
-                        <li class="">
-                            <a href="#">帮助</a>
-                        </li>
-                        <li class="">
-                            <a href="#">关于</a>
-                        </li>
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                设置 <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a id="toResponsive" href="javascript:;">宽屏</a>
-                                </li>
-                                <li>
-                                    <a id="toBoxed" href="javascript:;">窄屏</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img alt="" src="images/user-avatar.png">
-                                bigzhu <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="#">修改密码</a>
-                                </li>
-                                <li>
-                                    <a href="#">退出</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-
-    <div id="container">
-        <div class="main-content2">
-            <div class="wrapper">
+<template name="resetPassword">
+<div class="main-content2">
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="panel">
-                                    <div class="panel-body">
-                                        <div class="profile-pic text-center">
-                                            <img alt="" src="images/photos/user1.png"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="panel">
-                                    <div class="panel-body">
-                                        <ul class="p-info">
-                                            <li>
-                                                <div class="title">用户名</div>
-                                                <div class="desk">administrator</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">书签数</div>
-                                                <div class="desk">123456</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">注册时间</div>
-                                                <div class="desk">2014年1月1日</div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="profile-pic text-center">
+                                    <img alt="" src="images/photos/user1.png"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="panel">
-                                    <div class="panel-body">
-                                        <h3>修改密码</h3>
-                                        <form class="form-horizontal" role="form">
-                                            <div class="form-group">
-                                                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                                                <div class="col-sm-10">
-                                                    <input disabled type="email" class="form-control" id="inputEmail3" placeholder="252540133@qq.com"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
-                                                <div class="col-sm-10">
-                                                    <input type="password" class="form-control" id="inputPassword3" placeholder="请输入新密码"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputPassword3" class="col-sm-2 control-label"></label>
-                                                <div class="col-sm-10">
-                                                    <input type="password" class="form-control" id="inputPassword3" placeholder="请再次输入新密码"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
-                                                    <button type="submit" class="btn btn-primary">提交</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <ul class="p-info">
+                                    <li>
+                                        <div class="title">用户名</div>
+                                        <div class="desk">administrator</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">书签数</div>
+                                        <div class="desk">123456</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">注册时间</div>
+                                        <div class="desk">2014年1月1日</div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <h3>修改密码</h3>
 
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                                        <div class="col-sm-10">
+                                            <input disabled type="email" class="form-control" id="inputEmail3"
+                                                   placeholder="252540133@qq.com"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="inputPassword3"
+                                                   placeholder="请输入新密码"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPassword3" class="col-sm-2 control-label"></label>
+
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="inputPassword3"
+                                                   placeholder="请再次输入新密码"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <footer class="sticky-footer">
-        <div class="fixedItem">Copyright &copy; 2014 highwe.com</div>
-    </footer>
-
-    <script src="scripts/jquery-2.1.0.min.js"></script>
-    <script src="scripts/jquery-ui-1.9.2.custom.min.js"></script>
-    <script src="scripts/bootstrap.min.js"></script>
-    <script src="scripts/scripts.js"></script>
-</body>
-</html>
+</div>
+</template>
