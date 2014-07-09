@@ -5,11 +5,13 @@ reg_pwdCheck = false
 
 Template.login.events = {
   'click #loginWithGoogle':(evt, template)->
+    loading(evt.target)
     Meteor.loginWithGoogle({},  (err)->
       if (err)
         console.log err
       else
         Router.go('/common')
+      finish(evt.target,"<i class='fa fa-google'></i>使用Google帐号登录")
     )
 
   #animate
