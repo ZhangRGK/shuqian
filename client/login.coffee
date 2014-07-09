@@ -30,7 +30,7 @@ Template.login.events = {
     $("#login_pad").addClass("open3D")
     $("#reg_pad").addClass("close3D")
 
-  'click #currentTheme':(evt)->
+  'click #currentTheme':->
     $("#currentTheme").animate({top: "-40px"},200,function (){
         $("#changeTheme").animate({top: "20px"},200);
     });
