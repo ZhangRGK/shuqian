@@ -34,7 +34,10 @@ Meteor.publish('statistical',(url)->
     #  where
     #]
 
-    statistical = Statistical.find(where, {sort: {start: -1, black: 1, count: -1}, limit: 20})
+    statistical = Statistical.find(where, {sort: {start: -1, black: 1, count: -1}, limit: 4})
+    if statistical.count() == 0
+      where = {star: {$gt: 1}, black: {$lt: 3}, url: {$nin: urls}}
+      statistical = Statistical.find(where, {sort: {start: -1, black: 1, count: -1}, limit: 4})
     return statistical
   else
     return Statistical.find({"url":url})
