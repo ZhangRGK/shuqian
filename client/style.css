@@ -1,6 +1,5 @@
 html{
     height: 100%;
-    background: #eff0f4;
 }
 body {
     color: #7a7676;
@@ -530,8 +529,7 @@ BOXED VIEW
             LEFT SIDE
 ----------------------------------*/
 .left_boxed{
-    position: absolute!important;
-    left: 15px!important;
+    left: auto!important;
 }
 .left-side {
     width: 240px;
