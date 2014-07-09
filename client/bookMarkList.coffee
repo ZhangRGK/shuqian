@@ -8,9 +8,9 @@ Template.bookMarkList.helpers({
       return false
   info:->
     if window.location.pathname == "/explore"
-      return '这里没有数据,是因为没有足够的用户量和网站,我们没法选出足够的好站点给你!请多帮我们宣传!'
+      return '每天探索太多可不太好哦!每个网站值得好好品玩.请明儿赶早(或者无耻的刷新)'
     else
-      return '没有收藏任何网站'
+      return '没有数据了!这是怎么回事!'
     
 })
 

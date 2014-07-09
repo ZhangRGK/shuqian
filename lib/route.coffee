@@ -88,7 +88,8 @@ getNotMyBookMarks=->
   theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$nin: urls}}]}
 
 
-  Statistical.find(theOr)
+  explores = Statistical.find(theOr)
+  return explores
   #explore()
 
 #根目录书签
