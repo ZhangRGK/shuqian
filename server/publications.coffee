@@ -59,3 +59,16 @@ Meteor.publish("explores", ->
     subHandle.stop()
   )
 )
+
+Meteor.methods({
+  #增加统计表的次数
+  addStatTag:(url, tag)->
+    if Statistical.find({"url": url}).count() == 0
+      Statistical.insert({"url": url, "star": 1, "black": 0, "count": 0, "tags": [tag]})
+    else
+      stat = Statistical.findOne({"url": url})
+      final = stat.tags.slice(0)
+      if stat.tags.indexOf(tag.title) < 0
+        final.push(tag.title)
+      Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star + 1, "tags": final}})
+})
