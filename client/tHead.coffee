@@ -2,8 +2,8 @@
 selectMulti = ->
   #根据选中checkbox,重新选中multiselect
   $('input[name="bookmark"]:checked').map(->
-    bookMarkId = $(this).val()
-    bookMark = getBookmarkById(bookMarkId)
+    bookMarkUrl = $(this).val()
+    bookMark = getBookmarkByUrl(bookMarkUrl)
     selectTags = Tags.find({url:bookMark.url, stat:1}).fetch()
     for selectTag in selectTags
       $('#multi').multiselect('select', selectTag.title)
@@ -31,16 +31,16 @@ Template.tHead.rendered = ->
       #增加
       if checked
         $('input[name="bookmark"]:checked').map(->
-          bookMarkId = $(this).val()
-          bookMark = getBookmarkById(bookMarkId)
+          bookMarkUrl = $(this).val()
+          bookMark = getBookmarkByUrl(bookMarkUrl)
           bookMark.stat = 1
           addTag(bookMark, tag)
         )
       #删除
       else
         $('input[name="bookmark"]:checked').map(->
-          bookMarkId = $(this).val()
-          removeTag(bookMarkId, tag)
+          bookMarkUrl = $(this).val()
+          removeTag(bookMarkUrl, tag)
         )
 
     #取消选中的

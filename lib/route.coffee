@@ -2,7 +2,7 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('statistical')]
+  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('statistical', 'explore', Session.get("checkedBookMarks"))]
   layoutTemplate: 'main'
   loadingTemplate: 'loading'
   onAfterAction:->
@@ -130,14 +130,19 @@ Router.map(->
       tags: getTags()
       }
     onBeforeAction: 'loading'
+    onBeforeAction: ->
+      if this.ready()
+        if !Meteor.userId()
+          Router.go('/')
   })
   this.route('bookMarkList', {
     path: '/explore'
     data: ->
       {
-      bookMarks: getNotMyBookMarks(),
+      bookMarks: Statistical.find(),
       tags: getTags()
       }
+    #waitOn: -> Meteor.subscribe('statistical', 'explore', Session.get("checkedBookMarks"))
   })
   this.route('bookMarkList', {
     path: '/garbage'
@@ -179,6 +184,10 @@ Router.map(->
       )
       #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
+    onBeforeAction: ->
+      if this.ready()
+        if !Meteor.userId()
+          Router.go('/')
   })
 
   this.route('bookMarkDetail', {
@@ -186,9 +195,10 @@ Router.map(->
     data: ->
       {
       url: @params._url,
-      statistical:Statistical.findOne({"url":@params._url}),
+      statistical:Statistical.find(),
       tags: getTags()
       }
+    waitOn: -> Meteor.subscribe('statistical', @params._url)
   })
 )
 

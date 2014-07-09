@@ -65,11 +65,13 @@
                         <span id="user-email"></span> <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
+                        {{#if currentUser.emails}}
                         <li>
-                        <a href="#">修改密码</a>
+                        <a href="javascript:;">修改密码</a>
                         </li>
+                        {{/if}}
                         <li>
-                        <a id="signOut">退出</a>
+                        <a href="javascript:;" id="signOut">退出</a>
                         </li>
                     </ul>
                     </li>

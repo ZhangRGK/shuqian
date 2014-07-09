@@ -44,8 +44,7 @@ Template.bookMarkDetail.events = {
 
     url = $('a[name="bookmarkUrl"]').prop('text')
     tag = $(evt.target).html()
-    bookMark = getBookmarkByUrl(url)
-    removeTag(bookMark._id, tag)
+    removeTag(url, tag)
   ,
   'click a[name="otherTags"]':(evt,template)->
     #没有登录就返回
