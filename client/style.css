@@ -84,28 +84,27 @@ body {
     border: solid 1px rgba(255,255,255,.5);
     cursor: pointer;
 }
+
 #hello {
-    width: 100%;
-    height: 100%;
-}
-#hello {
-    width: 100%;
-    height: 100%;
-    position: absolute;
     z-index: 51;
-    overflow: auto;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    background: url(../images/pattern.png) repeat;
 }
 #welcome{
     width: 100%;
     position: relative;
-    z-index: 1;
+    z-index: 3;
 }
 .welcome { 
     padding-top: 140px;
+}
+.bgCoverStyle{
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: url(../images/pattern.png) repeat;
+    min-height: 700px;
 }
 .cbp-bislideshow {
     list-style: none;
@@ -123,15 +122,15 @@ body {
 }
 .cbp-bislideshow li {
     position: absolute;
-    width: 101%;
-    height: 101%;
-    top: -0.5%;
-    left: -0.5%;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
     -webkit-transition: opacity 1s;
     -moz-transition: opacity 1s;
     transition: opacity 1s;
     background-position: center center;
-    min-height: 600px;
+    min-height: 700px;
 }
 #hello article h1 {
     font-weight: 700;
@@ -180,15 +179,9 @@ body {
     bottom: 0px;
     display: none;
 }
-.login-body {
-    background: #65cea7 url("../images/login-bg.jpg") no-repeat fixed;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-}
 .pad{
     width: 330px;
-    margin: 150px auto 0px;
+    margin: 10% auto 0px;
     position: relative;
 }
 .form-signin {
@@ -459,16 +452,6 @@ MAIN
     background: #eff0f4;
     min-height: 100%;
 }
-/* -------------------------
-详情,关于,帮助等页面
-------------------------- */
-.main-content2 {
-    margin-left: 0px;
-    padding: 50px 0px;
-    background: #eff0f4;
-    min-height: 100%;
-}
-
 .page-heading {
     padding: 15px;
     position: relative;
