@@ -75,7 +75,10 @@ getBlacklistBookMarks=->
 
 #探索
 getNotMyBookMarks=->
-  explore()
+  blacks = BookMarks.find({stat:2}).fetch()
+  urls = _.pluck(blacks, 'url')
+  Statistical.find({url:{$nin:urls}})
+  #explore()
 
 #根目录书签
 getMyBookMarks=->
@@ -134,7 +137,7 @@ Router.map(->
     path: '/explore'
     data: ->
       {
-      bookMarks: Statistical.find(),
+      bookMarks: getNotMyBookMarks(),
       tags: getTags()
       }
     onBeforeAction:->
