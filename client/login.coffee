@@ -55,7 +55,7 @@ Template.login.events = {
 
   'blur #signIn_email':(evt)->
     if evt.keyCode == 13
-      signIn()
+      signIn(evt)
     reg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/
     email = $(evt.target).val()
     if !reg.test(email)
@@ -68,10 +68,10 @@ Template.login.events = {
 
   'keypress #signIn_pwd':(evt)->
     if evt.keyCode == 13
-      signIn()
+      signIn(evt)
 
-  'click #signIn':->
-    signIn()
+  'click #signIn':(evt)->
+    signIn(evt)
 
   # register
   # 请文千调整下面的颜色并且定义class
@@ -122,22 +122,26 @@ Template.login.events = {
   'change #reg_agree':->
     checkReg()
 
-  'click #reg':->
+  'click #reg':(evt)->
+    loading(evt.target)
     Accounts.createUser({"email":$("#reg_email").val(),"password":$("#reg_pwd").val()},(error)->
       if error
         console.log error
       else
         Router.go("/")
+      finish(evt.target,'注册')
     )
 }
 
-signIn = ->
+signIn = (evt)->
   if signIn_Check and $("#signIn_pwd").val().length >= 6
+    loading(evt.target)
     Meteor.loginWithPassword($("#signIn_email").val(),$("#signIn_pwd").val(),(error)->
       if error
         console.log error
       else
         Router.go("/common")
+      finish(evt.target,"登录")
     )
 
 checkReg = ->
@@ -145,6 +149,13 @@ checkReg = ->
     $("#reg").removeAttr("disabled")
   else
     $("#reg").attr("disabled","disabled")
+
+loading = (target)->
+  console.log("loading",target)
+  $(target).attr("disabled","disabled").html("<i class='fa fa-spinner fa-spin'></i>")
+
+finish = (target,text)->
+  $(target).removeAttr("disabled").html(text)
 
 Template.login.rendered = ->
   n = window.localStorage.getItem("themeNum")
