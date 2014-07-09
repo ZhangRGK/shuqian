@@ -49,6 +49,19 @@ Template.login.events = {
       signIn_Check = true
     return
 
+  'blur #signIn_email':(evt)->
+    if evt.keyCode == 13
+      signIn()
+    reg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/
+    email = $(evt.target).val()
+    if !reg.test(email)
+      $(evt.target).css("border-color","#a94442")
+      signIn_Check = false
+    else
+      $(evt.target).css("border-color","#3c763d")
+      signIn_Check = true
+    return
+
   'keypress #signIn_pwd':(evt)->
     if evt.keyCode == 13
       signIn()
