@@ -33,9 +33,8 @@
     tag.stat = 1
     Tags.insert(tag)
   # 修改统计表
-
   if Statistical.find({"url": bookMark.url}).count() == 0
-    Statistical.insert({"url": bookMark.url, "star": 1, "black": 0, "count": 0, "tags": [tag]})
+    Statistical.insert({"url": bookMark.url, "star": 1, "black": 0, "count": 0, "tags": [tag.title]})
   else
     stat = Statistical.findOne({"url": bookMark.url})
     final = stat.tags.slice(0)
