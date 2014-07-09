@@ -11,17 +11,22 @@ Meteor.publish('tags', ->
 Meteor.publish('statistical',(url)->
   #自已的tag
   if url == 'explore'
-    #if !checkedBookMarks
-    #  checkedBookMarks = []
+    #当前用户所有在用tag
+    usingTags = Tags.find({userId: @userId, stat:1}).fetch()
+    tagTitles = _.uniq(_.pluck(usingTags, "title"))
+    #随机选3个标签
+    randTags = randArray(tagTitles, 3)
+    urlAreas = _.uniq(_.pluck(Tags.find({title: {$in:randTags}}).fetch(), "url"))
+
+    #屏蔽曾经和当前收藏的和黑名单的url
+    bms = _.pluck(BookMarks.find({userId: @userId}).fetch(), "url")
     tags = Tags.find({userId: @userId}).fetch()
-    #tagTitles = _.pluck(tags, "title")
-
-    #屏蔽曾经和当前收藏的和黑名单的
-    bms = _.pluck(BookMarks.find({"userId": @userId}).fetch(), "url")
     urls = _.pluck(tags, 'url').concat(bms)
-
-    #屏蔽被其他人列入黑名单内的
-    where = {star: {$gt: 1}, black: {$lt: 2}, count: {$gt: 3}, url: {$nin: urls}}
+    if urlAreas.length != 0
+      where = {star: {$gt: 0}, black: {$lt: 3}, url: {$nin: urls, $in:urlAreas}}
+    else
+      where = {star: {$gt: 0}, black: {$lt: 3}, url: {$nin: urls}}
+    #where = {star: {$gt: 1}, black: {$lt: 2}, count: {$gt: 3}, url: {$nin: urls, $in:urlAreas}}
     #where = {url: {$nin: urls}}
 
     #theOr = [
