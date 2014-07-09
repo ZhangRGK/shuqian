@@ -108,7 +108,7 @@ signIn = ->
       if error
         console.log error
       else
-        Router.go("/")
+        Router.go("/common")
     )
 
 checkReg = ->
