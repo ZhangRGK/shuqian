@@ -23,9 +23,9 @@ Meteor.publish('statistical',(url)->
     tags = Tags.find({userId: @userId}).fetch()
     urls = _.pluck(tags, 'url').concat(bms)
     if urlAreas.length != 0
-      where = {star: {$gt: 0}, black: {$lt: 3}, url: {$nin: urls, $in:urlAreas}}
+      where = {star: {$gt: 2}, black: {$lt: 3}, url: {$nin: urls, $in:urlAreas}}
     else
-      where = {star: {$gt: 0}, black: {$lt: 3}, url: {$nin: urls}}
+      where = {star: {$gt: 2}, black: {$lt: 3}, url: {$nin: urls}}
     #where = {star: {$gt: 1}, black: {$lt: 2}, count: {$gt: 3}, url: {$nin: urls, $in:urlAreas}}
     #where = {url: {$nin: urls}}
 
