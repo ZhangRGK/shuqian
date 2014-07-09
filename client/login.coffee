@@ -5,10 +5,13 @@ reg_pwdCheck = false
 
 Template.login.events = {
   'click #loginWithGoogle':(evt, template)->
+    console.log "login with google"
     Meteor.loginWithGoogle({},  (err)->
       if (err)
         console.log err
       else
+        console.log Meteor.user()
+        console.log "success"
         Router.go('/common')
     )
 
