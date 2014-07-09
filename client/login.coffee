@@ -5,13 +5,10 @@ reg_pwdCheck = false
 
 Template.login.events = {
   'click #loginWithGoogle':(evt, template)->
-    console.log "login with google"
     Meteor.loginWithGoogle({},  (err)->
       if (err)
         console.log err
       else
-        console.log Meteor.user()
-        console.log "success"
         Router.go('/common')
     )
 
@@ -108,7 +105,6 @@ Template.login.events = {
       return
     pwd = $("#reg_pwd").val()
     repwd = $("#reg_repwd").val()
-    console.log(pwd,repwd)
     if pwd != repwd
       $(evt.target).css("border-color","#a94442")
       reg_pwdCheck = false
@@ -126,7 +122,8 @@ Template.login.events = {
     loading(evt.target)
     Accounts.createUser({"email":$("#reg_email").val(),"password":$("#reg_pwd").val()},(error)->
       if error
-        console.log error
+        $("#reg_error_label").html("Email 已经存在")
+        $("#reg_error").removeClass("hide")
       else
         Router.go("/")
       finish(evt.target,'注册')
@@ -138,7 +135,8 @@ signIn = (evt)->
     loading(evt.target)
     Meteor.loginWithPassword($("#signIn_email").val(),$("#signIn_pwd").val(),(error)->
       if error
-        console.log error
+        $("#signIn_error_label").html("用户名或密码错误")
+        $("#signIn_error").removeClass("hide")
       else
         Router.go("/common")
       finish(evt.target,"登录")
@@ -151,7 +149,6 @@ checkReg = ->
     $("#reg").attr("disabled","disabled")
 
 loading = (target)->
-  console.log("loading",target)
   $(target).attr("disabled","disabled").html("<i class='fa fa-spinner fa-spin'></i>")
 
 finish = (target,text)->
