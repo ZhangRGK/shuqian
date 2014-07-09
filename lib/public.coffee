@@ -33,8 +33,7 @@
     tag.stat = 1
     Tags.insert(tag)
   # 增加统计表
-  Meteor.call('addStatTag', bookMark.url, tag)
-
+  Meteor.call('addStatTag', bookMark.url, tag.title)
 # 统计表修改完成
 
 @increaseBookMarkCount = (url)->
