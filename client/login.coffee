@@ -33,10 +33,19 @@ Template.login.events = {
     $("#login_pad").addClass("open3D")
     $("#reg_pad").addClass("close3D")
 
+  'click #currentTheme':(evt)->
+    $("#currentTheme").animate({top: "-40px"},200,function (){
+        $("#changeTheme").animate({top: "20px"},200);
+    });
+
   'click #changeTheme li':(evt)->
     n=$("#changeTheme li").index($(evt.target))
     $("#cbp-bislideshow li").addClass('hide')
     $("#cbp-bislideshow li:eq("+n+")").removeClass('hide')
+    $("#currentTheme").css("background-color",$("#changeTheme li:eq("+n+")").css("background-color"));
+    $("#changeTheme").animate({top: "-20px"},200,function (){
+        $("#currentTheme").animate({top: "20px"},200);
+    }); 
     window.localStorage.setItem("themeNum",n)
 
   # login

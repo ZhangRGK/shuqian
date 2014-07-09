@@ -71,7 +71,7 @@ body {
     position: fixed;
     z-index: 100;
     right: 20px;
-    top: 20px;
+    top: -20px;
 }
 #changeTheme li{
     width: 20px;
@@ -81,10 +81,27 @@ body {
     float: right;
     list-style: none;
     margin-left: 10px;
-    border: solid 1px rgba(255,255,255,.5);
     cursor: pointer;
+    border: solid 1px rgba(0,0,0,.5);
+    -moz-transition: .5s ease-in-out;
+    -webkit-transition: .5s ease-in-out;
+    -o-transition: .5s ease-in-out;
+    -ms-transition: .5s ease-in-out;
 }
-
+#currentTheme{
+    position: fixed;
+    z-index: 101;
+    right: 20px;
+    top: 20px;
+    border-radius: 2px;
+    width: 50px;
+    height: 30px;
+    cursor: pointer;
+    color: #fff;
+    border: solid 1px rgba(0,0,0,.3);
+    text-align: center;
+    padding-top: 3px;
+}
 #hello {
     z-index: 51;
 }
@@ -456,12 +473,6 @@ MAIN
 }
 .main-content {
     margin-left: 240px;
-    padding: 50px 0px;
-    background: #eff0f4;
-    min-height: 100%;
-}
-.main-content2 {
-    margin-left: 0px;
     padding: 50px 0px;
     background: #eff0f4;
     min-height: 100%;
