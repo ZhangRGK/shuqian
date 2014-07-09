@@ -1,6 +1,8 @@
 Template.tag.helpers({
   selected: ()->
-    tag = Session.get('shuqianTag')
+    str = window.location.pathname
+    arr = str.split('/')
+    tag = arr[arr.length - 1]
     if @title == tag
       return true
     else
