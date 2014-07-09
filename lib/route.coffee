@@ -74,7 +74,7 @@ getBlacklistBookMarks=->
   BookMarks.find({stat:2},{sort:{dateAdded:-1}}).fetch()
 
 #探索
-getNotMyBookMarks=->
+getNotMyBookMarks= ()->
   #黑名单的不要查出来
   blacks = BookMarks.find({stat:2}).fetch()
   urls = _.pluck(blacks, 'url')
@@ -153,9 +153,9 @@ Router.map(->
       bookMarks: getNotMyBookMarks(),
       tags: getTags()
       }
-    onBeforeAction:->
+    #onBeforeAction:->
+    waitOn:->
       @subscribe('statistical', 'explore')
-    onBeforeAction: 'loading'
   })
   this.route('bookMarkList', {
     path: '/garbage'
@@ -211,7 +211,7 @@ Router.map(->
       statistical:Statistical.findOne(),
       tags: getTags()
       }
-    onBeforeAction: -> Meteor.subscribe('statistical', @params._url)
+    waitOn: -> Meteor.subscribe('statistical', @params._url)
   })
 )
 

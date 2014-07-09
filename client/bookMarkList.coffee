@@ -11,7 +11,6 @@ Template.bookMarkList.helpers({
       return '每天探索太多可不太好哦!每个网站值得好好品玩.请明儿赶早(或者无耻的刷新)'
     else
       return '没有数据了!这是怎么回事!'
-    
 })
 
 
