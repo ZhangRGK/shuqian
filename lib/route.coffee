@@ -154,8 +154,8 @@ Router.map(->
       bookMarks:getNotMyBookMarks(),
       tags: getTags()
       }
-    #waitOn:->
-    #  Meteor.subscribe('statistical', 'explore')
+    onBeforeAction:->
+      @subscribe('statistical', 'explore').wait()
   })
   this.route('bookMarkList', {
     path: '/garbage'
