@@ -1,10 +1,13 @@
 Template.tag.helpers({
   selected: ()->
-    str = window.location.pathname
-    arr = str.split('/')
-    tag = decodeURIComponent(arr[arr.length - 1])
-    if @title == tag
-      return true
-    else
+    if window.location.pathname == '/explore'
       return false
+    else
+      str = window.location.pathname
+      arr = str.split('/')
+      tag = decodeURIComponent(arr[arr.length - 1])
+      if @title == tag
+        return true
+      else
+        return false
 })
