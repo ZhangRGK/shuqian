@@ -2,7 +2,7 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('statistical')]
+  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
   layoutTemplate: 'main'
   loadingTemplate: 'loading'
   onAfterAction:->
@@ -142,7 +142,7 @@ Router.map(->
       bookMarks: Statistical.find(),
       tags: getTags()
       }
-    waitOn: -> Meteor.subscribe('statistical', 'explore', Session.get("checkedBookMarks"))
+    #waitOn: -> Meteor.subscribe('statistical', 'explore', Session.get("checkedBookMarks"))
   })
   this.route('bookMarkList', {
     path: '/garbage'
