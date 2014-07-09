@@ -193,5 +193,8 @@ Template.login.rendered = ->
   n = window.localStorage.getItem("themeNum")
   if n
     $("#cbp-bislideshow li:eq("+n+")").removeClass('hide');
+    $("#currentTheme").css("background-color",$("#changeTheme li:eq("+n+")").css("background-color"));
   else
-    $("#cbp-bislideshow li:eq("+Math.floor(Math.random() * $('#changeTheme ul>li').length)+")").removeClass('hide');
+    r = Math.floor(Math.random() * $('#changeTheme ul>li').length)
+    $("#cbp-bislideshow li:eq("+r+")").removeClass('hide');
+    $("#currentTheme").css("background-color",$("#changeTheme li:eq("+r+")").css("background-color"));
