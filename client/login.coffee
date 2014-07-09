@@ -39,7 +39,7 @@ Template.login.events = {
   # login
   'keypress #signIn_email':(evt)->
     if evt.keyCode == 13
-      signIn()
+      signIn(evt)
     reg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/
     email = $(evt.target).val()
     if !reg.test(email)
@@ -48,6 +48,7 @@ Template.login.events = {
     else
       $(evt.target).css("border-color","#3c763d")
       signIn_Check = true
+    checkSignIn()
     return
 
   'blur #signIn_email':(evt)->
@@ -61,11 +62,13 @@ Template.login.events = {
     else
       $(evt.target).css("border-color","#3c763d")
       signIn_Check = true
+    checkSignIn()
     return
 
   'keypress #signIn_pwd':(evt)->
     if evt.keyCode == 13
       signIn(evt)
+    checkSignIn()
 
   'click #signIn':(evt)->
     signIn(evt)
@@ -131,7 +134,6 @@ Template.login.events = {
 }
 
 signIn = (evt)->
-  if signIn_Check and $("#signIn_pwd").val().length >= 6
     loading(evt.target)
     Meteor.loginWithPassword($("#signIn_email").val(),$("#signIn_pwd").val(),(error)->
       if error
@@ -141,6 +143,10 @@ signIn = (evt)->
         Router.go("/common")
       finish(evt.target,"登录")
     )
+
+checkSignIn = ->
+  if signIn_Check and $("#signIn_pwd").val().length >= 6
+    $("#signIn").removeAttr("disabled")
 
 checkReg = ->
   if reg_emailCheck and reg_pwdCheck and $("#reg_agree").is(":checked")
