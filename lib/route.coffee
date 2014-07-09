@@ -85,11 +85,17 @@ getMyBookMarks=->
   checkedBookMarks = Session.get("checkedBookMarks")||[]
   theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
   sort = {sort:{count:-1}, limit : 14}
+
+  if BookMarks.find(theOr, sort).count() == 0
+    Router.go('/help')
   BookMarks.find(theOr, sort)
 
 
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 Router.map(->
+  this.route('help', {
+    path: '/help'
+  })
   this.route('index', {
     path: '/index'
   })
@@ -119,7 +125,6 @@ Router.map(->
       bookMarks: getMyBookMarks(),
       tags: getTags()
       }
-    onBeforeAction: 'loading'
     onBeforeAction: ->
       if this.ready()
         if !Meteor.userId()
