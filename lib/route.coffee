@@ -144,7 +144,6 @@ Router.map(->
       }
     onBeforeAction:->
       Meteor.subscribe('statistical', 'explore', Session.get("checkedBookMarks"))
-    #waitOn: -> Meteor.subscribe('statistical', 'explore', Session.get("checkedBookMarks"))
   })
   this.route('bookMarkList', {
     path: '/garbage'
