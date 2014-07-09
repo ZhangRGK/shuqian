@@ -1,6 +1,5 @@
-@removeTag = (bookMarkId, tag)->
-  bookMark = getBookmarkById(bookMarkId)
-  tag = {userId: Meteor.userId(), url: bookMark.url, title: tag, stat: 1}
+@removeTag = (bookMarkUrl, tag)->
+  tag = {userId: Meteor.userId(), url: bookMarkUrl, title: tag, stat: 1}
   doTag = Tags.findOne(tag)
   #选择多个checkbox时,会出现剔除没有标记这个tag的bookmakrs的情况
   if !doTag
@@ -105,6 +104,7 @@
 #取bookMark
 @getBookmarkById = (bookMarkId)->
   bookMark = BookMarks.findOne({_id: bookMarkId})
+  console.log bookMark
   if !bookMark
     bookMark = Statistical.findOne({_id: bookMarkId})
     bookMark.userId = Meteor.userId()
