@@ -21,12 +21,12 @@ Meteor.publish('statistical',(url, checkedBookMarks)->
     #屏蔽被其他人列入黑名单内的
     where = {star: {$gt: 1}, black: {$lt: 2}, count: {$gt: 3}, url: {$nin: urls}}
     #checkedBookMarks = Session.get("checkedBookMarks") || []
-    #theOr = [
-    #  { _id: {$in: checkedBookMarks}},
-    #  where
-    #]
-    #statistical = Statistical.find({$or: theOr}, {sort: {start: -1, black: 1, count: -1}, limit: 20})
-    statistical = Statistical.find({},limit: 10)
+    theOr = [
+      { _id: {$in: checkedBookMarks}},
+      where
+    ]
+    statistical = Statistical.find({$or: theOr}, {sort: {start: -1, black: 1, count: -1}, limit: 20})
+    #statistical = Statistical.find({},limit: 10)
     return statistical
   else
     return Statistical.find({"url":url})
