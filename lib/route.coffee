@@ -194,9 +194,10 @@ Router.map(->
     data: ->
       {
       url: @params._url,
-      statistical:Statistical.findOne({"url":@params._url}),
+      statistical:Statistical.findOne(),
       tags: getTags()
       }
+    waitOn: -> Meteor.subscribe('statistical', @params._url)
   })
 )
 

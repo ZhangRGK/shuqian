@@ -8,7 +8,7 @@ Meteor.publish('tags', ->
       return Tags.find({userId:this.userId})
 )
 
-Meteor.publish('statistical',()->
+Meteor.publish('statistical',(url)->
 #  urls = []
 #  if this.userId
 #    urls = BookMarks.find({userId:this.userId},{"fields":{"url":true,"_id":false}}).fetch()
@@ -16,7 +16,8 @@ Meteor.publish('statistical',()->
 #    urls = BookMarks.find({userId:''},{"fields":{"url":true,"_id":false}}).fetch()
 #  console.log(this.userId)
 #  console.log(urls)
-  return Statistical.find({}, limit:20)
+#  return Statistical.find({}, limit:20)
+  Statistical.find({"url":url})
 )
 
 Meteor.publish("explores", ->
