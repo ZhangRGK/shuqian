@@ -101,7 +101,8 @@ getMyBookMarks=->
   theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
   sort = {sort:{count:-1}, limit : 14}
 
-  if BookMarks.find(theOr, sort).count() == 0
+  #没有收藏书签时候,在探索勾选,会触发这里执行,导致跳转
+  if BookMarks.find(theOr, sort).count() == 0 and window.location.pathname != "/explore"
     Router.go('/help')
   BookMarks.find(theOr, sort)
 
@@ -154,6 +155,7 @@ Router.map(->
       }
     onBeforeAction:->
       @subscribe('statistical', 'explore')
+    onBeforeAction: 'loading'
   })
   this.route('bookMarkList', {
     path: '/garbage'
