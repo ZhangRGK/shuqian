@@ -75,9 +75,20 @@ getBlacklistBookMarks=->
 
 #探索
 getNotMyBookMarks=->
+  #黑名单的不要查出来
   blacks = BookMarks.find({stat:2}).fetch()
   urls = _.pluck(blacks, 'url')
-  Statistical.find({url:{$nin:urls}})
+
+  #已经收藏的也不要查出来
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url').concat(urls)
+
+  #当前勾住的,不要动
+  checkedBookMarks = Session.get("checkedBookMarks")
+  theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$nin: urls}}]}
+
+
+  Statistical.find(theOr)
   #explore()
 
 #根目录书签
