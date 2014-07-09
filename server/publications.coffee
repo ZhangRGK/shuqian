@@ -74,4 +74,12 @@ Meteor.methods({
   increaseStatCount:(url)->
     statistical = Statistical.findOne({"url": url})
     Statistical.update({_id: statistical._id}, {$set: {"count": statistical.count + 1}})
+  #当tag没有人用的时候从统计表中移除 标签stat==0
+  removeStatTag:(url,title)->
+    if Tags.find({"title": title,"stat":1}).count() == 0
+      stat = Statistical.findOne({"url": url})
+      final = stat.tags
+      final.splice(final.indexOf(title),1)
+      Statistical.update({"_id": stat._id}, {"$set": {"tags": final}})
+
 })

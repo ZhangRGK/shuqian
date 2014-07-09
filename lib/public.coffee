@@ -6,6 +6,9 @@
     return
 
   Tags.update({_id: doTag._id}, {$set: {stat: 0}})
+
+  Meteor.call('removeStatTag', bookMarkUrl, tag.title)
+
 #  stat = Statistical.findOne({"url": bookMark.url})
 #  final = stat.tags.slice(0)
 #  final.splice(final.indexOf(tag.title),1)
