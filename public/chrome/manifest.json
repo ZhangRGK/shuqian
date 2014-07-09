@@ -4,7 +4,7 @@
     "manifest_version": 2,
     "description": "用来同步Chrome书签到互联网",
     "browser_action": {
-        "default_icon": "icon128.png",
+        "default_icon": "login-logo.png",
         "default_popup": "popup.html"
     },
     "background": {
