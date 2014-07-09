@@ -430,12 +430,13 @@ bar
     -webkit-border-radius: 2px;
     margin-right: 5px;
     vertical-align: middle;
-    width: 18px;
+    width: 30px;
 }
 .topBar .navbar-nav > li > a {
-    padding-top: 13px;
+    padding-top: 0px;
     padding-bottom: 0px;
     height: 50px;
+    line-height: 45px;
 }
 
 /* --------------------------------
@@ -871,4 +872,8 @@ ul.labels-info li a:hover, ul.labels-info li a:focus {
 
 .list-group {
     margin-bottom: 0px;
+}
+
+.selectall{
+    margin: 11px 10px 0px 0px;
 }
