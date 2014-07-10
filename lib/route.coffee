@@ -155,7 +155,7 @@ Router.map(->
       tags: getTags()
       }
     onAfterAction: ->
-      @subscribe('statistical', 'explore')
+      @subscribe('statistical', 'explore').wait()
   })
   this.route('bookMarkList', {
     path: '/garbage'
