@@ -130,9 +130,8 @@ Router.map(->
     waitOn: ->
     layoutTemplate: ''
     onBeforeAction: ->
-      if this.ready()
-        if Meteor.userId()
-          Router.go('/common')
+      if Meteor.userId()
+        Router.go('/common')
   })
   this.route('bookMarkList', {
     path: '/common'
@@ -144,7 +143,7 @@ Router.map(->
     onBeforeAction: (pause)->
       if !Meteor.userId()
         Router.go('/')
-      pause()
+      #pause()
   })
   this.route('bookMarkList', {
     path: '/explore'
@@ -199,7 +198,7 @@ Router.map(->
     onBeforeAction: (pause)->
       if !Meteor.userId()
         Router.go('/')
-      pause()
+      #pause()
   })
 
   this.route('bookMarkDetail', {
