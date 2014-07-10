@@ -1,14 +1,14 @@
 Meteor.publish('bookmarks', ->
   if this.userId
-    return BookMarks.find({userId:@userId})
+    return BookMarks.find({userId: @userId})
 )
 
 Meteor.publish('tags', ->
   if this.userId
-      return Tags.find({userId:@userId})
+    return Tags.find({userId: @userId})
 )
 
-Meteor.publish('statistical',(url)->
+Meteor.publish('statistical', (url)->
   #自已的tag
   if url == 'explore'
     #当前用户所有在用tag
@@ -40,7 +40,7 @@ Meteor.publish('statistical',(url)->
       statistical = Statistical.find(where, {sort: {start: -1, black: 1, count: -1}, limit: 4})
     return statistical
   else
-    return Statistical.find({"url":url})
+    return Statistical.find({"url": url})
 )
 
 Meteor.publish("explores", ->
@@ -51,7 +51,7 @@ Meteor.publish("explores", ->
   #bms = _.pluck(BookMarks.find({"userId":this.userId,"stat":2}).fetch(),"url")
   #urls = _.pluck(tags, 'url').concat(bms)
 
-  subHandle = BookMarks.find({userId: {$ne: this.userId}},{limit : 200}
+  subHandle = BookMarks.find({userId: {$ne: this.userId}}, {limit: 200}
   ).observeChanges({
       added: (id, fields)->
         sub.added("explores", id, fields)
@@ -68,6 +68,14 @@ Meteor.publish("explores", ->
   )
 )
 
+Meteor.publish("FAQ", (keywords)->
+#  if keywords == ""
+#    return FAQ.find({"sort": {"count": -1}, "limit": 20})
+#  else
+#    return FAQ.find({"question":/[keyword]?/})
+  return FAQ.find()
+)
+
 Meteor.methods({
   #增加统计表的次数
   addStatTag:(url, tag)->
@@ -80,7 +88,7 @@ Meteor.methods({
       if stat.tags.indexOf(tag) < 0
         final.push(tag)
       Statistical.update({"_id": stat._id}, {"$set": {"star": stat.star + 1, "tags": final}})
-  increaseStatCount:(url)->
+  increaseStatCount: (url)->
     statistical = Statistical.findOne({"url": url})
     Statistical.update({_id: statistical._id}, {$set: {"count": statistical.count + 1}})
   #当tag没有人用的时候从统计表中移除 标签stat==0

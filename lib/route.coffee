@@ -207,6 +207,15 @@ Router.map(->
     data: -> Statistical.findOne()
     waitOn: -> Meteor.subscribe('statistical', @params._url)
   })
+
+  this.route('resetPassword', {
+    path: '/resetPwd'
+  })
+
+  this.route('faq',{
+    path: '/faq'
+    onBeforeAction: -> Meteor.subscribe('faq')
+  })
 )
 
 Meteor.Router.add('/add', 'POST', ->
