@@ -74,8 +74,23 @@ getBlacklistBookMarks=->
   BookMarks.find({stat:2},{sort:{dateAdded:-1}}).fetch()
 
 #探索
-getNotMyBookMarks=->
-  explore()
+getNotMyBookMarks= ->
+  
+  #黑名单的不要查出来
+  blacks = BookMarks.find({stat:2}).fetch()
+  urls = _.pluck(blacks, 'url')
+
+  #已经收藏的也不要查出来
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url').concat(urls)
+
+  #当前勾住的,不要动
+  checkedBookMarks = Session.get("checkedBookMarks")
+  theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$nin: urls}}]}
+
+  explores = Statistical.find(theOr)
+  return explores
+  #explore()
 
 #根目录书签
 getMyBookMarks=->
@@ -86,7 +101,8 @@ getMyBookMarks=->
   theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
   sort = {sort:{count:-1}, limit : 14}
 
-  if BookMarks.find(theOr, sort).count() == 0
+  #没有收藏书签时候,在探索勾选,会触发这里执行,导致跳转
+  if BookMarks.find(theOr, sort).count() == 0 and window.location.pathname != "/explore"
     Router.go('/help')
   BookMarks.find(theOr, sort)
 
@@ -134,11 +150,11 @@ Router.map(->
     path: '/explore'
     data: ->
       {
-      bookMarks: Statistical.find(),
+      bookMarks:getNotMyBookMarks(),
       tags: getTags()
       }
-    onBeforeAction:->
-      @subscribe('statistical', 'explore')
+    onAfterAction:->
+      @subscribe('statistical', 'explore').wait()
   })
   this.route('bookMarkList', {
     path: '/garbage'
@@ -188,13 +204,17 @@ Router.map(->
 
   this.route('bookMarkDetail', {
     path: '/d/:_url'
-    data: ->
-      {
-      url: @params._url,
-      statistical:Statistical.findOne(),
-      tags: getTags()
-      }
-    onBeforeAction: -> Meteor.subscribe('statistical', @params._url)
+    data: -> Statistical.findOne()
+    waitOn: -> Meteor.subscribe('statistical', @params._url)
+  })
+
+  this.route('resetPassword', {
+    path: '/resetPwd'
+  })
+
+  this.route('faq',{
+    path: '/faq'
+    onBeforeAction: -> Meteor.subscribe('faq')
   })
 )
 

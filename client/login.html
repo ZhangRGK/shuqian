@@ -19,7 +19,11 @@
                         </article>
                         <div class="clear"></div>
                         <article class="welcome-btn">
+                            {{#if currentUser}}
+                            <a href="javascript:;" class="active-links"><i class='fa fa-spinner fa-spin'></i></a>
+                            {{else}}
                             <a href="javascript:;" id="openLogin" class="active-links">注册/登录</a>
+                            {{/if}}
                         </article>
                     </div>
                 </div>

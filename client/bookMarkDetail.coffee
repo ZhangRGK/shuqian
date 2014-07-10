@@ -5,32 +5,20 @@ Template.bookMarkDetail.helpers({
     if this.url
       a.href = this.url
     return a.hostname
-  bmTitle: ->
-    if @statistical
-      @statistical.title
-  star:->
-    if @statistical
-      @statistical.star
-  black:->
-    if @statistical
-      @statistical.black
-  count:->
-    if @statistical
-      @statistical.count
   myTags:->
-    if @statistical
-      allTags = Tags.find({"url":@statistical.url,stat:1}).fetch()
+    if @url
+      allTags = Tags.find({"url":@url,stat:1}).fetch()
       myTags = []
-      stat_tags = @statistical.tags
+      stat_tags = @tags
       for tag in allTags
         if stat_tags.indexOf(tag.title)>=0
           myTags.push({"title":tag.title})
       return myTags
   otherTags:->
-    if @statistical
-      allTags = Tags.find({"url":@statistical.url,stat:1}).fetch()
+    if @url
+      allTags = Tags.find({"url":@url,stat:1}).fetch()
       otherTags = []
-      stat_tags = @statistical.tags.slice(0)
+      stat_tags = @tags.slice(0)
       for tag in allTags
         if stat_tags.indexOf(tag.title) >=0
           stat_tags.splice(stat_tags.indexOf(tag.title),1)

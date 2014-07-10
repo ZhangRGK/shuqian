@@ -112,3 +112,6 @@
     for selectTag in selectTags
       $('#multi').multiselect('select', selectTag.title)
   )
+@randArray = (m, len)->
+    m.sort(-> return Math.random() - 0.5)
+    return m.slice(0, len)
