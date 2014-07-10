@@ -46,6 +46,11 @@ Template.main.events = {
 }
 
 Template.main.rendered = ->
+  Meteor.call("getUserInfo",(error, userInfo)->
+    console.log 'rendered call'
+    console.log userInfo
+    console.log error
+  )
   user = Meteor.user()
   console.log 'rendered'
   console.log user
@@ -66,6 +71,11 @@ Template.main.rendered = ->
 
 Meteor.startup(->
   Deps.autorun(->
+    Meteor.call("getUserInfo",(error, userInfo)->
+      console.log 'autorun call'
+      console.log userInfo
+      console.log error
+    )
     user = Meteor.user()
     console.log 'autorun'
     console.log user
