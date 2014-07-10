@@ -46,8 +46,16 @@ Template.main.events = {
 }
 
 Template.main.rendered = ->
+  console.log 'rendered'
+  console.log localStorage.getItem("userType")
+  console.log localStorage.getItem("userEmail")
+  console.log Meteor.user()
+
   if localStorage.getItem("userType") == 1
     Meteor.call("getUserInfo",(error, userInfo)->
+      console.log 'rendered call'
+      console.log Meteor.user()
+      console.log userInfo
       name = userInfo.services.google.name
       $("#user-avatar").attr("src",userInfo.services.google.picture)
       $("#user-email").html(name)
@@ -61,6 +69,10 @@ Template.main.rendered = ->
 
 Meteor.startup(->
   Deps.autorun(->
+    console.log 'autorun'
+    console.log localStorage.getItem("userType")
+    console.log localStorage.getItem("userEmail")
+    console.log Meteor.user()
     user = Meteor.user()
     if user
       if user.emails
@@ -69,10 +81,12 @@ Meteor.startup(->
         localStorage.setItem("userType", 0)
       else
         Meteor.call("getUserInfo",(error, userInfo)->
+          console.log 'autorun call'
+          console.log Meteor.user()
+          console.log userInfo
           email = userInfo.services.google.email
           localStorage.setItem("userEmail", email)
           localStorage.setItem("userType", 1)
-
         )
   )
 )
