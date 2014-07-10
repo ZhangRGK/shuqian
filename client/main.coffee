@@ -57,6 +57,7 @@ Template.main.rendered = ->
 Meteor.startup(->
   Deps.autorun(->
     user = Meteor.user()
+    console.log user
     if user
       if user.emails
         email = user.emails[0].address

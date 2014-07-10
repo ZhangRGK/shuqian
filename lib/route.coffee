@@ -196,6 +196,11 @@ Router.map(->
   this.route('resetPassword', {
     path: '/resetPwd'
   })
+
+  this.route('faq',{
+    path: '/faq'
+    onBeforeAction: -> Meteor.subscribe('faq')
+  })
 )
 
 Meteor.Router.add('/add', 'POST', ->
