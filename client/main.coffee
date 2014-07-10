@@ -50,7 +50,7 @@ Template.main.rendered = ->
   if user
     if user.emails
       email = Meteor.user().emails[0].address
-      url = "http://www.gravatar.com/avatar/"+MD5(email);
+      url = "http://www.gravatar.com/avatar/"+MD5(email)
       $("#user-avatar").attr("src",url)
       $("#user-email").html(email)
     else
