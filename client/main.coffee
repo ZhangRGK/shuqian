@@ -5,6 +5,15 @@ Template.main.helpers({
     window.location.pathname == "/common"
   isHelp:->
     window.location.pathname == "/help"
+  userInfo:->
+    user = Meteor.user()
+    console.log(user)
+    if user
+      if user.emails[0]
+        console.log(user.emails[0])
+        return {"name":user.emails[0].address,"url":"http://www.gravatar.com/avatar/"+MD5(user.emails[0].address)}
+    else
+      return null
 })
 Template.main.events = {
   'click #savetagbtn':(evt, template)->
@@ -46,48 +55,35 @@ Template.main.events = {
 }
 
 Template.main.rendered = ->
-  displayUserinfo()
-
-
-
-displayUserinfo = ->
   Meteor.call("getUserInfo",(error, userInfo)->
-    console.log 'rendered call'
-    console.log userInfo
-    console.log error
-    user = Meteor.user()
-    console.log user
+    name = userInfo.services.google.name
+    console.log name
+    $("#user-avatar").attr("src",userInfo.services.google.picture)
+    $("#user-email").html(name)
   )
-  user = Meteor.user()
-  console.log 'rendered'
-  console.log user
-  if user
-    if user.emails
-      email = Meteor.user().emails[0].address
-      url = "http://www.gravatar.com/avatar/"+MD5(email)
-      $("#user-avatar").attr("src",url)
-      $("#user-email").html(email)
-    else
-      Meteor.call("getUserInfo",(error, userInfo)->
-        name = userInfo.services.google.name
-        $("#user-avatar").attr("src",userInfo.services.google.picture)
-        $("#user-email").html(name)
-      )
-  else
-    setTimeout(displayUserinfo,1000)
+
+
+#
+#displayUserinfo = ->
+#  user = Meteor.user()
+#  if user
+#    if user.emails
+#      email = Meteor.user().emails[0].address
+#      url = "http://www.gravatar.com/avatar/"+MD5(email)
+#      $("#user-avatar").attr("src",url)
+#      $("#user-email").html(email)
+#    else
+#      Meteor.call("getUserInfo",(error, userInfo)->
+#        name = userInfo.services.google.name
+#        $("#user-avatar").attr("src",userInfo.services.google.picture)
+#        $("#user-email").html(name)
+#      )
+#  else
+#    setTimeout(displayUserinfo,3000)
 
 Meteor.startup(->
   Deps.autorun(->
-    Meteor.call("getUserInfo",(error, userInfo)->
-      console.log 'autorun call'
-      console.log userInfo
-      console.log error
-      user = Meteor.user()
-      console.log user
-    )
     user = Meteor.user()
-    console.log 'autorun'
-    console.log user
     if user
       if user.emails
         email = user.emails[0].address

@@ -48,7 +48,7 @@ Template.login.events = {
     window.localStorage.setItem("themeNum",n)
 
   # login
-  'keypress #signIn_email':(evt)->
+  'change #signIn_email':(evt)->
     if evt.keyCode == 13
       signIn(evt)
     reg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/
@@ -76,7 +76,7 @@ Template.login.events = {
     checkSignIn()
     return
 
-  'keyup #signIn_pwd':(evt)->
+  'change #signIn_pwd':(evt)->
     if evt.target.value.length < 6
       $(evt.target).css("border-color","#a94442")
     else if evt.keyCode == 13
@@ -92,7 +92,7 @@ Template.login.events = {
 
   # register
   # 请文千调整下面的颜色并且定义class
-  'keyup #reg_email':(evt)->
+  'change #reg_email':(evt)->
     reg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/
     email = $(evt.target).val()
     if !reg.test(email)
@@ -116,7 +116,7 @@ Template.login.events = {
     checkReg()
     return
 
-  'keyup #reg_pwd':(evt)->
+  'change #reg_pwd':(evt)->
     if evt.target.value.length >= 6
       $("#reg_pwd").css("border-color","#3c763d")
     else
@@ -135,7 +135,7 @@ Template.login.events = {
     checkReg()
     return
 
-  'keyup #reg_repwd,#reg_pwd':(evt)->
+  'change #reg_repwd,#reg_pwd':(evt)->
     pwd = $("#reg_pwd").val()
     repwd = $("#reg_repwd").val()
     if pwd != repwd || repwd == ""

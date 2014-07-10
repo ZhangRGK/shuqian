@@ -1,111 +1,121 @@
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>叶脉书签</title>
-<link rel="shortcut icon" href="/images/login-logo.png" type="image/x-icon" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>叶脉书签</title>
+    <link rel="shortcut icon" href="/images/login-logo.png" type="image/x-icon"/>
 </head>
 
 <template name="main">
-<div class="topBar">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="fixedItem container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">菜单</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">
-                    <img src="/images/logo.png" alt=""></a>
-            </div>
+    <div class="topBar">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="fixedItem container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">菜单</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        <img src="/images/logo.png" alt=""></a>
+                </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
 
-                    {{#if currentUser}}
-                    <li class="{{#if isCommon}}active{{/if}}">
-                    <a href="/common">常用</a>
-                    </li>
-                    <li class="{{#if isExplore}}active{{/if}}">
-                    <a href="/explore">探索</a>
-                    </li>
-                    {{/if}}
-                    <li class="{{#if isHelp}}active{{/if}}">
-                    <a href="/help">帮助</a>
-                    </li>
-                </ul>
-
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        设置 <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                        <a id="toResponsive" href="javascript:;">宽屏</a>
+                        {{#if currentUser}}
+                        <li class="{{#if isCommon}}active{{/if}}">
+                            <a href="/common">常用</a>
                         </li>
-                        <li>
-                        <a id="toBoxed" href="javascript:;">窄屏</a>
-                        </li>
-                    </ul>
-                    </li>
-                    {{#if currentUser}}
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img id="user-avatar" alt="" src="images/user-avatar.png">
-                        <span id="user-email"></span> <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        {{#if currentUser.emails}}
-                        <li>
-                        <a href="/resetPwd">修改密码</a>
+                        <li class="{{#if isExplore}}active{{/if}}">
+                            <a href="/explore">探索</a>
                         </li>
                         {{/if}}
-                        <li>
-                        <a href="javascript:;" id="signOut">退出</a>
+                        <li class="{{#if isHelp}}active{{/if}}">
+                            <a href="/help">帮助</a>
                         </li>
                     </ul>
-                    </li>
-                    {{else}}
-                    <li><a href="/login">登录</a></li>
-                    {{/if}}
-                </ul>
+
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                设置 <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a id="toResponsive" href="javascript:;">宽屏</a>
+                                </li>
+                                <li>
+                                    <a id="toBoxed" href="javascript:;">窄屏</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {{#if currentUser}}
+                        <li class="dropdown">
+                            {{#if userInfo}}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img alt="" src="{{userInfo.url}}">
+                                <span>{{userInfo.name}}</span> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/resetPwd">修改密码</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" id="signOut">退出</a>
+                                </li>
+                            </ul>
+                            {{else}}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img id="user-avatar" src="images/user-avatar.png">
+                                <span id="user-email"></span> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="javascript:;" id="signOut">退出</a>
+                                </li>
+                            </ul>
+                            {{/if}}
+                        </li>
+                        {{else}}
+                        <li><a href="/login">登录</a></li>
+                        {{/if}}
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</div>
+        </nav>
+    </div>
 
-{{> yield}}
-
+    {{> yield}}
 
 
-<footer class="sticky-footer">
-    <div class="fixedItem">Copyright &copy; 2014 highwe.com</div>
-</footer>
+    <footer class="sticky-footer">
+        <div class="fixedItem">Copyright &copy; 2014 highwe.com</div>
+    </footer>
 
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">添加标签</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form">
-                    <div class="form-group">
-                        <label>输入标签名称</label>
-                        <input type="text" class="form-control" id="tagname">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="savetagbtn">保存</button>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">添加标签</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>输入标签名称</label>
+                            <input type="text" class="form-control" id="tagname">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="savetagbtn">保存</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
