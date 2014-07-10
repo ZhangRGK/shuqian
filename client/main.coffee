@@ -55,7 +55,6 @@ Template.main.events = {
 }
 
 Template.main.rendered = ->
-<<<<<<< HEAD
   Meteor.call("getUserInfo",(error, userInfo)->
     name = userInfo.services.google.name
     console.log name
