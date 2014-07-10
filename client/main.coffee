@@ -56,11 +56,16 @@ Template.main.rendered = ->
       console.log 'rendered call'
       console.log Meteor.user()
       console.log userInfo
+      console.log $("#user-avatar")
+      console.log $("#user-email")
       name = userInfo.services.google.name
       $("#user-avatar").attr("src",userInfo.services.google.picture)
       $("#user-email").html(name)
     )
   else
+    console.log 'rendered local'
+    console.log $("#user-avatar")
+    console.log $("#user-email")
     email = localStorage.getItem("userEmail")
     url = "http://www.gravatar.com/avatar/"+MD5(email)
     $("#user-avatar").attr("src",url)
@@ -76,6 +81,9 @@ Meteor.startup(->
     user = Meteor.user()
     if user
       if user.emails
+        console.log 'rendered local'
+        console.log $("#user-avatar")
+        console.log $("#user-email")
         email = user.emails[0].address
         localStorage.setItem("userEmail", email)
         localStorage.setItem("userType", 0)
@@ -84,6 +92,8 @@ Meteor.startup(->
           console.log 'autorun call'
           console.log Meteor.user()
           console.log userInfo
+          console.log $("#user-avatar")
+          console.log $("#user-email")
           email = userInfo.services.google.email
           localStorage.setItem("userEmail", email)
           localStorage.setItem("userType", 1)
