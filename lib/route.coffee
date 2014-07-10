@@ -142,9 +142,10 @@ Router.map(->
       tags: getTags()
       }
     onBeforeAction: (pause)->
-      if !Meteor.userId()
-        Router.go('/')
-      pause()
+      if this.ready()
+        if !Meteor.userId()
+          Router.go('/')
+        pause()
   })
   this.route('bookMarkList', {
     path: '/explore'
@@ -197,9 +198,10 @@ Router.map(->
       #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
     onBeforeAction: (pause)->
-      if !Meteor.userId()
-        Router.go('/')
-      pause()
+      if this.ready()
+        if !Meteor.userId()
+          Router.go('/')
+        pause()
   })
 
   this.route('bookMarkDetail', {
