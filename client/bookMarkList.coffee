@@ -1,6 +1,7 @@
 Template.bookMarkList.helpers({
   isEmpty:->
     if @bookMarks
+      #console.log @bookMarks.count()
       #return @bookMarks.count() == 0
       return false
     else

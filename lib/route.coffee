@@ -117,7 +117,9 @@ Router.map(->
   })
   this.route('login', {
     path: '/login'
-    layoutTemplate: ''
+    onBeforeAction: ->
+      if Meteor.userId()
+        Router.go('/common')
   })
   this.route('about', {
     path: '/about'
@@ -130,9 +132,8 @@ Router.map(->
     waitOn: ->
     layoutTemplate: ''
     onBeforeAction: ->
-      if this.ready()
-        if Meteor.userId()
-          Router.go('/common')
+      if Meteor.userId()
+        Router.go('/common')
   })
   this.route('bookMarkList', {
     path: '/common'
@@ -144,7 +145,7 @@ Router.map(->
     onBeforeAction: (pause)->
       if !Meteor.userId()
         Router.go('/')
-      pause()
+      #pause()
   })
   this.route('bookMarkList', {
     path: '/explore'
@@ -153,8 +154,8 @@ Router.map(->
       bookMarks:getNotMyBookMarks(),
       tags: getTags()
       }
-    onBeforeAction:(pause)->
-      @subscribe('statistical', 'explore')
+    onAfterAction: ->
+      @subscribe('statistical', 'explore').wait()
   })
   this.route('bookMarkList', {
     path: '/garbage'
@@ -199,7 +200,7 @@ Router.map(->
     onBeforeAction: (pause)->
       if !Meteor.userId()
         Router.go('/')
-      pause()
+      #pause()
   })
 
   this.route('bookMarkDetail', {
@@ -259,3 +260,4 @@ Meteor.Router.add('/upload', 'POST', ->
   return [200,'0']
 )
 
+Router.onBeforeAction('loading')

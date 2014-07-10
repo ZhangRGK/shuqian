@@ -1,7 +1,9 @@
 {
   "packages": {
     "bootstrap-3": {},
-    "iron-router": {},
+    "iron-router": {
+      "git": "https://github.com/EventedMind/iron-router"
+      },
     "router": {},
     "spin": {},
     "bootstrap-multiselect": {
