@@ -154,7 +154,8 @@ Router.map(->
       bookMarks:getNotMyBookMarks(),
       tags: getTags()
       }
-    onBeforeAction:(pause)->
+    onBeforeAction:'loading'
+    onAfterAction: ->
       @subscribe('statistical', 'explore')
   })
   this.route('bookMarkList', {
