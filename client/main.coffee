@@ -55,6 +55,8 @@ displayUserinfo = ->
     console.log 'rendered call'
     console.log userInfo
     console.log error
+    user = Meteor.user()
+    console.log user
   )
   user = Meteor.user()
   console.log 'rendered'
@@ -80,6 +82,8 @@ Meteor.startup(->
       console.log 'autorun call'
       console.log userInfo
       console.log error
+      user = Meteor.user()
+      console.log user
     )
     user = Meteor.user()
     console.log 'autorun'
