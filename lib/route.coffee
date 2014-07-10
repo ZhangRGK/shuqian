@@ -117,7 +117,9 @@ Router.map(->
   })
   this.route('login', {
     path: '/login'
-    layoutTemplate: ''
+    onBeforeAction: ->
+      if Meteor.userId()
+        Router.go('/common')
   })
   this.route('about', {
     path: '/about'
