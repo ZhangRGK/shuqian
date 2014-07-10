@@ -1,10 +1,10 @@
 {
-    "name": "书签",
-    "version": "1.2",
+    "name": "叶脉书签",
+    "version": "1.4",
     "manifest_version": 2,
     "description": "用来同步Chrome书签到互联网",
     "browser_action": {
-        "default_icon": "icon128.png",
+        "default_icon": "login-logo.png",
         "default_popup": "popup.html"
     },
     "background": {
@@ -18,13 +18,15 @@
     "permissions": [
         "bookmarks",
         "tabs",
-        "http://shuqian.bigzhu.org/"
+        "http://shuqian.bigzhu.org/",
+        "http://yemai.in/",
+        "http://www.yemai.in/"
     ],
     "content_scripts": [
       {
-          "matches": ["http://shuqian.bigzhu.org/*"],
+          "matches": ["http://shuqian.bigzhu.org/*", "http://*.yemai.in/*", "http://yemai.in/*"],
           "js": ["jquery-2.1.1.min.js","content.js"]
       }
     ],
-    "homepage_url": "http://shuqian.bigzhu.org"
+    "homepage_url": "http://yemai.in"
 }

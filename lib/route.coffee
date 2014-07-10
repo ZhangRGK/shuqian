@@ -2,7 +2,8 @@ log = (parm)->
   console.log parm
 
 Router.configure({
-  waitOn: -> [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags')]
+  waitOn: ->
+    [Meteor.subscribe('bookmarks'), Meteor.subscribe('tags'), Meteor.subscribe('statistical', 'explore')]
   layoutTemplate: 'main'
   loadingTemplate: 'loading'
   onAfterAction:->
@@ -19,7 +20,6 @@ getBookMarksByTag = (tag)->
   urls = _.pluck(tags, 'url')
 
   checkedBookMarks = Session.get("checkedBookMarks")||[]
-  console.log checkedBookMarks
   theOr = {$or:[{ url: {$in: checkedBookMarks}}, {url: {$in: urls}}]}
   sort = {sort:{dateAdded:-1}}
   BookMarks.find(theOr, sort)
@@ -75,8 +75,23 @@ getBlacklistBookMarks=->
   BookMarks.find({stat:2},{sort:{dateAdded:-1}}).fetch()
 
 #探索
-getNotMyBookMarks=->
-  explore()
+getNotMyBookMarks= ->
+  
+  #黑名单的不要查出来
+  blacks = BookMarks.find({stat:2}).fetch()
+  urls = _.pluck(blacks, 'url')
+
+  #已经收藏的也不要查出来
+  tags = Tags.find({stat:1}).fetch()
+  urls = _.pluck(tags, 'url').concat(urls)
+
+  #当前勾住的,不要动
+  checkedBookMarks = Session.get("checkedBookMarks")
+  theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$nin: urls}}]}
+
+  explores = Statistical.find(theOr)
+  return explores
+  #explore()
 
 #根目录书签
 getMyBookMarks=->
@@ -86,11 +101,18 @@ getMyBookMarks=->
   checkedBookMarks = Session.get("checkedBookMarks")||[]
   theOr = {$or: [{ url: {$in: checkedBookMarks}}, {url: {$in: urls}, stat:1}]}
   sort = {sort:{count:-1}, limit : 14}
+
+  #没有收藏书签时候,在探索勾选,会触发这里执行,导致跳转
+  if BookMarks.find(theOr, sort).count() == 0 and window.location.pathname != "/explore"
+    Router.go('/help')
   BookMarks.find(theOr, sort)
 
 
   BookMarks.find({url: {$in: urls}, stat:1}, {sort:{count:-1}, limit : 14})
 Router.map(->
+  this.route('help', {
+    path: '/help'
+  })
   this.route('index', {
     path: '/index'
   })
@@ -120,7 +142,6 @@ Router.map(->
       bookMarks: getMyBookMarks(),
       tags: getTags()
       }
-    onBeforeAction: 'loading'
     onBeforeAction: ->
       if this.ready()
         if !Meteor.userId()
@@ -130,11 +151,11 @@ Router.map(->
     path: '/explore'
     data: ->
       {
-      bookMarks: Statistical.find(),
+      bookMarks:getNotMyBookMarks(),
       tags: getTags()
       }
     onBeforeAction:->
-      @subscribe('statistical', 'explore')
+      @subscribe('statistical', 'explore').wait()
   })
   this.route('bookMarkList', {
     path: '/garbage'
@@ -190,7 +211,7 @@ Router.map(->
       statistical:Statistical.findOne(),
       tags: getTags()
       }
-    onBeforeAction: -> Meteor.subscribe('statistical', @params._url)
+    waitOn: -> Meteor.subscribe('statistical', @params._url)
   })
 
   this.route('resetPassword', {

@@ -1,3 +1,11 @@
+Template.main.helpers({
+  isExplore:->
+    window.location.pathname == "/explore"
+  isCommon:->
+    window.location.pathname == "/common"
+  isHelp:->
+    window.location.pathname == "/help"
+})
 Template.main.events = {
   'click #savetagbtn':(evt, template)->
     $('#myModal').modal('hide')

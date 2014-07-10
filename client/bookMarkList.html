@@ -1,5 +1,4 @@
 <template name='bookMarkList'>
-
 <div id="container">
     {{> tagList}}
     <div class="main-content">
@@ -7,8 +6,15 @@
             <div class="fav-box">
                 <section class="fav-box-info">
                     {{> tHead}}
+
+
                     <section class="fav-list">
                         <ul class="list-group ">
+                            {{#if isEmpty}}
+                            <li class="list-group-item">
+                            {{info}}
+                            </li>
+                            {{/if}}
                             {{#each bookMarks}}
                             {{> bookMark}}
                             {{/each}}

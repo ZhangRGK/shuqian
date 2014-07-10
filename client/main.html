@@ -25,21 +25,15 @@
                 <ul class="nav navbar-nav">
 
                     {{#if currentUser}}
-                    <li>
+                    <li class="{{#if isCommon}}active{{/if}}">
                     <a href="/common">常用</a>
                     </li>
-                    <li>
+                    <li class="{{#if isExplore}}active{{/if}}">
                     <a href="/explore">探索</a>
                     </li>
                     {{/if}}
-                    <li class="">
-                    <a href="#">客户端</a>
-                    </li>
-                    <li class="">
-                    <a href="#">帮助</a>
-                    </li>
-                    <li class="">
-                    <a href="/about">关于</a>
+                    <li class="{{#if isHelp}}active{{/if}}">
+                    <a href="/help">帮助</a>
                     </li>
                 </ul>
 

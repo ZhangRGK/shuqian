@@ -6,6 +6,9 @@
     return
 
   Tags.update({_id: doTag._id}, {$set: {stat: 0}})
+
+  Meteor.call('removeStatTag', bookMarkUrl, tag.title)
+
 #  stat = Statistical.findOne({"url": bookMark.url})
 #  final = stat.tags.slice(0)
 #  final.splice(final.indexOf(tag.title),1)
@@ -84,7 +87,6 @@
     bookMarks = []
   bookMarks.push(bookMarkId)
   bookMarks = _.uniq(bookMarks)
-  console.log bookMarks
   Session.set("checkedBookMarks", bookMarks)
 @popCheckedBookMarks = (bookMarkId)->
   bookMarks = Session.get("checkedBookMarks")
@@ -110,3 +112,6 @@
     for selectTag in selectTags
       $('#multi').multiselect('select', selectTag.title)
   )
+@randArray = (m, len)->
+    m.sort(-> return Math.random() - 0.5)
+    return m.slice(0, len)
