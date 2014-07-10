@@ -51,14 +51,7 @@ Template.main.rendered = ->
 
 
 displayUserinfo = ->
-  Meteor.call("getUserInfo",(error, userInfo)->
-    console.log 'rendered call'
-    console.log userInfo
-    console.log error
-  )
   user = Meteor.user()
-  console.log 'rendered'
-  console.log user
   if user
     if user.emails
       email = Meteor.user().emails[0].address
@@ -72,18 +65,11 @@ displayUserinfo = ->
         $("#user-email").html(name)
       )
   else
-    setTimeout(displayUserinfo,1000)
+    setTimeout(displayUserinfo,3000)
 
 Meteor.startup(->
   Deps.autorun(->
-    Meteor.call("getUserInfo",(error, userInfo)->
-      console.log 'autorun call'
-      console.log userInfo
-      console.log error
-    )
     user = Meteor.user()
-    console.log 'autorun'
-    console.log user
     if user
       if user.emails
         email = user.emails[0].address
