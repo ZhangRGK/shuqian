@@ -51,6 +51,7 @@ Template.main.rendered = ->
 
 
 displayUserinfo = ->
+  user = Meteor.user()
   if user
     if user.emails
       email = Meteor.user().emails[0].address
@@ -66,6 +67,7 @@ displayUserinfo = ->
 
 Meteor.startup(->
   Deps.autorun(->
+    user = Meteor.user()
     if user
       if user.emails
         email = user.emails[0].address
