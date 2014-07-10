@@ -46,6 +46,11 @@ Template.main.events = {
 }
 
 Template.main.rendered = ->
+  displayUserinfo()
+
+
+
+displayUserinfo = ->
   user = Meteor.user()
   if user
     if user.emails
@@ -59,13 +64,12 @@ Template.main.rendered = ->
         $("#user-avatar").attr("src",userInfo.services.google.picture)
         $("#user-email").html(name)
       )
-
-
+  else
+    setTimeout(displayUserinfo,1000)
 
 Meteor.startup(->
   Deps.autorun(->
     user = Meteor.user()
-    console.log user
     if user
       if user.emails
         email = user.emails[0].address
