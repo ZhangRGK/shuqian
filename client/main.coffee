@@ -51,31 +51,51 @@ Template.main.rendered = ->
 
 
 displayUserinfo = ->
+  Meteor.call("getUserInfo",(error, userInfo)->
+    console.log 'rendered call'
+    console.log userInfo
+    console.log error
+    user = Meteor.user()
+    console.log user
+  )
   user = Meteor.user()
+  console.log 'rendered'
+  console.log user
   if user
     if user.emails
       email = Meteor.user().emails[0].address
       url = "http://www.gravatar.com/avatar/"+MD5(email)
       $("#user-avatar").attr("src",url)
       $("#user-email").html(email)
+    else
+      Meteor.call("getUserInfo",(error, userInfo)->
+        name = userInfo.services.google.name
+        $("#user-avatar").attr("src",userInfo.services.google.picture)
+        $("#user-email").html(name)
+      )
   else
-    Meteor.call("getUserInfo",(error, userInfo)->
-      name = userInfo.services.google.name
-      $("#user-avatar").attr("src",userInfo.services.google.picture)
-      $("#user-email").html(name)
-    )
+    setTimeout(displayUserinfo,1000)
 
 Meteor.startup(->
   Deps.autorun(->
+    Meteor.call("getUserInfo",(error, userInfo)->
+      console.log 'autorun call'
+      console.log userInfo
+      console.log error
+      user = Meteor.user()
+      console.log user
+    )
     user = Meteor.user()
+    console.log 'autorun'
+    console.log user
     if user
       if user.emails
         email = user.emails[0].address
         localStorage.setItem("userEmail", email)
-    else
-      Meteor.call("getUserInfo",(error, userInfo)->
-        email = userInfo.services.google.email
-        localStorage.setItem("userEmail", email)
-      )
+      else
+        Meteor.call("getUserInfo",(error, userInfo)->
+          email = userInfo.services.google.email
+          localStorage.setItem("userEmail", email)
+        )
   )
 )
