@@ -141,10 +141,10 @@ Router.map(->
       bookMarks: getMyBookMarks(),
       tags: getTags()
       }
-    onBeforeAction: ->
-      if this.ready()
-        if !Meteor.userId()
-          Router.go('/')
+    onBeforeAction: (pause)->
+      if !Meteor.userId()
+        Router.go('/')
+      pause()
   })
   this.route('bookMarkList', {
     path: '/explore'
@@ -153,8 +153,8 @@ Router.map(->
       bookMarks:getNotMyBookMarks(),
       tags: getTags()
       }
-    onAfterAction:->
-      @subscribe('statistical', 'explore').wait()
+    onBeforeAction:(pause)->
+      @subscribe('statistical', 'explore')
   })
   this.route('bookMarkList', {
     path: '/garbage'
@@ -196,10 +196,10 @@ Router.map(->
       )
       #$('#multi').multiselect('disable')
       $('#multi').multiselect('refresh')
-    onBeforeAction: ->
-      if this.ready()
-        if !Meteor.userId()
-          Router.go('/')
+    onBeforeAction: (pause)->
+      if !Meteor.userId()
+        Router.go('/')
+      pause()
   })
 
   this.route('bookMarkDetail', {
