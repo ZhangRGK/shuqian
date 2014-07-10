@@ -46,27 +46,47 @@ Template.main.events = {
 }
 
 Template.main.rendered = ->
-  Meteor.call("getUserInfo",(error, userInfo)->
-    if userInfo.emails
-      email = Meteor.user().emails[0].address
-      url = "http://www.gravatar.com/avatar/"+MD5(email)
-      $("#user-avatar").attr("src",url)
-      $("#user-email").html(email)
-    else
+  console.log 'rendered'
+  console.log localStorage.getItem("userType")
+  console.log localStorage.getItem("userEmail")
+  console.log Meteor.user()
+
+  if localStorage.getItem("userType") == 1
+    Meteor.call("getUserInfo",(error, userInfo)->
+      console.log 'rendered call'
+      console.log Meteor.user()
+      console.log userInfo
       name = userInfo.services.google.name
       $("#user-avatar").attr("src",userInfo.services.google.picture)
       $("#user-email").html(name)
-  )
+    )
+  else
+    email = localStorage.getItem("userEmail")
+    url = "http://www.gravatar.com/avatar/"+MD5(email)
+    $("#user-avatar").attr("src",url)
+    $("#user-email").html(email)
+
 
 Meteor.startup(->
   Deps.autorun(->
-    Meteor.call("getUserInfo",(error, userInfo)->
-      if userInfo.emails
-        email = Meteor.user().emails[0].address
+    console.log 'autorun'
+    console.log localStorage.getItem("userType")
+    console.log localStorage.getItem("userEmail")
+    console.log Meteor.user()
+    user = Meteor.user()
+    if user
+      if user.emails
+        email = user.emails[0].address
         localStorage.setItem("userEmail", email)
+        localStorage.setItem("userType", 0)
       else
-        email = userInfo.services.google.email
-        localStorage.setItem("userEmail", email)
-    )
+        Meteor.call("getUserInfo",(error, userInfo)->
+          console.log 'autorun call'
+          console.log Meteor.user()
+          console.log userInfo
+          email = userInfo.services.google.email
+          localStorage.setItem("userEmail", email)
+          localStorage.setItem("userType", 1)
+        )
   )
 )
