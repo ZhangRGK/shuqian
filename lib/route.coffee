@@ -154,7 +154,6 @@ Router.map(->
       bookMarks:getNotMyBookMarks(),
       tags: getTags()
       }
-    onBeforeAction:'loading'
     onAfterAction: ->
       @subscribe('statistical', 'explore')
   })
@@ -261,3 +260,4 @@ Meteor.Router.add('/upload', 'POST', ->
   return [200,'0']
 )
 
+Router.onBeforeAction('loading')

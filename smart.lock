@@ -3,7 +3,10 @@
   "dependencies": {
     "basePackages": {
       "bootstrap-3": {},
-      "iron-router": {},
+      "iron-router": {
+        "git": "https://github.com/EventedMind/iron-router",
+        "branch": "master"
+      },
       "router": {},
       "spin": {},
       "bootstrap-multiselect": {
@@ -19,9 +22,9 @@
         "commit": "17a63902fc6cf1096c5289d963c66cf28b474727"
       },
       "iron-router": {
-        "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.7.1",
-        "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
+        "git": "https://github.com/EventedMind/iron-router",
+        "branch": "master",
+        "commit": "8164c87025329f2668eeb2285d7ef403251589dc"
       },
       "router": {
         "git": "https://github.com/tmeasday/meteor-router.git",
@@ -45,8 +48,8 @@
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
-        "tag": "v0.2.4",
-        "commit": "b40e9b0612329288d75cf52ad14a7da64bb8618f"
+        "tag": "v0.2.5",
+        "commit": "273e3ab7d005d91a1a59c71bd224533b4dae2fbd"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
