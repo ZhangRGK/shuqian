@@ -68,17 +68,16 @@
                                     <a href="javascript:;" id="signOut">退出</a>
                                 </li>
                             </ul>
-                            {{else}}
+                            {{/if}}
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img id="user-avatar" src="images/user-avatar.png">
-                                <span id="user-email"></span> <b class="caret"></b>
+                                <span id="user-email">{{userInfo}}</span> <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="javascript:;" id="signOut">退出</a>
                                 </li>
                             </ul>
-                            {{/if}}
                         </li>
                         {{else}}
                         <li><a href="/login">登录</a></li>

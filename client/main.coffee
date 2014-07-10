@@ -13,7 +13,7 @@ Template.main.helpers({
         console.log(user.emails[0])
         return {"name":user.emails[0].address,"url":"http://www.gravatar.com/avatar/"+MD5(user.emails[0].address)}
     else
-      return null
+      return false
 })
 Template.main.events = {
   'click #savetagbtn':(evt, template)->
